@@ -138,7 +138,7 @@
 
 <body>
 
-  <div class="overlay">
+  <div class="overlay" id="overlay">
     <button data-url="https://nirbytes.mcwrite.net">Proxy 1 (Mocha)</button>
     <button data-url="https://avocadofrommexico.limana.rs">Proxy 2 (Space)</button>
     <button id="fullscreenButton">Fullscreen</button>
@@ -264,6 +264,7 @@
     });
 
     document.getElementById('quizButton').addEventListener('click', function() {
+      document.getElementById('overlay').style.display = 'none';
       startQuiz();
     });
 
@@ -393,4 +394,4 @@
         { question: "10x8", answer: 80 },
         { question: "4x2", answer: 8 },
         { question: "6x11", answer: 66 },
-        { question: "12x12", answer: 144}
+        { question: "12x12", answer 144 }
