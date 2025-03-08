@@ -1,30 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
 
-<style type=text/css>
-  [data-url]::after {
-    content: attr(data-url)
-  }
-  
-  #iFrame {
-    /* this is for demo purposes only */
-    min-height: 100%;
-    width: 100%; 
-          border:none; 
-          margin:0; 
-          padding:0; 
-    overflow:hidden; 
-    z-index:999999;
-  }
-</style>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style type="text/css">
+    [data-url]::after {
+      content: attr(data-url)
+    }
 
-<button data-url="https://nirbytes.mcwrite.net"></button>
-<button data-url="https://avocadofrommexico.limana.rs"></button>
-<div> <iframe id="iFrame"></iframe> </div>
+    #iFrame {
+      /* this is for demo purposes only */
+      min-height: 100%;
+      width: 100%;
+      border: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      z-index: 999999;
+    }
 
-<script>
-  /* it is important you put the script part after the HTML with the buttons */
-  Array.prototype.forEach.call(document.querySelectorAll('[data-url]'), function(elem) {
-    elem.addEventListener('click', function(e) {
-      iFrame.src = this.dataset.url
+    /* Style for the buttons to take 100% width */
+    button[data-url] {
+      width: 100%;
+      display: block;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 16px;
+      cursor: pointer;
+      border: 1px solid #ccc;
+      background-color: #f9f9f9;
+    }
+  </style>
+</head>
+
+<body>
+
+  <button data-url="https://nirbytes.mcwrite.net">Proxy 1 (Mocha)</button>
+  <button data-url="https://avocadofrommexico.limana.rs">Proxy 2 (Space)</button>
+  <div> <iframe id="iFrame"></iframe> </div>
+
+  <script>
+    /* it is important you put the script part after the HTML with the buttons */
+    Array.prototype.forEach.call(document.querySelectorAll('[data-url]'), function(elem) {
+      elem.addEventListener('click', function(e) {
+        iFrame.src = this.dataset.url
+      })
     })
-  })
-</script>
+  </script>
+
+</body>
+
+</html>
