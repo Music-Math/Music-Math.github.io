@@ -50,7 +50,7 @@
     /* it is important you put the script part after the HTML with the buttons */
     Array.prototype.forEach.call(document.querySelectorAll('[data-url]'), function(elem) {
       elem.addEventListener('click', function(e) {
-        iFrame.src = this.dataset.url;
+        document.getElementById('iFrame').src = this.dataset.url;
         this.style.display = 'none'; // Hide the button after click
       });
     });
