@@ -6,6 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap&family=Open+Sans:wght@400;600&display=swap&family=Lobster&display=swap&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <style type="text/css">
+    @font-face {
+      font-family: 'Brush Script MT';
+      src: url('https://fonts.gstatic.com/s/brushscriptmt/v10/xxu1GkRSU7zB4JG-gzA1OQdI4PTvuc8.woff2') format('woff2');
+    }
+
     body, html {
       height: 100%;
       margin: 0;
@@ -48,7 +53,7 @@
     }
 
     /* Style for the buttons to take 100% width */
-    button[data-url], #fullscreenButton, #downloadButton, #stopButton, #uploadButton, #uploadBackgroundButton {
+    button[data-url], #fullscreenButton, #downloadButton, #stopButton, #uploadButton, #uploadBackgroundButton, #quizButton {
       width: 80%;
       max-width: 300px;
       display: block;
@@ -66,8 +71,12 @@
       animation: changeFont 0.5s infinite, shake 0.5s infinite;
     }
 
-    button[data-url]:hover, #fullscreenButton:hover, #downloadButton:hover, #stopButton:hover, #uploadButton:hover, #uploadBackgroundButton:hover {
+    button[data-url]:hover, #fullscreenButton:hover, #downloadButton:hover, #stopButton:hover, #uploadButton:hover, #uploadBackgroundButton:hover, #quizButton:hover {
       background-color: #cc0000; /* Darker button background on hover */
+    }
+
+    button[data-url] {
+      font-family: 'Brush Script MT', cursive; /* Set font to Brush Script MT */
     }
 
     @keyframes changeFont {
@@ -106,6 +115,7 @@
     <button id="stopButton">Stop</button>
     <button id="uploadButton">Upload Music</button>
     <button id="uploadBackgroundButton">Upload Background</button>
+    <button id="quizButton">Start Math Quiz</button>
     <input type="file" id="musicInput" accept="audio/*" style="display:none;">
     <input type="file" id="backgroundInput" accept="image/*" style="display:none;">
     <input type="color" id="colorPicker" value="#ff0000" style="display:none;">
@@ -212,6 +222,10 @@
       document.querySelectorAll('button').forEach(button => {
         button.style.backgroundColor = color;
       });
+    });
+
+    document.getElementById('quizButton').addEventListener('click', function() {
+      window.location.href = 'https://github.com/ganadelle/math-quiz';
     });
 
     document.addEventListener('keydown', function(event) {
