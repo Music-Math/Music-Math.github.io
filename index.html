@@ -49,7 +49,7 @@
     }
 
     /* Style for the buttons to take 100% width */
-    button[data-url], #fullscreenButton {
+    button[data-url], #fullscreenButton, #downloadButton {
       width: 80%;
       max-width: 300px;
       display: block;
@@ -66,7 +66,7 @@
       transition: background-color 0.3s, transform 0.3s;
     }
 
-    button[data-url]:hover, #fullscreenButton:hover {
+    button[data-url]:hover, #fullscreenButton:hover, #downloadButton:hover {
       background-color: #e64a19; /* Darker button background on hover */
       transform: translateY(-2px); /* Slight lift on hover */
     }
@@ -88,6 +88,7 @@
     <button data-url="https://nirbytes.mcwrite.net">Proxy 1 (Mocha)</button>
     <button data-url="https://avocadofrommexico.limana.rs">Proxy 2 (Space)</button>
     <button id="fullscreenButton">Fullscreen</button>
+    <button id="downloadButton">File cloak (download)</button>
   </div>
   <div> <iframe id="iFrame"></iframe> </div>
   <div class="footer">Mahad 2025</div>
@@ -122,6 +123,16 @@
       } else if (iFrame.msRequestFullscreen) { /* IE/Edge */
         iFrame.msRequestFullscreen();
       }
+    });
+
+    document.getElementById('downloadButton').addEventListener('click', function() {
+      const element = document.createElement('a');
+      const file = new Blob([document.documentElement.outerHTML], {type: 'text/html'});
+      element.href = URL.createObjectURL(file);
+      element.download = 'index.html';
+      document.body.appendChild(element); // Required for this to work in Firefox
+      element.click();
+      document.body.removeChild(element);
     });
 
     document.addEventListener('keydown', function(event) {
