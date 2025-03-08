@@ -8,10 +8,21 @@
     body, html {
       height: 100%;
       margin: 0;
+      overflow: hidden;
+      position: relative;
+      animation: fadeInBackground 2s ease-in-out forwards; /* Add fade-in animation */
+      background: url('icon.png') no-repeat center center fixed; /* Background image */
+      background-size: cover; /* Make background cover the entire viewport */
+      opacity: 0; /* Start with the background hidden */
+    }
+
+    @keyframes fadeInBackground {
+      to {
+        opacity: 1; /* End with the background fully visible */
+      }
     }
 
     #iFrame {
-      /* this is for demo purposes only */
       height: 100%;
       width: 100%;
       border: none;
@@ -32,6 +43,8 @@
       border: 1px solid #ccc;
       background-color: #f9f9f9;
       box-sizing: border-box; /* Ensure padding is included in the width */
+      position: relative;
+      z-index: 1000000; /* Ensure buttons are above the background */
     }
   </style>
 </head>
@@ -78,4 +91,4 @@
 
 </body>
 
-</html> Mahad wasnt here
+</html>
