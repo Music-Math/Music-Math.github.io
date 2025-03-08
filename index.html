@@ -307,11 +307,12 @@
             if (answer === correctAnswer) {
               correctStreak++;
               resultElement.textContent = `Correct! Streak: ${correctStreak}`;
+              playCorrectSound();
               if (correctStreak > recordStreak) {
                 recordStreak = correctStreak;
                 recordStreakElement.textContent = `Record Streak: ${recordStreak}`;
               }
-              if (correctStreak === 10 && !musicPlayed) {
+              if (correctStreak >= 10 && !musicPlayed) {
                 musicPlayed = true;
                 playCelebrationMusic();
               }
@@ -325,8 +326,13 @@
         });
       }
 
+      function playCorrectSound() {
+        const audio = new Audio('Correct.mp3');
+        audio.play();
+      }
+
       function playCelebrationMusic() {
-        const audio = new Audio('path/to/music/file.mp3');
+        const audio = new Audio('music.mp3');
         audio.play();
       }
 
