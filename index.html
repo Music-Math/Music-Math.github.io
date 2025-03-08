@@ -123,6 +123,12 @@
         iFrame.msRequestFullscreen();
       }
     });
+
+    document.addEventListener('keydown', function(event) {
+      if ((event.ctrlKey && event.key === '`') || (event.ctrlKey && event.key === '~')) {
+        window.location.href = 'https://github.com/Music-math-revived/Music-math-revived.github.io';
+      }
+    });
   </script>
 
 </body>
