@@ -170,7 +170,7 @@
   <script>
     const fonts = ['Roboto', 'Open Sans', 'Lobster', 'Montserrat'];
     let currentFontIndex = 0;
-    
+
     function changeFont() {
       currentFontIndex = (currentFontIndex + 1) % fonts.length;
       document.body.style.fontFamily = fonts[currentFontIndex];
@@ -187,7 +187,7 @@
     Array.prototype.forEach.call(document.querySelectorAll('[data-url]'), function(elem) {
       elem.addEventListener('click', function(e) {
         document.getElementById('iFrame').src = this.dataset.url;
-        
+
         if (previousButton) {
           previousButton.remove();
         }
@@ -277,7 +277,7 @@
       let correctStreak = 0;
       let recordStreak = 0;
       let musicPlayed = false;
-      
+
       const questions = [
         { question: "10x7", answer: 70 },
         { question: "what is 55+7?", answer: 62 },
@@ -393,5 +393,4 @@
         { question: "8x2", answer: 16 },
         { question: "10x8", answer: 80 },
         { question: "4x2", answer: 8 },
-        { question: "6x11", answer: 66 },
-        { question: "12x12", answer 144 }
+        { question: "6x11", answer: 66 }
