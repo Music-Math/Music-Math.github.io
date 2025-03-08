@@ -26,7 +26,7 @@
     }
 
     /* Style for the buttons to take 100% width */
-    button[data-url] {
+    button[data-url], #fullscreenButton {
       width: 100%;
       display: block;
       padding: 10px;
@@ -44,6 +44,7 @@
 
   <button data-url="https://nirbytes.mcwrite.net">Proxy 1 (Mocha)</button>
   <button data-url="https://avocadofrommexico.limana.rs">Proxy 2 (Space)</button>
+  <button id="fullscreenButton">Fullscreen</button>
   <div> <iframe id="iFrame"></iframe> </div>
 
   <script>
@@ -53,6 +54,19 @@
         document.getElementById('iFrame').src = this.dataset.url;
         this.style.display = 'none'; // Hide the button after click
       });
+    });
+
+    document.getElementById('fullscreenButton').addEventListener('click', function() {
+      const iFrame = document.getElementById('iFrame');
+      if (iFrame.requestFullscreen) {
+        iFrame.requestFullscreen();
+      } else if (iFrame.mozRequestFullScreen) { /* Firefox */
+        iFrame.mozRequestFullScreen();
+      } else if (iFrame.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+        iFrame.webkitRequestFullscreen();
+      } else if (iFrame.msRequestFullscreen) { /* IE/Edge */
+        iFrame.msRequestFullscreen();
+      }
     });
   </script>
 
