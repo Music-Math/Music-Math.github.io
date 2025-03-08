@@ -139,6 +139,11 @@
 <body>
 
   <div class="overlay">
+    <div id="pinContainer">
+      <input type="password" id="pinInput" placeholder="Enter PIN">
+      <button id="submitPinButton">Submit</button>
+      <p id="pinMessage"></p>
+    </div>
     <button data-url="https://nirbytes.mcwrite.net">Proxy 1 (Mocha)</button>
     <button data-url="https://avocadofrommexico.limana.rs">Proxy 2 (Space)</button>
     <button id="fullscreenButton">Fullscreen</button>
@@ -351,6 +356,17 @@
       button.addEventListener('click', function() {
         document.getElementById('colorPicker').click();
       });
+    });
+
+    document.getElementById('submitPinButton').addEventListener('click', function() {
+      const pin = document.getElementById('pinInput').value;
+      const message = document.getElementById('pinMessage');
+      if (pin === '1234') {
+        message.textContent = 'PIN correct!';
+        document.querySelector('.overlay').style.display = 'none'; // Hide the overlay on correct PIN
+      } else {
+        message.textContent = 'Incorrect PIN. Try again.';
+      }
     });
   </script>
 
