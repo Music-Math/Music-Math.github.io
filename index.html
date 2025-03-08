@@ -1,5 +1,30 @@
-<iframe src="https://nirbytes.mcwrite.net"
-        <iframe src="mypage.html" style="position:fixed; top:0; left:0; bottom:0; right:0; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999;"
-        a href="https://mahadabubaker.github.io/Music-Math/" download="Proxy">Download</a>
-    They blocked it. Try next period
-</iframe>
+
+<style type=text/css>
+  [data-url]::after {
+    content: attr(data-url)
+  }
+  
+  #iFrame {
+    /* this is for demo purposes only */
+    min-height: 100%;
+    width: 100%; 
+          border:none; 
+          margin:0; 
+          padding:0; 
+    overflow:hidden; 
+    z-index:999999;
+  }
+</style>
+
+<button data-url="https://nirbytes.mcwrite.net"></button>
+<button data-url="https://avocadofrommexico.limana.rs"></button>
+<div> <iframe id="iFrame"></iframe> </div>
+
+<script>
+  /* it is important you put the script part after the HTML with the buttons */
+  Array.prototype.forEach.call(document.querySelectorAll('[data-url]'), function(elem) {
+    elem.addEventListener('click', function(e) {
+      iFrame.src = this.dataset.url
+    })
+  })
+</script>
