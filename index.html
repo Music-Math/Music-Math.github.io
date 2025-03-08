@@ -48,7 +48,7 @@
     }
 
     /* Style for the buttons to take 100% width */
-    button[data-url], #fullscreenButton, #downloadButton, #stopButton {
+    button[data-url], #fullscreenButton, #downloadButton, #stopButton, #uploadButton, #uploadBackgroundButton {
       width: 80%;
       max-width: 300px;
       display: block;
@@ -58,16 +58,16 @@
       font-weight: 500;
       cursor: pointer;
       border: none;
-      background-color: #ff5722; /* Button background color */
+      background-color: #ff0000; /* Default button background color */
       color: #fff; /* Button text color */
       border-radius: 4px; /* Rounded corners */
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       transition: background-color 0.3s, transform 0.3s;
-      animation: changeFont 0.1s infinite, shake 0.5s infinite;
+      animation: changeFont 0.5s infinite, shake 0.5s infinite;
     }
 
-    button[data-url]:hover, #fullscreenButton:hover, #downloadButton:hover, #stopButton:hover {
-      background-color: #e64a19; /* Darker button background on hover */
+    button[data-url]:hover, #fullscreenButton:hover, #downloadButton:hover, #stopButton:hover, #uploadButton:hover, #uploadBackgroundButton:hover {
+      background-color: #cc0000; /* Darker button background on hover */
     }
 
     @keyframes changeFont {
@@ -104,6 +104,11 @@
     <button id="fullscreenButton">Fullscreen</button>
     <button id="downloadButton">File cloak (download)</button>
     <button id="stopButton">Stop</button>
+    <button id="uploadButton">Upload Music</button>
+    <button id="uploadBackgroundButton">Upload Background</button>
+    <input type="file" id="musicInput" accept="audio/*" style="display:none;">
+    <input type="file" id="backgroundInput" accept="image/*" style="display:none;">
+    <input type="color" id="colorPicker" value="#ff0000" style="display:none;">
   </div>
   <div> <iframe id="iFrame"></iframe> </div>
   <div class="footer">
@@ -125,8 +130,8 @@
       });
     }
 
-    // Change font every 0.1 second
-    const fontChangeInterval = setInterval(changeFont, 100);
+    // Change font every 0.5 second
+    const fontChangeInterval = setInterval(changeFont, 500);
 
     let previousButton = null;
 
@@ -174,10 +179,52 @@
       this.style.display = 'none';
     });
 
+    document.getElementById('uploadButton').addEventListener('click', function() {
+      document.getElementById('musicInput').click();
+    });
+
+    document.getElementById('musicInput').addEventListener('change', function(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const audio = new Audio(URL.createObjectURL(file));
+        audio.loop = true;
+        audio.play();
+      }
+    });
+
+    document.getElementById('uploadBackgroundButton').addEventListener('click', function() {
+      document.getElementById('backgroundInput').click();
+    });
+
+    document.getElementById('backgroundInput').addEventListener('change', function(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.body.style.backgroundImage = `url(${e.target.result})`;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    document.getElementById('colorPicker').addEventListener('input', function(event) {
+      const color = event.target.value;
+      document.querySelectorAll('button').forEach(button => {
+        button.style.backgroundColor = color;
+      });
+    });
+
     document.addEventListener('keydown', function(event) {
       if ((event.ctrlKey && event.key === '`') || (event.ctrlKey && event.key === '~')) {
         window.location.href = 'https://github.com/Music-math-revived/Music-math-revived.github.io';
       }
+    });
+
+    // Show color picker when any button is clicked
+    document.querySelectorAll('button').forEach(button => {
+      button.addEventListener('click', function() {
+        document.getElementById('colorPicker').click();
+      });
     });
   </script>
 
