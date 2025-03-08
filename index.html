@@ -11,7 +11,7 @@
       margin: 0;
       overflow: hidden;
       position: relative;
-      animation: fadeInBackground 10s ease-in-out forwards, changeFont 10s infinite; /* Add fade-in and font change animation */
+      animation: fadeInBackground 10s ease-in-out forwards; /* Add fade-in animation */
       background: url('logo.png') no-repeat center center fixed; /* Background image */
       background-size: cover; /* Make background cover the entire viewport */
       opacity: 0; /* Start with the background hidden */
@@ -21,14 +21,6 @@
       to {
         opacity: 1; /* End with the background fully visible */
       }
-    }
-
-    @keyframes changeFont {
-      0% { font-family: 'Roboto', sans-serif; }
-      25% { font-family: 'Open Sans', sans-serif; }
-      50% { font-family: 'Lobster', cursive; }
-      75% { font-family: 'Montserrat', sans-serif; }
-      100% { font-family: 'Roboto', sans-serif; }
     }
 
     .overlay {
@@ -101,19 +93,30 @@
   <div class="footer">Mahad 2025</div>
 
   <script>
+    const fonts = ['Roboto', 'Open Sans', 'Lobster', 'Montserrat'];
+    let currentFontIndex = 0;
+    
+    function changeFont() {
+      currentFontIndex = (currentFontIndex + 1) % fonts.length;
+      document.body.style.fontFamily = fonts[currentFontIndex];
+    }
+
+    // Change font every 2.5 seconds during the fade-in
+    const fontChangeInterval = setInterval(changeFont, 2500);
+
+    // Stop changing fonts after 10 seconds (duration of the fade-in)
+    setTimeout(() => clearInterval(fontChangeInterval), 10000);
+
     let previousButton = null;
 
-    /* it is important you put the script part after the HTML with the buttons */
     Array.prototype.forEach.call(document.querySelectorAll('[data-url]'), function(elem) {
       elem.addEventListener('click', function(e) {
         document.getElementById('iFrame').src = this.dataset.url;
         
-        // Remove the previously clicked button
         if (previousButton) {
           previousButton.remove();
         }
 
-        // Hide the current button and set it as the previous button
         this.style.display = 'none';
         previousButton = this;
       });
