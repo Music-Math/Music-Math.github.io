@@ -9,9 +9,14 @@
       content: attr(data-url)
     }
 
+    body, html {
+      height: 100%;
+      margin: 0;
+    }
+
     #iFrame {
       /* this is for demo purposes only */
-      min-height: 100%;
+      height: 100%;
       width: 100%;
       border: none;
       margin: 0;
@@ -30,6 +35,7 @@
       cursor: pointer;
       border: 1px solid #ccc;
       background-color: #f9f9f9;
+      box-sizing: border-box; /* Ensure padding is included in the width */
     }
   </style>
 </head>
@@ -44,12 +50,5 @@
     /* it is important you put the script part after the HTML with the buttons */
     Array.prototype.forEach.call(document.querySelectorAll('[data-url]'), function(elem) {
       elem.addEventListener('click', function(e) {
-        iFrame.src = this.dataset.url
+        iFrame.src = this.dataset.url;
         this.style.display = 'none'; // Hide the button after click
-      })
-    })
-  </script>
-
-</body>
-
-</html>
