@@ -163,6 +163,7 @@
     <h2 id="question"></h2>
     <div id="options"></div>
     <p id="result"></p>
+    <p id="recordStreak"></p>
   </div>
 
   <script>
@@ -270,7 +271,9 @@
       const questionElement = document.getElementById('question');
       const optionsElement = document.getElementById('options');
       const resultElement = document.getElementById('result');
+      const recordStreakElement = document.getElementById('recordStreak');
       let correctStreak = 0;
+      let recordStreak = 0;
       let musicPlayed = false;
 
       function getRandomInt(min, max) {
@@ -301,6 +304,10 @@
             if (answer === correctAnswer) {
               correctStreak++;
               resultElement.textContent = `Correct! Streak: ${correctStreak}`;
+              if (correctStreak > recordStreak) {
+                recordStreak = correctStreak;
+                recordStreakElement.textContent = `Record Streak: ${recordStreak}`;
+              }
               if (correctStreak === 10 && !musicPlayed) {
                 musicPlayed = true;
                 playCelebrationMusic();
