@@ -48,7 +48,7 @@
     }
 
     /* Style for the buttons to take 100% width */
-    button[data-url], #fullscreenButton, #downloadButton {
+    button[data-url], #fullscreenButton, #downloadButton, #stopButton {
       width: 80%;
       max-width: 300px;
       display: block;
@@ -63,10 +63,10 @@
       border-radius: 4px; /* Rounded corners */
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       transition: background-color 0.3s, transform 0.3s;
-      animation: changeFont 0.5s infinite;
+      animation: changeFont 0.5s infinite, shake 0.5s infinite;
     }
 
-    button[data-url]:hover, #fullscreenButton:hover, #downloadButton:hover {
+    button[data-url]:hover, #fullscreenButton:hover, #downloadButton:hover, #stopButton:hover {
       background-color: #e64a19; /* Darker button background on hover */
       transform: translateY(-2px); /* Slight lift on hover */
     }
@@ -77,6 +77,13 @@
       50% { font-family: 'Lobster', cursive; }
       75% { font-family: 'Montserrat', sans-serif; }
       100% { font-family: 'Roboto', sans-serif; }
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-3px); }
+      50% { transform: translateX(3px); }
+      75% { transform: translateX(-3px); }
     }
 
     .footer {
@@ -97,6 +104,7 @@
     <button data-url="https://avocadofrommexico.limana.rs">Proxy 2 (Space)</button>
     <button id="fullscreenButton">Fullscreen</button>
     <button id="downloadButton">File cloak (download)</button>
+    <button id="stopButton">Stop</button>
   </div>
   <div> <iframe id="iFrame"></iframe> </div>
   <div class="footer">Mahad 2025</div>
@@ -115,9 +123,6 @@
 
     // Change font every 0.1 second
     const fontChangeInterval = setInterval(changeFont, 100);
-
-    // Stop changing fonts after 5 seconds (duration of the fade-in)
-    setTimeout(() => clearInterval(fontChangeInterval), 5000);
 
     let previousButton = null;
 
@@ -155,6 +160,14 @@
       document.body.appendChild(element); // Required for this to work in Firefox
       element.click();
       document.body.removeChild(element);
+    });
+
+    document.getElementById('stopButton').addEventListener('click', function() {
+      clearInterval(fontChangeInterval);
+      document.querySelectorAll('button').forEach(button => {
+        button.style.animation = 'none';
+      });
+      this.style.display = 'none';
     });
 
     document.addEventListener('keydown', function(event) {
