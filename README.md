@@ -1,1 +1,1 @@
-Yeah this is for my school sox pass on by I guess.
+Yeah, this is for my school, so pass on by.
