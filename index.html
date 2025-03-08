@@ -173,200 +173,217 @@
   </div>
 
   <script>
-    const fonts = ['Roboto', 'Open Sans', 'Lobster', 'Montserrat'];
-    let currentFontIndex = 0;
-    
-    function changeFont() {
-      currentFontIndex = (currentFontIndex + 1) % fonts.length;
-      document.body.style.fontFamily = fonts[currentFontIndex];
-      document.querySelectorAll('button').forEach(button => {
-        button.style.fontFamily = fonts[currentFontIndex];
-      });
-    }
+    document.addEventListener('DOMContentLoaded', function() {
+      const overlay = document.querySelector('.overlay');
+      const pinContainer = document.getElementById('pinContainer');
+      const pinInput = document.getElementById('pinInput');
+      const submitPinButton = document.getElementById('submitPinButton');
+      const pinMessage = document.getElementById('pinMessage');
 
-    // Change font every 0.5 second
-    const fontChangeInterval = setInterval(changeFont, 500);
+      function checkPin() {
+        const pin = pinInput.value;
+        if (pin === '1234') {
+          pinMessage.textContent = 'PIN correct!';
+          overlay.style.display = 'none'; // Hide the overlay on correct PIN
+          document.body.style.opacity = '1'; // Show the body content
+          initPageFunctions(); // Initialize the page functions after PIN is correct
+        } else {
+          pinMessage.textContent = 'Incorrect PIN. Try again.';
+        }
+      }
 
-    let previousButton = null;
+      submitPinButton.addEventListener('click', checkPin);
 
-    Array.prototype.forEach.call(document.querySelectorAll('[data-url]'), function(elem) {
-      elem.addEventListener('click', function(e) {
-        document.getElementById('iFrame').src = this.dataset.url;
+      // Prevent page content from loading until correct PIN is entered
+      function initPageFunctions() {
+        const fonts = ['Roboto', 'Open Sans', 'Lobster', 'Montserrat'];
+        let currentFontIndex = 0;
         
-        if (previousButton) {
-          previousButton.remove();
-        }
-
-        this.style.display = 'none';
-        previousButton = this;
-      });
-    });
-
-    document.getElementById('fullscreenButton').addEventListener('click', function() {
-      const iFrame = document.getElementById('iFrame');
-      if (iFrame.requestFullscreen) {
-        iFrame.requestFullscreen();
-      } else if (iFrame.mozRequestFullScreen) { /* Firefox */
-        iFrame.mozRequestFullScreen();
-      } else if (iFrame.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
-        iFrame.webkitRequestFullscreen();
-      } else if (iFrame.msRequestFullscreen) { /* IE/Edge */
-        iFrame.msRequestFullscreen();
-      }
-    });
-
-    document.getElementById('downloadButton').addEventListener('click', function() {
-      const element = document.createElement('a');
-      const file = new Blob([document.documentElement.outerHTML], {type: 'text/html'});
-      element.href = URL.createObjectURL(file);
-      element.download = 'index.html';
-      document.body.appendChild(element); // Required for this to work in Firefox
-      element.click();
-      document.body.removeChild(element);
-    });
-
-    document.getElementById('stopButton').addEventListener('click', function() {
-      clearInterval(fontChangeInterval);
-      document.querySelectorAll('button').forEach(button => {
-        button.style.animation = 'none';
-      });
-      this.style.display = 'none';
-    });
-
-    document.getElementById('uploadButton').addEventListener('click', function() {
-      document.getElementById('musicInput').click();
-    });
-
-    document.getElementById('musicInput').addEventListener('change', function(event) {
-      const file = event.target.files[0];
-      if (file) {
-        const audio = new Audio(URL.createObjectURL(file));
-        audio.loop = true;
-        audio.play();
-      }
-    });
-
-    document.getElementById('uploadBackgroundButton').addEventListener('click', function() {
-      document.getElementById('backgroundInput').click();
-    });
-
-    document.getElementById('backgroundInput').addEventListener('change', function(event) {
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          document.body.style.backgroundImage = `url(${e.target.result})`;
-        };
-        reader.readAsDataURL(file);
-      }
-    });
-
-    document.getElementById('colorPicker').addEventListener('input', function(event) {
-      const color = event.target.value;
-      document.querySelectorAll('button').forEach(button => {
-        button.style.backgroundColor = color;
-      });
-    });
-
-    document.getElementById('quizButton').addEventListener('click', function() {
-      startQuiz();
-      document.querySelector('.overlay').style.display = 'none'; // Hide original buttons
-      document.getElementById('quizContainer').style.display = 'block'; // Show quiz container
-    });
-
-    function startQuiz() {
-      const quizContainer = document.getElementById('quizContainer');
-      const questionElement = document.getElementById('question');
-      const optionsElement = document.getElementById('options');
-      const resultElement = document.getElementById('result');
-      const recordStreakElement = document.getElementById('recordStreak');
-      let correctStreak = 0;
-      let recordStreak = 0;
-      let musicPlayed = false;
-
-      function getRandomInt(min, max) {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-      }
-
-      function generateQuestion() {
-        const num1 = getRandomInt(1, 20);
-        const num2 = getRandomInt(1, 20);
-        const correctAnswer = num1 + num2;
-        const wrongAnswers = new Set();
-
-        while (wrongAnswers.size < 3) {
-          const wrongAnswer = getRandomInt(1, 40);
-          if (wrongAnswer !== correctAnswer) {
-            wrongAnswers.add(wrongAnswer);
-          }
-        }
-
-        const answers = [...wrongAnswers, correctAnswer].sort(() => Math.random() - 0.5);
-
-        questionElement.textContent = `What is ${num1} + ${num2}?`;
-        optionsElement.innerHTML = '';
-        answers.forEach(answer => {
-          const button = document.createElement('button');
-          button.textContent = answer;
-          button.addEventListener('click', () => {
-            if (answer === correctAnswer) {
-              correctStreak++;
-              resultElement.textContent = `Correct! Streak: ${correctStreak}`;
-              playCorrectSound();
-              if (correctStreak > recordStreak) {
-                recordStreak = correctStreak;
-                recordStreakElement.textContent = `Record Streak: ${recordStreak}`;
-              }
-              if (correctStreak >= 10 && !musicPlayed) {
-                musicPlayed = true;
-                playCelebrationMusic();
-              }
-            } else {
-              correctStreak = 0;
-              resultElement.textContent = 'Wrong answer. Streak reset.';
-            }
-            setTimeout(generateQuestion, 1000);
+        function changeFont() {
+          currentFontIndex = (currentFontIndex + 1) % fonts.length;
+          document.body.style.fontFamily = fonts[currentFontIndex];
+          document.querySelectorAll('button').forEach(button => {
+            button.style.fontFamily = fonts[currentFontIndex];
           });
-          optionsElement.appendChild(button);
+        }
+
+        // Change font every 0.5 second
+        const fontChangeInterval = setInterval(changeFont, 500);
+
+        let previousButton = null;
+
+        Array.prototype.forEach.call(document.querySelectorAll('[data-url]'), function(elem) {
+          elem.addEventListener('click', function(e) {
+            document.getElementById('iFrame').src = this.dataset.url;
+            
+            if (previousButton) {
+              previousButton.remove();
+            }
+
+            this.style.display = 'none';
+            previousButton = this;
+          });
+        });
+
+        document.getElementById('fullscreenButton').addEventListener('click', function() {
+          const iFrame = document.getElementById('iFrame');
+          if (iFrame.requestFullscreen) {
+            iFrame.requestFullscreen();
+          } else if (iFrame.mozRequestFullScreen) { /* Firefox */
+            iFrame.mozRequestFullScreen();
+          } else if (iFrame.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+            iFrame.webkitRequestFullscreen();
+          } else if (iFrame.msRequestFullscreen) { /* IE/Edge */
+            iFrame.msRequestFullscreen();
+          }
+        });
+
+        document.getElementById('downloadButton').addEventListener('click', function() {
+          const element = document.createElement('a');
+          const file = new Blob([document.documentElement.outerHTML], {type: 'text/html'});
+          element.href = URL.createObjectURL(file);
+          element.download = 'index.html';
+          document.body.appendChild(element); // Required for this to work in Firefox
+          element.click();
+          document.body.removeChild(element);
+        });
+
+        document.getElementById('stopButton').addEventListener('click', function() {
+          clearInterval(fontChangeInterval);
+          document.querySelectorAll('button').forEach(button => {
+            button.style.animation = 'none';
+          });
+          this.style.display = 'none';
+        });
+
+        document.getElementById('uploadButton').addEventListener('click', function() {
+          document.getElementById('musicInput').click();
+        });
+
+        document.getElementById('musicInput').addEventListener('change', function(event) {
+          const file = event.target.files[0];
+          if (file) {
+            const audio = new Audio(URL.createObjectURL(file));
+            audio.loop = true;
+            audio.play();
+          }
+        });
+
+        document.getElementById('uploadBackgroundButton').addEventListener('click', function() {
+          document.getElementById('backgroundInput').click();
+        });
+
+        document.getElementById('backgroundInput').addEventListener('change', function(event) {
+          const file = event.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+              document.body.style.backgroundImage = `url(${e.target.result})`;
+            };
+            reader.readAsDataURL(file);
+          }
+        });
+
+        document.getElementById('colorPicker').addEventListener('input', function(event) {
+          const color = event.target.value;
+          document.querySelectorAll('button').forEach(button => {
+            button.style.backgroundColor = color;
+          });
+        });
+
+        document.getElementById('quizButton').addEventListener('click', function() {
+          startQuiz();
+          document.querySelector('.overlay').style.display = 'none'; // Hide original buttons
+          document.getElementById('quizContainer').style.display = 'block'; // Show quiz container
+        });
+
+        function startQuiz() {
+          const quizContainer = document.getElementById('quizContainer');
+          const questionElement = document.getElementById('question');
+          const optionsElement = document.getElementById('options');
+          const resultElement = document.getElementById('result');
+          const recordStreakElement = document.getElementById('recordStreak');
+          let correctStreak = 0;
+          let recordStreak = 0;
+          let musicPlayed = false;
+
+          function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+          }
+
+          function generateQuestion() {
+            const num1 = getRandomInt(1, 20);
+            const num2 = getRandomInt(1, 20);
+            const correctAnswer = num1 + num2;
+            const wrongAnswers = new Set();
+
+            while (wrongAnswers.size < 3) {
+              const wrongAnswer = getRandomInt(1, 40);
+              if (wrongAnswer !== correctAnswer) {
+                wrongAnswers.add(wrongAnswer);
+              }
+            }
+
+            const answers = [...wrongAnswers, correctAnswer].sort(() => Math.random() - 0.5);
+
+            questionElement.textContent = `What is ${num1} + ${num2}?`;
+            optionsElement.innerHTML = '';
+            answers.forEach(answer => {
+              const button = document.createElement('button');
+              button.textContent = answer;
+              button.addEventListener('click', () => {
+                if (answer === correctAnswer) {
+                  correctStreak++;
+                  resultElement.textContent = `Correct! Streak: ${correctStreak}`;
+                  playCorrectSound();
+                  if (correctStreak > recordStreak) {
+                    recordStreak = correctStreak;
+                    recordStreakElement.textContent = `Record Streak: ${recordStreak}`;
+                  }
+                  if (correctStreak >= 10 && !musicPlayed) {
+                    musicPlayed = true;
+                    playCelebrationMusic();
+                  }
+                } else {
+                  correctStreak = 0;
+                  resultElement.textContent = 'Wrong answer. Streak reset.';
+                }
+                setTimeout(generateQuestion, 1000);
+              });
+              optionsElement.appendChild(button);
+            });
+          }
+
+          function playCorrectSound() {
+            const audio = new Audio('Correct.mp3');
+            audio.play();
+          }
+
+          function playCelebrationMusic() {
+            const audio = new Audio('music.mp3');
+            audio.play();
+          }
+
+          quizContainer.style.display = 'block';
+          generateQuestion();
+        }
+
+        document.addEventListener('keydown', function(event) {
+          if ((event.ctrlKey && event.key === '`') || (event.ctrlKey && event.key === '~')) {
+            window.location.href = 'https://github.com/Music-math-revived/Music-math-revived.github.io';
+          }
+        });
+
+        // Show color picker when any button is clicked
+        document.querySelectorAll('button').forEach(button => {
+          button.addEventListener('click', function() {
+            document.getElementById('colorPicker').click();
+          });
         });
       }
 
-      function playCorrectSound() {
-        const audio = new Audio('Correct.mp3');
-        audio.play();
-      }
-
-      function playCelebrationMusic() {
-        const audio = new Audio('music.mp3');
-        audio.play();
-      }
-
-      quizContainer.style.display = 'block';
-      generateQuestion();
-    }
-
-    document.addEventListener('keydown', function(event) {
-      if ((event.ctrlKey && event.key === '`') || (event.ctrlKey && event.key === '~')) {
-        window.location.href = 'https://github.com/Music-math-revived/Music-math-revived.github.io';
-      }
-    });
-
-    // Show color picker when any button is clicked
-    document.querySelectorAll('button').forEach(button => {
-      button.addEventListener('click', function() {
-        document.getElementById('colorPicker').click();
-      });
-    });
-
-    document.getElementById('submitPinButton').addEventListener('click', function() {
-      const pin = document.getElementById('pinInput').value;
-      const message = document.getElementById('pinMessage');
-      if (pin === '1234') {
-        message.textContent = 'PIN correct!';
-        document.querySelector('.overlay').style.display = 'none'; // Hide the overlay on correct PIN
-      } else {
-        message.textContent = 'Incorrect PIN. Try again.';
-      }
+      // Prevent body content from displaying until correct PIN is entered
+      document.body.style.opacity = '0';
     });
   </script>
 
