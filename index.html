@@ -4,12 +4,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <style type="text/css">
     body, html {
       height: 100%;
       margin: 0;
       overflow: hidden;
       position: relative;
+      font-family: 'Roboto', sans-serif;
       animation: fadeInBackground 2s ease-in-out forwards; /* Add fade-in animation */
       background: url('icon.png') no-repeat center center fixed; /* Background image */
       background-size: cover; /* Make background cover the entire viewport */
@@ -20,6 +22,20 @@
       to {
         opacity: 1; /* End with the background fully visible */
       }
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 1;
     }
 
     #iFrame {
@@ -34,26 +50,36 @@
 
     /* Style for the buttons to take 100% width */
     button[data-url], #fullscreenButton {
-      width: 100%;
+      width: 80%;
+      max-width: 300px;
       display: block;
-      padding: 10px;
+      padding: 12px 20px;
       margin: 10px 0;
-      font-size: 16px;
+      font-size: 18px;
+      font-weight: 500;
       cursor: pointer;
-      border: 1px solid #ccc;
-      background-color: #f9f9f9;
-      box-sizing: border-box; /* Ensure padding is included in the width */
-      position: relative;
-      z-index: 1000000; /* Ensure buttons are above the background */
+      border: none;
+      background-color: #ff5722; /* Button background color */
+      color: #fff; /* Button text color */
+      border-radius: 4px; /* Rounded corners */
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s, transform 0.3s;
+    }
+
+    button[data-url]:hover, #fullscreenButton:hover {
+      background-color: #e64a19; /* Darker button background on hover */
+      transform: translateY(-2px); /* Slight lift on hover */
     }
   </style>
 </head>
 
 <body>
 
-  <button data-url="https://nirbytes.mcwrite.net">Proxy 1 (Mocha)</button>
-  <button data-url="https://avocadofrommexico.limana.rs">Proxy 2 (Space)</button>
-  <button id="fullscreenButton">Fullscreen</button>
+  <div class="overlay">
+    <button data-url="https://nirbytes.mcwrite.net">Proxy 1 (Mocha)</button>
+    <button data-url="https://avocadofrommexico.limana.rs">Proxy 2 (Space)</button>
+    <button id="fullscreenButton">Fullscreen</button>
+  </div>
   <div> <iframe id="iFrame"></iframe> </div>
 
   <script>
