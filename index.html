@@ -2,11 +2,47 @@
 <html lang="en">
 <head>
   <!-- ... (other head elements) ... -->
+  <style>
+    /* Hide the main content by default */
+    #mainContent {
+      display: none;
+    }
+    /* Style for the PIN entry form */
+    #pinForm {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    #pinInput {
+      margin-bottom: 10px;
+    }
+  </style>
 </head>
 <body>
-  <!-- ... (other body elements) ... -->
+  <!-- PIN entry form -->
+  <div id="pinForm">
+    <input type="password" id="pinInput" placeholder="Enter PIN">
+    <button onclick="validatePIN()">Submit</button>
+  </div>
+
+  <!-- Main content -->
+  <div id="mainContent">
+    <!-- ... (other body elements) ... -->
+  </div>
 
   <script>
+    function validatePIN() {
+      const pin = document.getElementById('pinInput').value;
+      if (pin === '1234') {
+        document.getElementById('pinForm').style.display = 'none';
+        document.getElementById('mainContent').style.display = 'block';
+      } else {
+        alert('Incorrect PIN');
+      }
+    }
+    // Existing JavaScript code
     const fonts = ['Roboto', 'Open Sans', 'Lobster', 'Montserrat'];
     let currentFontIndex = 0;
     let correctStreak = 0; // Moved outside the function for global scope
@@ -27,7 +63,7 @@
     Array.prototype.forEach.call(document.querySelectorAll('[data-url]'), function(elem) {
       elem.addEventListener('click', function(e) {
         document.getElementById('iFrame').src = this.dataset.url;
-        
+
         if (previousButton) {
           previousButton.remove();
         }
