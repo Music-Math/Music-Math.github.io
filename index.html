@@ -4,15 +4,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap&family=Open+Sans:wght@400;600&display=swap&family=Lobster&display=swap&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <style type="text/css">
     body, html {
       height: 100%;
       margin: 0;
       overflow: hidden;
       position: relative;
-      font-family: 'Roboto', sans-serif;
-      animation: fadeInBackground 2s ease-in-out forwards; /* Add fade-in animation */
+      animation: fadeInBackground 10s ease-in-out forwards, changeFont 10s infinite; /* Add fade-in and font change animation */
       background: url('logo.png') no-repeat center center fixed; /* Background image */
       background-size: cover; /* Make background cover the entire viewport */
       opacity: 0; /* Start with the background hidden */
@@ -22,6 +21,14 @@
       to {
         opacity: 1; /* End with the background fully visible */
       }
+    }
+
+    @keyframes changeFont {
+      0% { font-family: 'Roboto', sans-serif; }
+      25% { font-family: 'Open Sans', sans-serif; }
+      50% { font-family: 'Lobster', cursive; }
+      75% { font-family: 'Montserrat', sans-serif; }
+      100% { font-family: 'Roboto', sans-serif; }
     }
 
     .overlay {
