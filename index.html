@@ -63,12 +63,11 @@
       border-radius: 4px; /* Rounded corners */
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       transition: background-color 0.3s, transform 0.3s;
-      animation: changeFont 0.5s infinite, shake 0.5s infinite;
+      animation: changeFont 0.1s infinite, shake 0.5s infinite;
     }
 
     button[data-url]:hover, #fullscreenButton:hover, #downloadButton:hover, #stopButton:hover {
       background-color: #e64a19; /* Darker button background on hover */
-      transform: translateY(-2px); /* Slight lift on hover */
     }
 
     @keyframes changeFont {
@@ -80,16 +79,16 @@
     }
 
     @keyframes shake {
-      0%, 100% { transform: translateX(0); }
-      25% { transform: translateX(-3px); }
-      50% { transform: translateX(3px); }
-      75% { transform: translateX(-3px); }
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(-3deg); }
+      50% { transform: rotate(3deg); }
+      75% { transform: rotate(-3deg); }
     }
 
     .footer {
       position: absolute;
       bottom: 20px;
-      right: 20px;
+      left: 20px;
       color: #fff;
       font-size: 16px;
       z-index: 2;
@@ -107,7 +106,12 @@
     <button id="stopButton">Stop</button>
   </div>
   <div> <iframe id="iFrame"></iframe> </div>
-  <div class="footer">Mahad 2025</div>
+  <div class="footer">
+    Mahad 2025<br>
+    <a href='http://www.freevisitorcounters.com'>more information</a>
+    <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=156dd0b72dc6a48378495c7cfae5cc19e06d0507'></script>
+    <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/1312952/t/13"></script>
+  </div>
 
   <script>
     const fonts = ['Roboto', 'Open Sans', 'Lobster', 'Montserrat'];
