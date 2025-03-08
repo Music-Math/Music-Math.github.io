@@ -49,7 +49,7 @@
     }
 
     /* Style for the buttons to take 100% width */
-    button[data-url], #fullscreenButton {
+    button[data-url], #fullscreenButton, #commentButton {
       width: 80%;
       max-width: 300px;
       display: block;
@@ -66,7 +66,7 @@
       transition: background-color 0.3s, transform 0.3s;
     }
 
-    button[data-url]:hover, #fullscreenButton:hover {
+    button[data-url]:hover, #fullscreenButton:hover, #commentButton:hover {
       background-color: #e64a19; /* Darker button background on hover */
       transform: translateY(-2px); /* Slight lift on hover */
     }
@@ -79,6 +79,68 @@
       font-size: 16px;
       z-index: 2;
     }
+
+    .comment-section {
+      position: absolute;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80%;
+      max-width: 500px;
+      z-index: 2;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .comment-section textarea {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      margin-bottom: 10px;
+    }
+
+    .comment-section button {
+      width: 100%;
+      padding: 12px 20px;
+      font-size: 18px;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      background-color: #ff5722; /* Button background color */
+      color: #fff; /* Button text color */
+      border-radius: 4px; /* Rounded corners */
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .comment-section button:hover {
+      background-color: #e64a19; /* Darker button background on hover */
+      transform: translateY(-2px); /* Slight lift on hover */
+    }
+
+    .comment-display {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80%;
+      max-width: 500px;
+      z-index: 2;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      display: none;
+    }
+
+    .comment-display p {
+      margin: 0;
+    }
   </style>
 </head>
 
@@ -88,9 +150,20 @@
     <button data-url="https://nirbytes.mcwrite.net">Proxy 1 (Mocha)</button>
     <button data-url="https://avocadofrommexico.limana.rs">Proxy 2 (Space)</button>
     <button id="fullscreenButton">Fullscreen</button>
+    <button id="commentButton">Comment</button>
   </div>
   <div> <iframe id="iFrame"></iframe> </div>
   <div class="footer">Mahad 2025</div>
+
+  <div class="comment-section" id="commentSection" style="display: none;">
+    <textarea id="commentText" rows="4" placeholder="Enter your comment..."></textarea>
+    <button id="submitCommentButton">Submit Comment</button>
+  </div>
+
+  <div class="comment-display" id="commentDisplay">
+    <p id="userEmail"></p>
+    <p id="submittedComment"></p>
+  </div>
 
   <script>
     let previousButton = null;
@@ -124,11 +197,37 @@
       }
     });
 
+    document.getElementById('commentButton').addEventListener('click', function() {
+      document.getElementById('commentSection').style.display = 'block';
+    });
+
+    document.getElementById('submitCommentButton').addEventListener('click', function() {
+      const commentText = document.getElementById('commentText').value;
+      const censoredComment = censorBadWords(commentText);
+      const userEmail = 'your_email@example.com'; // Replace this with the actual email address
+
+      document.getElementById('userEmail').textContent = userEmail;
+      document.getElementById('submittedComment').textContent = censoredComment;
+      document.getElementById('commentDisplay').style.display = 'block';
+
+      // Here you can add code to handle the submitted comment
+      document.getElementById('commentSection').style.display = 'none';
+      document.getElementById('commentText').value = '';
+    });
+
     document.addEventListener('keydown', function(event) {
       if ((event.ctrlKey && event.key === '`') || (event.ctrlKey && event.key === '~')) {
         window.location.href = 'https://github.com/Music-math-revived/Music-math-revived.github.io';
       }
     });
+
+    function censorBadWords(text) {
+      const badWords = ['badword1', 'badword2', 'badword3']; // Add more bad words as needed
+      const censoredText = text.split(' ').map(word => {
+        return badWords.includes(word.toLowerCase()) ? '*'.repeat(word.length) : word;
+      }).join(' ');
+      return censoredText;
+    }
   </script>
 
 </body>
