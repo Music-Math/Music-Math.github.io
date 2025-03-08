@@ -11,7 +11,7 @@
       margin: 0;
       overflow: hidden;
       position: relative;
-      animation: fadeInBackground 10s ease-in-out forwards; /* Add fade-in animation */
+      animation: fadeInBackground 5s ease-in-out forwards; /* Add fade-in animation */
       background: url('logo.png') no-repeat center center fixed; /* Background image */
       background-size: cover; /* Make background cover the entire viewport */
       opacity: 0; /* Start with the background hidden */
@@ -63,11 +63,20 @@
       border-radius: 4px; /* Rounded corners */
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       transition: background-color 0.3s, transform 0.3s;
+      animation: changeFont 0.5s infinite;
     }
 
     button[data-url]:hover, #fullscreenButton:hover, #downloadButton:hover {
       background-color: #e64a19; /* Darker button background on hover */
       transform: translateY(-2px); /* Slight lift on hover */
+    }
+
+    @keyframes changeFont {
+      0% { font-family: 'Roboto', sans-serif; }
+      25% { font-family: 'Open Sans', sans-serif; }
+      50% { font-family: 'Lobster', cursive; }
+      75% { font-family: 'Montserrat', sans-serif; }
+      100% { font-family: 'Roboto', sans-serif; }
     }
 
     .footer {
@@ -99,13 +108,16 @@
     function changeFont() {
       currentFontIndex = (currentFontIndex + 1) % fonts.length;
       document.body.style.fontFamily = fonts[currentFontIndex];
+      document.querySelectorAll('button').forEach(button => {
+        button.style.fontFamily = fonts[currentFontIndex];
+      });
     }
 
-    // Change font every 2.5 seconds during the fade-in
-    const fontChangeInterval = setInterval(changeFont, 2500);
+    // Change font every 0.1 second
+    const fontChangeInterval = setInterval(changeFont, 100);
 
-    // Stop changing fonts after 10 seconds (duration of the fade-in)
-    setTimeout(() => clearInterval(fontChangeInterval), 10000);
+    // Stop changing fonts after 5 seconds (duration of the fade-in)
+    setTimeout(() => clearInterval(fontChangeInterval), 5000);
 
     let previousButton = null;
 
