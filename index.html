@@ -143,9 +143,21 @@
       overflow-y: scroll;
       max-height: 50vh;
     }
+
+    #loadingIcon {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10000;
+    }
   </style>
 </head>
 <body>
+  <div id="loadingIcon">
+    <img src="Loading.gif" alt="Loading...">
+  </div>
   <div class="pin-overlay" id="pinOverlay">
     <input type="password" id="pinInput" class="pin-input" placeholder="Enter PIN">
     <button id="pinButton" class="pin-button">Submit</button>
@@ -454,6 +466,16 @@
       iframe.style.border = "none";
       iframe.src = url;
       w.document.body.appendChild(iframe);
+    });
+
+    // Show loading icon on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('loadingIcon').style.display = 'block';
+    });
+
+    // Hide loading icon when page is fully loaded
+    window.addEventListener('load', function() {
+      document.getElementById('loadingIcon').style.display = 'none';
     });
   </script>
 </body>
