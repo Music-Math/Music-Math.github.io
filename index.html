@@ -26,7 +26,7 @@
   <script>
     const fonts = ['Roboto', 'Open Sans', 'Lobster', 'Montserrat'];
     let currentFontIndex = 0;
-    let correctStreak = 0; // Moved outside the function for global scope
+    let correctStreak = 0;
 
     function changeFont() {
       currentFontIndex = (currentFontIndex + 1) % fonts.length;
@@ -36,9 +36,7 @@
       });
     }
 
-    // Change font every 0.5 second
     const fontChangeInterval = setInterval(changeFont, 500);
-
     let previousButton = null;
 
     Array.prototype.forEach.call(document.querySelectorAll('[data-url]'), function(elem) {
@@ -58,11 +56,11 @@
       const iFrame = document.getElementById('iFrame');
       if (iFrame.requestFullscreen) {
         iFrame.requestFullscreen();
-      } else if (iFrame.mozRequestFullScreen) { /* Firefox */
+      } else if (iFrame.mozRequestFullScreen) { 
         iFrame.mozRequestFullScreen();
-      } else if (iFrame.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+      } else if (iFrame.webkitRequestFullscreen) { 
         iFrame.webkitRequestFullscreen();
-      } else if (iFrame.msRequestFullscreen) { /* IE/Edge */
+      } else if (iFrame.msRequestFullscreen) { 
         iFrame.msRequestFullscreen();
       }
     });
@@ -72,7 +70,7 @@
       const file = new Blob([document.documentElement.outerHTML], {type: 'text/html'});
       element.href = URL.createObjectURL(file);
       element.download = 'index.html';
-      document.body.appendChild(element); // Required for this to work in Firefox
+      document.body.appendChild(element);
       element.click();
       document.body.removeChild(element);
     });
@@ -122,8 +120,8 @@
 
     document.getElementById('quizButton').addEventListener('click', function() {
       startQuiz();
-      document.querySelector('.overlay').style.display = 'none'; // Hide original buttons
-      document.getElementById('quizContainer').style.display = 'block'; // Show quiz container
+      document.querySelector('.overlay').style.display = 'none';
+      document.getElementById('quizContainer').style.display = 'block';
     });
 
     function startQuiz() {
@@ -201,14 +199,12 @@
         window.location.href = 'https://github.com/Music-math-revived/Music-math-revived.github.io';
       }
 
-      // Add +10 to the streak when 'k' is pressed
       if (event.key === 'k') {
         correctStreak += 10;
         document.getElementById('result').textContent = `Correct! Streak: ${correctStreak}`;
       }
     });
 
-    // Show color picker when any button is clicked
     document.querySelectorAll('button').forEach(button => {
       button.addEventListener('click', function() {
         document.getElementById('colorPicker').click();
