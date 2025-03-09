@@ -217,6 +217,9 @@
 
       if (enteredPin === correctPin) {
         document.getElementById('pinOverlay').style.display = 'none';
+        document.querySelectorAll('button').forEach(button => {
+          button.disabled = false;
+        });
       } else {
         document.getElementById('pinErrorMessage').style.display = 'block';
       }
