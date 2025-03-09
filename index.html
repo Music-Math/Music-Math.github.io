@@ -435,12 +435,21 @@
     // PIN authentication logic
     document.getElementById('pinButton').addEventListener('click', function() {
       const pinInput = document.getElementById('pinInput').value;
-      if (pinInput === '1234') {
-        document.getElementById('pinOverlay').style.display = 'none';
-        document.getElementById('mainOverlay').style.display = 'flex';
-      } else {
-        alert('Incorrect PIN. Please try again.');
-      }
+      fetch('pin.html')
+        .then(response => response.text())
+        .then(data => {
+          const correctPin = data.trim();
+          if (pinInput === correctPin) {
+            document.getElementById('pinOverlay').style.display = 'none';
+            document.getElementById('mainOverlay').style.display = 'flex';
+          } else {
+            alert('Incorrect PIN. Please try again.');
+          }
+        })
+        .catch(error => {
+          console.error('Error fetching the PIN:', error);
+          alert('An error occurred while fetching the PIN. Please try again later.');
+        });
     });
 
     document.getElementById('incognitoButton').addEventListener('click', function() {
