@@ -1,32 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Music Math Revived</title>
-  <style>
-    .fade-in {
-      opacity: 0;
-      transition: opacity 1s ease-in-out;
-    }
-    .fade-in.visible {
-      opacity: 1;
-    }
-  </style>
   <!-- ... (other head elements) ... -->
 </head>
 <body>
   <!-- ... (other body elements) ... -->
-  <input type="text" id="codeInput" placeholder="Enter code">
-
-  <div id="contentToFadeIn" class="fade-in">
-    <!-- Content that will fade in -->
-  </div>
 
   <script>
     const fonts = ['Roboto', 'Open Sans', 'Lobster', 'Montserrat'];
     let currentFontIndex = 0;
-    let correctStreak = 0;
+    let correctStreak = 0; // Moved outside the function for global scope
 
     function changeFont() {
       currentFontIndex = (currentFontIndex + 1) % fonts.length;
@@ -36,7 +19,9 @@
       });
     }
 
+    // Change font every 0.5 second
     const fontChangeInterval = setInterval(changeFont, 500);
+
     let previousButton = null;
 
     Array.prototype.forEach.call(document.querySelectorAll('[data-url]'), function(elem) {
@@ -56,11 +41,11 @@
       const iFrame = document.getElementById('iFrame');
       if (iFrame.requestFullscreen) {
         iFrame.requestFullscreen();
-      } else if (iFrame.mozRequestFullScreen) { 
+      } else if (iFrame.mozRequestFullScreen) { /* Firefox */
         iFrame.mozRequestFullScreen();
-      } else if (iFrame.webkitRequestFullscreen) { 
+      } else if (iFrame.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
         iFrame.webkitRequestFullscreen();
-      } else if (iFrame.msRequestFullscreen) { 
+      } else if (iFrame.msRequestFullscreen) { /* IE/Edge */
         iFrame.msRequestFullscreen();
       }
     });
@@ -70,7 +55,7 @@
       const file = new Blob([document.documentElement.outerHTML], {type: 'text/html'});
       element.href = URL.createObjectURL(file);
       element.download = 'index.html';
-      document.body.appendChild(element);
+      document.body.appendChild(element); // Required for this to work in Firefox
       element.click();
       document.body.removeChild(element);
     });
@@ -120,8 +105,8 @@
 
     document.getElementById('quizButton').addEventListener('click', function() {
       startQuiz();
-      document.querySelector('.overlay').style.display = 'none';
-      document.getElementById('quizContainer').style.display = 'block';
+      document.querySelector('.overlay').style.display = 'none'; // Hide original buttons
+      document.getElementById('quizContainer').style.display = 'block'; // Show quiz container
     });
 
     function startQuiz() {
@@ -199,22 +184,18 @@
         window.location.href = 'https://github.com/Music-math-revived/Music-math-revived.github.io';
       }
 
+      // Add +10 to the streak when 'k' is pressed
       if (event.key === 'k') {
         correctStreak += 10;
         document.getElementById('result').textContent = `Correct! Streak: ${correctStreak}`;
       }
     });
 
+    // Show color picker when any button is clicked
     document.querySelectorAll('button').forEach(button => {
       button.addEventListener('click', function() {
         document.getElementById('colorPicker').click();
       });
-    });
-
-    document.getElementById('codeInput').addEventListener('input', function(event) {
-      if (event.target.value === '1234') {
-        document.getElementById('contentToFadeIn').classList.add('visible');
-      }
     });
   </script>
 
