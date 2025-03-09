@@ -48,13 +48,13 @@
     }
 
     .pin-button {
-      padding: 15px 30px;
+      padding: 10px 20px;
       background-color: #4CAF50;
       color: white;
       border: none;
       border-radius: 5px;
       cursor: pointer;
-      font-size: 20px;
+      font-size: 16px;
     }
 
     .pin-button:hover {
@@ -72,6 +72,7 @@
       top: 0;
       left: 0;
       width: 100%;
+      transition: background-color 2s;
     }
 
     .button-container {
@@ -85,15 +86,16 @@
     }
 
     button {
-      padding: 15px 30px;
+      padding: 10px 20px;
       margin: 10px;
       background-color: #4CAF50;
       color: white;
       border: none;
       border-radius: 5px;
       cursor: pointer;
-      font-size: 18px;
+      font-size: 16px;
       width: 100%;
+      transition: background-color 2s;
     }
 
     button:hover {
@@ -101,12 +103,13 @@
     }
 
     .footer {
-      text-align: center;
+      text-align: left;
       padding: 10px;
-      background-color: rgba(0, 0, 0, 0.5);
-      color: white;
+      background-color: transparent;
+      color: rgba(255, 255, 255, 0.7);
       position: fixed;
       bottom: 0;
+      left: 0;
       width: 100%;
     }
 
@@ -146,7 +149,7 @@
   <div> <iframe id="iFrame"></iframe> </div>
   <div class="footer">
     Mahad 2025<br>
-    Version 98.0<br>
+    Version 2.1<br>
     <a href='http://www.freevisitorcounters.com'>more information</a>
     <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=156dd0b72dc6a48378495c7cfae5cc19e06d0507'></script>
     <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/1312952/t/13"></script>
@@ -381,12 +384,14 @@
         .then(data => {
           const correctPin = data.trim();
           console.log("Fetched PIN:", correctPin); // Debugging statement
+          stopFontChange(); // Stop font change when the PIN is entered
           if (pinInput === correctPin) {
             document.getElementById('pinOverlay').style.display = 'none';
-            document.getElementById('mainOverlay').style.display = 'flex';
-            stopFontChange(); // Auto stop when the correct PIN is entered
+            document.getElementById('mainOverlay').style.backgroundColor = 'rgba(245, 245, 220, 0.8)'; // Change background to cream
+            document.querySelectorAll('button').forEach(button => {
+              button.style.backgroundColor = '#F5F5DC'; // Change buttons to cream
+            });
           } else {
-            stopFontChange(); // Stop font change when the PIN is incorrect
             alert('Incorrect PIN. Redirecting to math quiz.');
             window.location.href = 'math-quiz.html';
           }
