@@ -4,10 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Music Math Revived</title>
+  <style>
+    .fade-in {
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+    .fade-in.visible {
+      opacity: 1;
+    }
+  </style>
   <!-- ... (other head elements) ... -->
 </head>
 <body>
   <!-- ... (other body elements) ... -->
+  <input type="text" id="codeInput" placeholder="Enter code">
+
+  <div id="contentToFadeIn" class="fade-in">
+    <!-- Content that will fade in -->
+  </div>
 
   <script>
     const fonts = ['Roboto', 'Open Sans', 'Lobster', 'Montserrat'];
@@ -199,6 +213,12 @@
       button.addEventListener('click', function() {
         document.getElementById('colorPicker').click();
       });
+    });
+
+    document.getElementById('codeInput').addEventListener('input', function(event) {
+      if (event.target.value === '1234') {
+        document.getElementById('contentToFadeIn').classList.add('visible');
+      }
     });
   </script>
 
