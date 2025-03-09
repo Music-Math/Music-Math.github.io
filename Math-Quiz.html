@@ -19,10 +19,12 @@
         console.log("Fetched PIN:", correctPin); // Debugging statement
         if (pinInput === correctPin) {
           alert('Correct');
+          localStorage.removeItem('incorrectPin'); // Clear the flag if correct
           document.getElementById('pinOverlay').style.display = 'none';
           document.getElementById('mainOverlay').style.display = 'flex';
         } else {
           alert('Incorrect PIN. Starting quiz.');
+          localStorage.setItem('incorrectPin', 'true'); // Set the flag if incorrect
           loadMathQuiz();
         }
       })
