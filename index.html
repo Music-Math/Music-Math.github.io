@@ -189,6 +189,12 @@
       max-height: 300px;
       overflow-y: auto;
     }
+
+    .correct-streak {
+      background-image: url('streak.gif'); /* Background image for streak */
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
   </style>
 </head>
 
@@ -394,10 +400,12 @@
               if (correctStreak >= 10 && !musicPlayed) {
                 musicPlayed = true;
                 playCelebrationMusic();
+                document.body.classList.add('correct-streak'); // Change background to streak.gif
               }
             } else {
               correctStreak = 0;
               resultElement.textContent = 'Wrong answer. Streak reset.';
+              document.body.classList.remove('correct-streak'); // Remove streak.gif background
             }
             setTimeout(generateQuestion, 1000);
           });
