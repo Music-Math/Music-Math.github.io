@@ -344,8 +344,17 @@
     });
 
     document.getElementById('loadCommentsButton').addEventListener('click', function() {
-      document.getElementById('commentsContainer').style.display = 'block';
+      const commentsContainer = document.getElementById('commentsContainer');
+      commentsContainer.style.display = 'block';
       window.scrollTo(0, document.body.scrollHeight);
+      
+      // Hide comments when clicking outside
+      document.addEventListener('click', function handleClickOutside(event) {
+        if (!commentsContainer.contains(event.target) && event.target.id !== 'loadCommentsButton') {
+          commentsContainer.style.display = 'none';
+          document.removeEventListener('click', handleClickOutside);
+        }
+      });
     });
 
     function startQuiz() {
