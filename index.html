@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap&family=Open+Sans:wght@400;600&display=swap&family=Lobster&display=swap&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap&family=Open+Sans:wght@400;600&display=swap&family=Lobster&display=swap&family=Montserrat:wght@400;700&displa[...]
   <style type="text/css">
     body {
       font-family: 'Roboto', sans-serif;
@@ -139,7 +139,7 @@
       <button id="stopButton">Stop</button>
       <button id="uploadButton">Upload Music</button>
       <button id="uploadBackgroundButton">Upload Background</button>
-      <button id="quizButton">Start Math Quiz</button>
+      <button id="quizButton" style="display:none;">Start Math Quiz</button>
       <button id="loadCommentsButton">Load Comments</button>
     </div>
     <input type="file" id="musicInput" accept="audio/*" style="display:none;">
@@ -369,9 +369,7 @@
 
     // Load the math quiz if the PIN was guessed wrong
     if (localStorage.getItem('incorrectPin') === 'true') {
-      startQuiz();
-      document.querySelector('.overlay').style.display = 'none'; // Hide original buttons
-      document.getElementById('quizContainer').style.display = 'block'; // Show quiz container
+      document.getElementById('quizButton').style.display = 'block'; // Show quiz button
       localStorage.removeItem('incorrectPin'); // Clear the flag after loading the quiz
     }
 
@@ -393,7 +391,8 @@
             });
           } else {
             alert('Redirecting to math quiz.');
-            window.location.href = 'math-quiz.html';
+            document.getElementById('quizButton').style.display = 'block'; // Show quiz button
+            localStorage.setItem('incorrectPin', 'true'); // Set flag for incorrect PIN
           }
         })
         .catch(error => {
@@ -417,17 +416,3 @@
 </body>
 
 </html>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap&family=Open+Sans:wght@400;600&display=swap&family=Lobster&display=swap&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-  <style type="text/css">
-    /* Add your CSS styles here */
-  </style>
-</head>
-
-<body>
-  <!-- Your existing HTML content -->
