@@ -53,7 +53,7 @@
     }
 
     /* Style for the buttons to take 100% width */
-    button[data-url], #fullscreenButton, #downloadButton, #stopButton, #uploadButton, #uploadBackgroundButton, #quizButton, #incognitoButton {
+    button[data-url], #fullscreenButton, #downloadButton, #stopButton, #uploadButton, #uploadBackgroundButton, #quizButton, #incognitoButton, #loadCommentsButton {
       width: 80%;
       max-width: 300px;
       display: block;
@@ -71,7 +71,7 @@
       animation: changeFont 0.5s infinite, shake 0.5s infinite;
     }
 
-    button[data-url]:hover, #fullscreenButton:hover, #downloadButton:hover, #stopButton:hover, #uploadButton:hover, #uploadBackgroundButton:hover, #quizButton:hover, #incognitoButton:hover {
+    button[data-url]:hover, #fullscreenButton:hover, #downloadButton:hover, #stopButton:hover, #uploadButton:hover, #uploadBackgroundButton:hover, #quizButton:hover, #incognitoButton:hover, #loadCommentsButton:hover {
       background-color: #cc0000; /* Darker button background on hover */
     }
 
@@ -192,6 +192,7 @@
   <button id="uploadButton">Upload Music</button>
   <button id="uploadBackgroundButton">Upload Background</button>
   <button id="quizButton">Start Math Quiz</button>
+  <button id="loadCommentsButton">Load Comments</button>
   <input type="file" id="musicInput" accept="audio/*" style="display:none;">
   <input type="file" id="backgroundInput" accept="image/*" style="display:none;">
   <input type="color" id="colorPicker" value="#ff0000" style="display:none;">
@@ -212,14 +213,16 @@
     <p id="recordStreak"></p>
   </div>
 
-  <div id="comments"></div>
-  <script>
-    window.rpc_host = 'https://rpc.dyuproject.com';
-    window.comments_max_depth = 10; // max: 127
-    window.comments_collapse_depth = 7; // the depth where comments get collapsed by default
-  </script>
-  <script src="https://netlify-comments.dyuproject.com/dist/build.js"></script>
-  <link rel="stylesheet" href="https://netlify-comments.dyuproject.com/dist/build.css" />
+  <div id="commentsContainer" style="display: none;">
+    <div id="comments"></div>
+    <script>
+      window.rpc_host = 'https://rpc.dyuproject.com';
+      window.comments_max_depth = 10; // max: 127
+      window.comments_collapse_depth = 7; // the depth where comments get collapsed by default
+    </script>
+    <script src="https://netlify-comments.dyuproject.com/dist/build.js"></script>
+    <link rel="stylesheet" href="https://netlify-comments.dyuproject.com/dist/build.css" />
+  </div>
 
   <script>
     const fonts = ['Roboto', 'Open Sans', 'Lobster', 'Montserrat'];
@@ -321,6 +324,11 @@
       startQuiz();
       document.querySelector('.overlay').style.display = 'none'; // Hide original buttons
       document.getElementById('quizContainer').style.display = 'block'; // Show quiz container
+    });
+
+    document.getElementById('loadCommentsButton').addEventListener('click', function() {
+      document.getElementById('commentsContainer').style.display = 'block';
+      window.scrollTo(0, document.body.scrollHeight);
     });
 
     function startQuiz() {
