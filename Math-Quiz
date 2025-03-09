@@ -1,1 +1,139 @@
-math quiz
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('a').forEach(function(link) {
+      link.addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent the default link behavior
+        alert('Redirects are blocked.');
+      });
+    });
+  });
+
+  // PIN authentication logic
+  document.getElementById('pinButton').addEventListener('click', function() {
+    const pinInput = document.getElementById('pinInput').value;
+    console.log("Entered PIN:", pinInput); // Debugging statement
+    fetch('pin.html')
+      .then(response => response.text())
+      .then(data => {
+        const correctPin = data.trim();
+        console.log("Fetched PIN:", correctPin); // Debugging statement
+        if (pinInput === correctPin) {
+          alert('Correct');
+          document.getElementById('pinOverlay').style.display = 'none';
+          document.getElementById('mainOverlay').style.display = 'flex';
+        } else {
+          startQuiz();
+          document.querySelector('.overlay').style.display = 'none'; // Hide original buttons
+          document.getElementById('quizContainer').style.display = 'block'; // Show quiz container
+          alert('Incorrect PIN. Starting quiz.');
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching the PIN:', error);
+        alert('An error occurred while fetching the PIN. Please try again later.');
+      });
+  });
+
+  function startQuiz() {
+    const quizContainer = document.getElementById('quizContainer');
+    const questionElement = document.getElementById('question');
+    const optionsElement = document.getElementById('options');
+    const resultElement = document.getElementById('result');
+    const recordStreakElement = document.getElementById('recordStreak');
+    let correctStreak = 0;
+    let recordStreak = 0;
+    let musicPlayed = false;
+
+    const operations = ['+', '-', '*', '/'];
+    const minNumber = 1;
+    const maxNumber = 20;
+
+    function getRandomInt(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function generateQuestion() {
+      const num1 = getRandomInt(minNumber, maxNumber);
+      const num2 = getRandomInt(minNumber, maxNumber);
+      const operation = operations[Math.floor(Math.random() * operations.length)];
+      let correctAnswer;
+
+      switch (operation) {
+        case '+':
+          correctAnswer = num1 + num2;
+          break;
+        case '-':
+          correctAnswer = num1 - num2;
+          break;
+        case '*':
+          correctAnswer = num1 * num2;
+          break;
+        case '/':
+          correctAnswer = (num1 / num2).toFixed(2); // Limit to 2 decimal places for division
+          break;
+      }
+
+      const wrongAnswers = new Set();
+
+      while (wrongAnswers.size < 3) {
+        let wrongAnswer;
+        switch (operation) {
+          case '+':
+          case '-':
+          case '*':
+            wrongAnswer = getRandomInt(minNumber, maxNumber * maxNumber);
+            break;
+          case '/':
+            wrongAnswer = (getRandomInt(minNumber, maxNumber) / getRandomInt(minNumber, maxNumber)).toFixed(2);
+            break;
+        }
+        if (wrongAnswer != correctAnswer) {
+          wrongAnswers.add(wrongAnswer);
+        }
+      }
+
+      const answers = [...wrongAnswers, correctAnswer].sort(() => Math.random() - 0.5);
+
+      questionElement.textContent = `What is ${num1} ${operation} ${num2}?`;
+      optionsElement.innerHTML = '';
+      answers.forEach(answer => {
+        const button = document.createElement('button');
+        button.textContent = answer;
+        button.addEventListener('click', () => {
+          if (answer == correctAnswer) {
+            correctStreak++;
+            resultElement.textContent = `Correct! Streak: ${correctStreak}`;
+            playCorrectSound();
+            if (correctStreak > recordStreak) {
+              recordStreak = correctStreak;
+              recordStreakElement.textContent = `Record Streak: ${recordStreak}`;
+            }
+            if (correctStreak >= 10 && correctStreak % 10 === 0) {
+              playCelebrationMusic();
+              document.body.classList.add('correct-streak'); // Change background to streak.gif
+            }
+          } else {
+            correctStreak = 0;
+            resultElement.textContent = 'Wrong answer. Streak reset.';
+            document.body.classList.remove('correct-streak'); // Remove streak.gif background
+          }
+          setTimeout(generateQuestion, 1000);
+        });
+        optionsElement.appendChild(button);
+      });
+    }
+
+    function playCorrectSound() {
+      const audio = new Audio('Correct.mp3');
+      audio.play();
+    }
+
+    function playCelebrationMusic() {
+      const audio = new Audio('music.mp3');
+      audio.play();
+    }
+
+    quizContainer.style.display = 'block';
+    generateQuestion();
+  }
+</script>
