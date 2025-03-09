@@ -233,10 +233,10 @@
         document.getElementById('iFrame').src = this.dataset.url;
         
         if (previousButton) {
-          previousButton.remove();
+          previousButton.style.display = 'block'; // Show the previous button again
         }
 
-        this.style.display = 'none';
+        this.style.display = 'none'; // Hide the current button
         previousButton = this;
       });
     });
