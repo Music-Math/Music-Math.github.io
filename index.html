@@ -101,6 +101,16 @@
       color: #fff;
       font-size: 16px;
       z-index: 2;
+      width: calc(100% - 40px);
+      padding: 20px;
+      border-radius: 8px;
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    .footer.correct-streak {
+      background-image: url('streak.gif'); /* Background image for streak */
+      background-size: cover;
+      background-repeat: no-repeat;
     }
 
     .quiz-container {
@@ -189,12 +199,6 @@
       max-height: 300px;
       overflow-y: auto;
     }
-
-    .correct-streak {
-      background-image: url('streak.gif'); /* Background image for streak */
-      background-size: cover;
-      background-repeat: no-repeat;
-    }
   </style>
 </head>
 
@@ -221,7 +225,7 @@
   <input type="color" id="colorPicker" value="#ff0000" style="display:none;">
 </div>
   <div> <iframe id="iFrame"></iframe> </div>
-  <div class="footer">
+  <div class="footer" id="footer">
     Mahad 2025<br>
     Version 94.0<br>
     <a href='http://www.freevisitorcounters.com'>more information</a>
@@ -360,6 +364,7 @@
       const optionsElement = document.getElementById('options');
       const resultElement = document.getElementById('result');
       const recordStreakElement = document.getElementById('recordStreak');
+      const footerElement = document.getElementById('footer');
       let correctStreak = 0;
       let recordStreak = 0;
       let musicPlayed = false;
@@ -400,12 +405,12 @@
               if (correctStreak >= 10 && !musicPlayed) {
                 musicPlayed = true;
                 playCelebrationMusic();
-                document.body.classList.add('correct-streak'); // Change background to streak.gif
+                footerElement.classList.add('correct-streak'); // Change footer background to streak.gif
               }
             } else {
               correctStreak = 0;
               resultElement.textContent = 'Wrong answer. Streak reset.';
-              document.body.classList.remove('correct-streak'); // Remove streak.gif background
+              footerElement.classList.remove('correct-streak'); // Remove streak.gif background from footer
             }
             setTimeout(generateQuestion, 1000);
           });
@@ -462,10 +467,4 @@
 
     document.getElementById('incognitoButton').addEventListener('click', function() {
       // Open a new incognito window
-      window.open('about:blank', '_blank', 'noopener,noreferrer');
-    });
-  </script>
-
-</body>
-
-</html>
+     
