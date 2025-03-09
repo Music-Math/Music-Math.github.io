@@ -22,10 +22,8 @@
           document.getElementById('pinOverlay').style.display = 'none';
           document.getElementById('mainOverlay').style.display = 'flex';
         } else {
-          startQuiz();
-          document.querySelector('.overlay').style.display = 'none'; // Hide original buttons
-          document.getElementById('quizContainer').style.display = 'block'; // Show quiz container
           alert('Incorrect PIN. Starting quiz.');
+          loadMathQuiz();
         }
       })
       .catch(error => {
@@ -33,6 +31,12 @@
         alert('An error occurred while fetching the PIN. Please try again later.');
       });
   });
+
+  function loadMathQuiz() {
+    startQuiz();
+    document.querySelector('.overlay').style.display = 'none'; // Hide original buttons
+    document.getElementById('quizContainer').style.display = 'block'; // Show quiz container
+  }
 
   function startQuiz() {
     const quizContainer = document.getElementById('quizContainer');
