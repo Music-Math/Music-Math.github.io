@@ -387,6 +387,7 @@
           stopFontChange(); // Stop font change when the PIN is entered
           if (pinInput === correctPin) {
             document.getElementById('pinOverlay').style.display = 'none';
+            document.getElementById('mainOverlay').style.display = 'flex'; // Ensure buttons are displayed
             document.getElementById('mainOverlay').style.backgroundColor = 'rgba(245, 245, 220, 0.8)'; // Change background to cream
             document.querySelectorAll('button').forEach(button => {
               button.style.backgroundColor = '#F5F5DC'; // Change buttons to cream
