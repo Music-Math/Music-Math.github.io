@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap&family=Open+Sans:wght@400;600&display=swap&family=Lobster&display=swap&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap&family=Open+Sans:wght@400;600&display=swap&family=Lobster&display=swap&family=Montserrat:wght@400;700&display=swap&family=Brush+Script+MT&display=swap" rel="stylesheet">
   <style type="text/css">
     @font-face {
       font-family: 'Brush Script MT';
@@ -223,7 +223,7 @@
   <div> <iframe id="iFrame"></iframe> </div>
   <div class="footer">
     Mahad 2025<br>
-    Version 94.0<br>
+    Version 98.0<br>
     <a href='http://www.freevisitorcounters.com'>more information</a>
     <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=156dd0b72dc6a48378495c7cfae5cc19e06d0507'></script>
     <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/1312952/t/13"></script>
@@ -442,10 +442,12 @@
     // PIN authentication logic
     document.getElementById('pinButton').addEventListener('click', function() {
       const pinInput = document.getElementById('pinInput').value;
+      console.log("Entered PIN:", pinInput); // Debugging statement
       fetch('pin.html')
         .then(response => response.text())
         .then(data => {
           const correctPin = data.trim();
+          console.log("Fetched PIN:", correctPin); // Debugging statement
           if (pinInput === correctPin) {
             document.getElementById('pinOverlay').style.display = 'none';
             document.getElementById('mainOverlay').style.display = 'flex';
