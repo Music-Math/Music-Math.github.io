@@ -9,15 +9,6 @@
 <body>
   <!-- ... (other body elements) ... -->
 
-  <div id="pinOverlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); display: flex; align-items: center; justify-content: center;">
-    <div style="background: white; padding: 20px; border-radius: 10px; text-align: center;">
-      <h2>Enter PIN</h2>
-      <input type="password" id="pinInput" style="font-size: 1.2em; padding: 5px;" maxlength="4">
-      <button id="pinSubmitButton" style="font-size: 1.2em; padding: 5px;">Submit</button>
-      <p id="pinErrorMessage" style="color: red; display: none;">Incorrect PIN. Try again.</p>
-    </div>
-  </div>
-
   <script>
     const fonts = ['Roboto', 'Open Sans', 'Lobster', 'Montserrat'];
     let currentFontIndex = 0;
@@ -208,41 +199,6 @@
       button.addEventListener('click', function() {
         document.getElementById('colorPicker').click();
       });
-    });
-
-    // PIN functionality
-    document.getElementById('pinSubmitButton').addEventListener('click', function() {
-      const enteredPin = document.getElementById('pinInput').value;
-      const correctPin = '1234';
-
-      if (enteredPin === correctPin) {
-        document.getElementById('pinOverlay').style.display = 'none';
-        document.querySelectorAll('button').forEach(button => {
-          button.disabled = false;
-        });
-      } else {
-        document.getElementById('pinErrorMessage').style.display = 'block';
-      }
-    });
-
-    // Disable all buttons until PIN is entered
-    document.querySelectorAll('button').forEach(button => {
-      button.disabled = true;
-    });
-
-    // Enable buttons once correct PIN is entered
-    document.getElementById('pinSubmitButton').addEventListener('click', function() {
-      const enteredPin = document.getElementById('pinInput').value;
-      const correctPin = '1234';
-
-      if (enteredPin === correctPin) {
-        document.getElementById('pinOverlay').style.display = 'none';
-        document.querySelectorAll('button').forEach(button => {
-          button.disabled = false;
-        });
-      } else {
-        document.getElementById('pinErrorMessage').style.display = 'block';
-      }
     });
   </script>
 
