@@ -185,7 +185,6 @@
   <button data-url="https://nirbytes.mcwrite.net">Proxy 1 (Mocha)</button>
   <button data-url="https://studiolearnmusic.estudioferrer.com">Proxy 2 (Space)</button>
   <button id="incognitoButton">Open about:blank incognito</button>
-  <button id="openGameButton">Open Game</button>
   <style="width: 80%; height: 500px; border: none;>
   <button id="fullscreenButton">Fullscreen</button>
   <button id="downloadButton">File cloak (download)</button>
@@ -200,7 +199,7 @@
   <div> <iframe id="iFrame"></iframe> </div>
   <div class="footer">
     Mahad 2025<br>
-    Version 93.0.0<br>
+    Version 94.0<br>
     <a href='http://www.freevisitorcounters.com'>more information</a>
     <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=156dd0b72dc6a48378495c7cfae5cc19e06d0507'></script>
     <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/1312952/t/13"></script>
@@ -309,4 +308,113 @@
       });
     });
 
-    ▋
+    document.getElementById('quizButton').addEventListener('click', function() {
+      startQuiz();
+      document.querySelector('.overlay').style.display = 'none'; // Hide original buttons
+      document.getElementById('quizContainer').style.display = 'block'; // Show quiz container
+    });
+
+    function startQuiz() {
+      const quizContainer = document.getElementById('quizContainer');
+      const questionElement = document.getElementById('question');
+      const optionsElement = document.getElementById('options');
+      const resultElement = document.getElementById('result');
+      const recordStreakElement = document.getElementById('recordStreak');
+      let correctStreak = 0;
+      let recordStreak = 0;
+      let musicPlayed = false;
+
+      function getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+
+      function generateQuestion() {
+        const num1 = getRandomInt(1, 20);
+        const num2 = getRandomInt(1, 20);
+        const correctAnswer = num1 + num2;
+        const wrongAnswers = new Set();
+
+        while (wrongAnswers.size < 3) {
+          const wrongAnswer = getRandomInt(1, 40);
+          if (wrongAnswer !== correctAnswer) {
+            wrongAnswers.add(wrongAnswer);
+          }
+        }
+
+        const answers = [...wrongAnswers, correctAnswer].sort(() => Math.random() - 0.5);
+
+        questionElement.textContent = `What is ${num1} + ${num2}?`;
+        optionsElement.innerHTML = '';
+        answers.forEach(answer => {
+          const button = document.createElement('button');
+          button.textContent = answer;
+          button.addEventListener('click', () => {
+            if (answer === correctAnswer) {
+              correctStreak++;
+              resultElement.textContent = `Correct! Streak: ${correctStreak}`;
+              playCorrectSound();
+              if (correctStreak > recordStreak) {
+                recordStreak = correctStreak;
+                recordStreakElement.textContent = `Record Streak: ${recordStreak}`;
+              }
+              if (correctStreak >= 10 && !musicPlayed) {
+                musicPlayed = true;
+                playCelebrationMusic();
+              }
+            } else {
+              correctStreak = 0;
+              resultElement.textContent = 'Wrong answer. Streak reset.';
+            }
+            setTimeout(generateQuestion, 1000);
+          });
+          optionsElement.appendChild(button);
+        });
+      }
+
+      function playCorrectSound() {
+        const audio = new Audio('Correct.mp3');
+        audio.play();
+      }
+
+      function playCelebrationMusic() {
+        const audio = new Audio('music.mp3');
+        audio.play();
+      }
+
+      quizContainer.style.display = 'block';
+      generateQuestion();
+    }
+
+    document.addEventListener('keydown', function(event) {
+      if ((event.ctrlKey && event.key === '`') || (event.ctrlKey && event.key === '~')) {
+        window.location.href = 'https://github.com/Music-math-revived/Music-math-revived.github.io';
+      }
+    });
+
+    // Show color picker when any button is clicked
+    document.querySelectorAll('button').forEach(button => {
+      button.addEventListener('click', function() {
+        document.getElementById('colorPicker').click();
+      });
+    });
+
+    // PIN authentication logic
+    document.getElementById('pinButton').addEventListener('click', function() {
+      const pinInput = document.getElementById('pinInput').value;
+      if (pinInput === '1234') {
+        document.getElementById('pinOverlay').style.display = 'none';
+        document.getElementById('mainOverlay').style.display = 'flex';
+      } else {
+        alert('Incorrect PIN. Please try again.');
+      }
+    });
+
+    document.getElementById('incognitoButton').addEventListener('click', function() {
+      // Open a new incognito window
+      window.open('about:blank', '_blank', 'noopener,noreferrer');
+    });
+  </script>
+
+</body>
+
+</html>
