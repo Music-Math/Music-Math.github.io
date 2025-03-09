@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- ... (other head elements) ... -->
+</head>
+<body>
+  <!-- ... (other body elements) ... -->
+
+  <script>
+    const fonts = ['Roboto', 'Open Sans', 'Lobster', 'Montserrat'];
+    let currentFontIndex = 0;
+    let correctStreak = 0; // Moved outside the function for global scope
+
+    function changeFont() {
+      currentFontIndex = (currentFontIndex + 1) % fonts.length;
+      document.body.style.fontFamily = fonts[currentFontIndex];
+      document.querySelectorAll('button').forEach(button => {
+        button.style.fontFamily = fonts[currentFontIndex];
+      });
+    }
+
+    // Change font every 0.5 second
+    const fontChangeInterval = setInterval(changeFont, 500);
+
+    let previousButton = null;
+
+    Array.prototype.forEach.call(document.querySelectorAll('[data-url]'), function(elem) {
+      elem.addEventListener('click', function(e) {
+        document.getElementById('iFrame').src = this.dataset.url;
+        
+        if (previousButton) {
+          previousButton.remove();
+        }
+
+        this.style.display = 'none';
+        previousButton = this;
+      });
+    });
+
+    document.getElementById('fullscreenButton').addEventListener('click', function() {
+      const iFrame = document.getElementById('iFrame');
+      if (iFrame.requestFullscreen) {
+        iFrame.requestFullscreen();
+      } else if (iFrame.mozRequestFullScreen) { /* Firefox */
+        iFrame.mozRequestFullScreen();
+      } else if (iFrame.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+        iFrame.webkitRequestFullscreen();
+      } else if (iFrame.msRequestFullscreen) { /* IE/Edge */
+        iFrame.msRequestFullscreen();
+      }
+    });
+
+    document.getElementById('downloadButton').addEventListener('click', function() {
+      const element = document.createElement('a');
+      const file = new Blob([document.documentElement.outerHTML], {type: 'text/html'});
+      element.href = URL.createObjectURL(file);
+      element.download = 'index.html';
+      document.body.appendChild(element); // Required for this to work in Firefox
+      element.click();
+      document.body.removeChild(element);
+    });
+
+    document.getElementById('stopButton').addEventListener('click', function() {
+      clearInterval(fontChangeInterval);
+      document.querySelectorAll('button').forEach(button => {
+        button.style.animation = 'none';
+      });
+      this.style.display = 'none';
+    });
+
+    document.getElementById('uploadButton').addEventListener('click', function() {
+      document.getElementById('musicInput').click();
+    });
+
+    document.getElementById('musicInput').addEventListener('change', function(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const audio = new Audio(URL.createObjectURL(file));
+        audio.loop = true;
+        audio.play();
+      }
+    });
+
+    document.getElementById('uploadBackgroundButton').addEventListener('click', function() {
+      document.getElementById('backgroundInput').click();
+    });
+
+    document.getElementById('backgroundInput').addEventListener('change', function(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.body.style.backgroundImage = `url(${e.target.result})`;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    document.getElementById('colorPicker').addEventListener('input', function(event) {
+      const color = event.target.value;
+      document.querySelectorAll('button').forEach(button => {
+        button.style.backgroundColor = color;
+      });
+    });
+
+    document.getElementById('quizButton').addEventListener('click', function() {
+      startQuiz();
+      document.querySelector('.overlay').style.display = 'none'; // Hide original buttons
+      document.getElementById('quizContainer').style.display = 'block'; // Show quiz container
+    });
+
+    function startQuiz() {
+      const quizContainer = document.getElementById('quizContainer');
+      const questionElement = document.getElementById('question');
+      const optionsElement = document.getElementById('options');
+      const resultElement = document.getElementById('result');
+      const recordStreakElement = document.getElementById('recordStreak');
+      let recordStreak = 0;
+      let musicPlayed = false;
+
+      function getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+
+      function generateQuestion() {
+        const num1 = getRandomInt(1, 20);
+        const num2 = getRandomInt(1, 20);
+        const correctAnswer = num1 + num2;
+        const wrongAnswers = new Set();
+
+        while (wrongAnswers.size < 3) {
+          const wrongAnswer = getRandomInt(1, 40);
+          if (wrongAnswer !== correctAnswer) {
+            wrongAnswers.add(wrongAnswer);
+          }
+        }
+
+        const answers = [...wrongAnswers, correctAnswer].sort(() => Math.random() - 0.5);
+
+        questionElement.textContent = `What is ${num1} + ${num2}?`;
+        optionsElement.innerHTML = '';
+        answers.forEach(answer => {
+          const button = document.createElement('button');
+          button.textContent = answer;
+          button.addEventListener('click', () => {
+            if (answer === correctAnswer) {
+              correctStreak++;
+              resultElement.textContent = `Correct! Streak: ${correctStreak}`;
+              playCorrectSound();
+              if (correctStreak > recordStreak) {
+                recordStreak = correctStreak;
+                recordStreakElement.textContent = `Record Streak: ${recordStreak}`;
+              }
+              if (correctStreak >= 10 && !musicPlayed) {
+                musicPlayed = true;
+                playCelebrationMusic();
+              }
+            } else {
+              correctStreak = 0;
+              resultElement.textContent = 'Wrong answer. Streak reset.';
+            }
+            setTimeout(generateQuestion, 1000);
+          });
+          optionsElement.appendChild(button);
+        });
+      }
+
+      function playCorrectSound() {
+        const audio = new Audio('Correct.mp3');
+        audio.play();
+      }
+
+      function playCelebrationMusic() {
+        const audio = new Audio('music.mp3');
+        audio.play();
+      }
+
+      quizContainer.style.display = 'block';
+      generateQuestion();
+    }
+
+    document.addEventListener('keydown', function(event) {
+      if ((event.ctrlKey && event.key === '`') || (event.ctrlKey && event.key === '~')) {
+        window.location.href = 'https://github.com/Music-math-revived/Music-math-revived.github.io';
+      }
+
+      // Add +10 to the streak when 'k' is pressed
+      if (event.key === 'k') {
+        correctStreak += 10;
+        document.getElementById('result').textContent = `Correct! Streak: ${correctStreak}`;
+      }
+    });
+
+    // Show color picker when any button is clicked
+    document.querySelectorAll('button').forEach(button => {
+      button.addEventListener('click', function() {
+        document.getElementById('colorPicker').click();
+      });
+    });
+  </script>
+
+</body>
+</html>
