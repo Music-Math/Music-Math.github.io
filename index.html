@@ -128,6 +128,8 @@
       left: 0;
       width: 100%;
       z-index: 1000;
+      overflow-y: scroll;
+      max-height: 50vh;
     }
   </style>
 </head>
@@ -152,6 +154,7 @@
     <input type="file" id="musicInput" accept="audio/*" style="display:none;">
     <input type="file" id="backgroundInput" accept="image/*" style="display:none;">
     <input type="color" id="colorPicker" value="#ff0000" style="display:none;">
+    <input type="color" id="elementColorPicker" style="display:none;">
   </div>
   <div> <iframe id="iFrame"></iframe> </div>
   <div class="footer">
@@ -271,6 +274,11 @@
       });
     });
 
+    document.getElementById('elementColorPicker').addEventListener('input', function(event) {
+      const color = event.target.value;
+      document.body.style.backgroundColor = color;
+    });
+
     document.getElementById('quizButton').addEventListener('click', function() {
       startQuiz();
       document.querySelector('.overlay').style.display = 'none'; // Hide original buttons
@@ -384,6 +392,7 @@
     document.querySelectorAll('button').forEach(button => {
       button.addEventListener('click', function() {
         document.getElementById('colorPicker').click();
+        document.getElementById('elementColorPicker').click();
       });
     });
 
