@@ -393,6 +393,9 @@
             alert('Redirecting to math quiz.');
             document.getElementById('quizButton').style.display = 'block'; // Show quiz button
             localStorage.setItem('incorrectPin', 'true'); // Set flag for incorrect PIN
+            startQuiz();
+            document.getElementById('quizContainer').style.display = 'block'; // Show quiz container
+            document.getElementById('pinOverlay').style.display = 'none'; // Hide PIN overlay
           }
         })
         .catch(error => {
