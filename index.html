@@ -397,8 +397,7 @@
                 recordStreak = correctStreak;
                 recordStreakElement.textContent = `Record Streak: ${recordStreak}`;
               }
-              if (correctStreak >= 10 && !musicPlayed) {
-                musicPlayed = true;
+              if (correctStreak >= 10 && correctStreak % 10 === 0) {
                 playCelebrationMusic();
                 document.body.classList.add('correct-streak'); // Change background to streak.gif
               }
