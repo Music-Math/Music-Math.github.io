@@ -123,6 +123,11 @@
 
     #commentsContainer {
       background-color: red;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
     }
   </style>
 </head>
@@ -294,7 +299,7 @@
       link.href = "https://netlify-comments.dyuproject.com/dist/build.css";
       commentsContainer.appendChild(link);
 
-      window.scrollTo(0, document.body.scrollHeight);
+      window.scrollTo(0, 0); // Scroll to top to see the comments
     });
 
     function startQuiz() {
