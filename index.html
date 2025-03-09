@@ -6,7 +6,98 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap&family=Open+Sans:wght@400;600&display=swap&family=Lobster&display=swap&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <style type="text/css">
-    /* Your existing styles */
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: url('logo.png') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .pin-overlay {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    .pin-input {
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 2px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    .pin-button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .pin-button:hover {
+      background-color: #45a049;
+    }
+
+    .overlay {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    .button-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 5px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      width: 200px;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 10px;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+
+    .quiz-container, #commentsContainer {
+      display: none;
+      text-align: center;
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 10px;
+      margin: 20px;
+    }
   </style>
 </head>
 
@@ -16,16 +107,18 @@
     <button id="pinButton" class="pin-button">Submit</button>
   </div>
   <div class="overlay" id="mainOverlay" style="display:none;">
-    <button data-url="https://nirbytes.mcwrite.net">Proxy 1 (Mocha)</button>
-    <button data-url="https://studiolearnmusic.estudioferrer.com">Proxy 2 (Space)</button>
-    <button id="incognitoButton">Open about:blank incognito</button>
-    <button id="fullscreenButton">Fullscreen</button>
-    <button id="downloadButton">File cloak (download)</button>
-    <button id="stopButton">Stop</button>
-    <button id="uploadButton">Upload Music</button>
-    <button id="uploadBackgroundButton">Upload Background</button>
-    <button id="quizButton">Start Math Quiz</button>
-    <button id="loadCommentsButton">Load Comments</button>
+    <div class="button-container">
+      <button data-url="https://nirbytes.mcwrite.net">Proxy 1 (Mocha)</button>
+      <button data-url="https://studiolearnmusic.estudioferrer.com">Proxy 2 (Space)</button>
+      <button id="incognitoButton">Open about:blank incognito</button>
+      <button id="fullscreenButton">Fullscreen</button>
+      <button id="downloadButton">File cloak (download)</button>
+      <button id="stopButton">Stop</button>
+      <button id="uploadButton">Upload Music</button>
+      <button id="uploadBackgroundButton">Upload Background</button>
+      <button id="quizButton">Start Math Quiz</button>
+      <button id="loadCommentsButton">Load Comments</button>
+    </div>
     <input type="file" id="musicInput" accept="audio/*" style="display:none;">
     <input type="file" id="backgroundInput" accept="image/*" style="display:none;">
     <input type="color" id="colorPicker" value="#ff0000" style="display:none;">
