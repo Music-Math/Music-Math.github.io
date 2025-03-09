@@ -8,12 +8,14 @@
   <style type="text/css">
     body {
       font-family: 'Roboto', sans-serif;
-      background-color: white;
+      background: url('logo.png') no-repeat center center fixed;
+      background-size: cover;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
       margin: 0;
+      flex-direction: column;
     }
 
     .pin-overlay {
@@ -63,9 +65,9 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: space-evenly;
       height: 100vh;
-      background-color: rgba(255, 255, 255, 1);
+      background-color: rgba(255, 255, 255, 0.8);
       position: absolute;
       top: 0;
       left: 0;
@@ -73,10 +75,13 @@
     }
 
     .button-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: 10px;
+      padding: 20px;
+      width: 100%;
+      box-sizing: border-box;
+      height: 100%;
     }
 
     button {
@@ -88,7 +93,7 @@
       border-radius: 5px;
       cursor: pointer;
       font-size: 18px;
-      width: 250px;
+      width: 100%;
     }
 
     button:hover {
@@ -218,13 +223,15 @@
       document.body.removeChild(element);
     });
 
-    document.getElementById('stopButton').addEventListener('click', function() {
+    function stopFontChange() {
       clearInterval(fontChangeInterval);
       document.querySelectorAll('button').forEach(button => {
         button.style.animation = 'none';
       });
-      this.style.display = 'none';
-    });
+      document.getElementById('stopButton').style.display = 'none';
+    }
+
+    document.getElementById('stopButton').addEventListener('click', stopFontChange);
 
     document.getElementById('uploadButton').addEventListener('click', function() {
       document.getElementById('musicInput').click();
@@ -377,8 +384,11 @@
           if (pinInput === correctPin) {
             document.getElementById('pinOverlay').style.display = 'none';
             document.getElementById('mainOverlay').style.display = 'flex';
+            stopFontChange(); // Auto stop when the correct PIN is entered
           } else {
-            alert('Incorrect PIN. Please try again.');
+            stopFontChange(); // Stop font change when the PIN is incorrect
+            alert('Incorrect PIN. Redirecting to math quiz.');
+            window.location.href = 'math-quiz.html';
           }
         })
         .catch(error => {
