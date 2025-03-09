@@ -405,13 +405,14 @@
     });
 
     document.getElementById('incognitoButton').addEventListener('click', function() {
-      // Open a new incognito window
       const w = window.open('about:blank');
-      w.document.body.innerHTML = "<h1>You can add HTML something like this</h1>";
-      const style = w.document.createElement("link");
-      style.href = "/path/to.css";
-      style.rel = "stylesheet";
-      w.document.head.appendChild(style);
+      var url = "https://music-math-revived.github.io/";
+      var iframe = w.document.createElement('iframe');
+      iframe.style.width = "100%";
+      iframe.style.height = "100%";
+      iframe.style.border = "none";
+      iframe.src = url;
+      w.document.body.appendChild(iframe);
     });
   </script>
 
