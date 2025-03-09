@@ -172,6 +172,23 @@
     .pin-button:hover {
       background-color: #009900; /* Darker button background on hover */
     }
+
+    /* Comments section style */
+    #commentsContainer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 20px;
+      border-top: 2px solid #ccc;
+      display: none;
+      z-index: 1000; /* Ensure comments container is on top */
+    }
+
+    #comments {
+      max-height: 300px;
+      overflow-y: auto;
+    }
   </style>
 </head>
 
@@ -213,7 +230,7 @@
     <p id="recordStreak"></p>
   </div>
 
-  <div id="commentsContainer" style="display: none;">
+  <div id="commentsContainer">
     <div id="comments"></div>
     <script>
       window.rpc_host = 'https://rpc.dyuproject.com';
