@@ -469,13 +469,17 @@
     });
 
     // Show loading icon on page load
-    document.addEventListener('DOMContentLoaded', function() {
-      document.getElementById('loadingIcon').style.display = 'block';
-      setTimeout(() => {
-        document.getElementById('loadingIcon').style.display = 'none';
-        document.getElementById('pinOverlay').style.display = 'flex';
-      }, 5); // Display loading icon for 5 seconds
-    });
+ document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('loadingIcon').style.display = 'block';
+  setTimeout(() => {
+    document.getElementById('loadingIcon').style.display = 'none';
+    document.getElementById('pinOverlay').style.display = 'flex';
+  }, 5000); // Display loading icon for 5 seconds
+});
+
+window.addEventListener('load', function() {
+  document.getElementById('loadingIcon').style.display = 'none';
+});
 
     // Hide loading icon when page is fully loaded
     window.addEventListener('load', function() {
