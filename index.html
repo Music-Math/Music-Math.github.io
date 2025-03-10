@@ -9,198 +9,83 @@
       font-family: 'Roboto', sans-serif;
       background: url('logo.png') no-repeat center center fixed;
       background-size: cover;
-      display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
       margin: 0;
       flex-direction: column;
     }
-
-    .pin-overlay {
+    .loading {
       display: flex;
-      flex-direction: column;
-      align-items: center;
       justify-content: center;
-      height: 100vh;
-      background-color: rgba(255, 255, 255, 1);
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      opacity: 0;
-      animation: fadeIn 2s forwards;
-    }
-
-    @keyframes fadeIn {
-      to {
-        opacity: 1;
-      }
-    }
-
-    .pin-input {
-      padding: 20px;
-      margin-bottom: 20px;
-      border: 2px solid #ccc;
-      border-radius: 5px;
-      font-size: 20px;
-    }
-
-    .pin-button {
-      padding: 10px 20px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-
-    .pin-button:hover {
-      background-color: #45a049;
-    }
-
-    .overlay {
-      display: flex;
-      flex-direction: column;
       align-items: center;
-      justify-content: space-evenly;
       height: 100vh;
-      background-color: rgba(255, 255, 255, 0.8);
-      position: absolute;
-      top: 0;
-      left: 0;
+      background-color: white;
       width: 100%;
-      transition: background-color 2s;
-    }
-
-    .button-container {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      grid-gap: 10px;
-      padding: 20px;
-      width: 100%;
-      box-sizing: border-box;
-      height: 100%;
-    }
-
-    button {
-      padding: 10px 20px;
-      margin: 10px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
-      width: 100%;
-      transition: background-color 2s;
-    }
-
-    button:hover {
-      background-color: #45a049;
-    }
-
-    #fullscreenButton {
-      background-color: green;
-    }
-
-    #fullscreenButton:hover {
-      background-color: darkgreen;
-    }
-
-    #stopButton {
-      font-family: 'Roboto', sans-serif;
-    }
-
-    .footer {
-      text-align: left;
-      padding: 10px;
-      background-color: transparent;
-      color: rgba(255, 255, 255, 0.7);
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-    }
-
-    .quiz-container, #commentsContainer {
-      display: none;
-      text-align: center;
-      padding: 20px;
-      background-color: rgba(255, 255, 255, 0.9);
-      border-radius: 10px;
-      margin: 20px;
-    }
-
-    #commentsContainer {
-      background-color: White;
       position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
       z-index: 1000;
-      overflow-y: scroll;
-      max-height: 50vh;
     }
-
-    #loadingIcon {
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 10000;
+    #mainContent {
+      display: none; /* Hide the main content initially */
     }
+    /* Add other styles here */
   </style>
 </head>
 <body>
-  <div id="loadingIcon">
+  <div class="loading" id="loading">
     <img src="Loading.gif" alt="Loading...">
   </div>
-  <div class="pin-overlay" id="pinOverlay">
-    <input type="password" id="pinInput" class="pin-input" placeholder="Enter PIN">
-    <button id="pinButton" class="pin-button">Submit</button>
-  </div>
-  <div class="overlay" id="mainOverlay" style="display:none;">
-    <div class="button-container">
-      <button data-url="https://nirbytes.mcwrite.net">Proxy 1 (Mocha)</button>
-      <button data-url="https://studiolearnmusic.estudioferrer.com">Proxy 2 (Space)</button>
-      <button id="incognitoButton">Open about:blank incognito</button>
-      <button id="fullscreenButton">Load (if about:blank press alt+a)</button>
-      <button id="downloadButton">File cloak (download)</button>
-      <button id="stopButton">Stop</button>
-      <button id="uploadButton">Upload Music</button>
-      <button id="uploadBackgroundButton">Upload Background</button>
-      <button id="quizButton" style="display:none;">Start Math Quiz</button>
-      <button id="loadCommentsButton">Load Comments</button>
+  <div id="mainContent">
+    <div class="pin-overlay" id="pinOverlay">
+      <input type="password" id="pinInput" class="pin-input" placeholder="Enter PIN">
+      <button id="pinButton" class="pin-button">Submit</button>
     </div>
-    <input type="file" id="musicInput" accept="audio/*" style="display:none;">
-    <input type="file" id="backgroundInput" accept="image/*" style="display:none;">
-    <input type="color" id="colorPicker" value="#ff0000" style="display:none;">
-    <input type="color" id="elementColorPicker" style="display:none;">
-  </div>
-  <div> <iframe id="iFrame"></iframe> </div>
-  <div class="footer">
-    Mahad 2025<br>
-    Version 2.1<br>
-    <a href='http://www.freevisitorcounters.com'>more information</a>
-    <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=156dd0b72dc6a48378495c7cfae5cc19e06d0507'></script>
-    <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/1312952/t/13"></script>
-  </div>
-
-  <div class="quiz-container" id="quizContainer">
-    <h2 id="question"></h2>
-    <div id="options"></div>
-    <p id="result"></p>
-    <p id="recordStreak"></p>
-  </div>
-
-  <div id="commentsContainer">
-    <div id="comments"></div>
+    <div class="overlay" id="mainOverlay" style="display:none;">
+      <div class="button-container">
+        <button data-url="https://nirbytes.mcwrite.net">Proxy 1 (Mocha)</button>
+        <button data-url="https://studiolearnmusic.estudioferrer.com">Proxy 2 (Space)</button>
+        <button id="incognitoButton">Open about:blank incognito</button>
+        <button id="fullscreenButton">Load (if about:blank press alt+a)</button>
+        <button id="downloadButton">File cloak (download)</button>
+        <button id="stopButton">Stop</button>
+        <button id="uploadButton">Upload Music</button>
+        <button id="uploadBackgroundButton">Upload Background</button>
+        <button id="quizButton" style="display:none;">Start Math Quiz</button>
+        <button id="loadCommentsButton">Load Comments</button>
+      </div>
+      <input type="file" id="musicInput" accept="audio/*" style="display:none;">
+      <input type="file" id="backgroundInput" accept="image/*" style="display:none;">
+      <input type="color" id="colorPicker" value="#ff0000" style="display:none;">
+      <input type="color" id="elementColorPicker" style="display:none;">
+    </div>
+    <div> <iframe id="iFrame"></iframe> </div>
+    <div class="footer">
+      Mahad 2025<br>
+      Version 2.1<br>
+      <a href='http://www.freevisitorcounters.com'>more information</a>
+      <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=156dd0b72dc6a48378495c7cfae5cc19e06d0507'></script>
+      <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/1312952/t/13"></script>
+    </div>
+    <div class="quiz-container" id="quizContainer">
+      <h2 id="question"></h2>
+      <div id="options"></div>
+      <p id="result"></p>
+      <p id="recordStreak"></p>
+    </div>
+    <div id="commentsContainer">
+      <div id="comments"></div>
+    </div>
   </div>
 
   <script>
+    // Show the main content after 3 seconds
+    setTimeout(() => {
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('mainContent').style.display = 'block';
+    }, 3000);
+
     const fonts = ['Roboto', 'Open Sans', 'Lobster', 'Montserrat'];
     let currentFontIndex = 0;
 
