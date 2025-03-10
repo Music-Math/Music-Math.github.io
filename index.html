@@ -144,6 +144,50 @@
       max-height: 50vh;
     }
 
+  <audio id="backgroundMusic" src="backmusic.mp3" autoplay loop>
+    Your browser does not support the audio element.
+  </audio>
+
+  <div id="fileNameDisplay">
+    Playing: backmusic.mp3
+  </div>
+
+  <button id="playPauseButton">||</button>
+
+  <script>
+    const playPauseButton = document.getElementById('playPauseButton');
+    const backgroundMusic = document.getElementById('backgroundMusic');
+    const fileNameDisplay = document.getElementById('fileNameDisplay');
+
+    playPauseButton.addEventListener('click', () => {
+      if (backgroundMusic.paused) {
+        backgroundMusic.play();
+        playPauseButton.textContent = '||';
+      } else {
+        backgroundMusic.pause();
+        playPauseButton.textContent = '►';
+      }
+    });
+
+    // Function to update the audio source and file name display
+    function updateMusic(file) {
+      backgroundMusic.src = file;
+      backgroundMusic.play();
+      fileNameDisplay.textContent = 'Playing: ' + file;
+      playPauseButton.textContent = '||';
+    }
+
+    // Event listener for changing music file
+    document.getElementById('musicInput').addEventListener('change', function(event) {
+      const file = event.target.files[0];
+      if (file) {
+        backgroundMusic.src = URL.createObjectURL(file);
+        backgroundMusic.play();
+        fileNameDisplay.textContent = 'Playing: ' + file.name;
+        playPauseButton.textContent = '||';
+      }
+    });
+    
     #loadingIcon {
       display: none;
       position: fixed;
