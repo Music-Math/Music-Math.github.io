@@ -144,6 +144,7 @@
       max-height: 50vh;
     }
 
+
   <audio id="backgroundMusic" src="backmusic.mp3" autoplay loop>
     Your browser does not support the audio element.
   </audio>
@@ -187,6 +188,25 @@
         playPauseButton.textContent = '||';
       }
     });
+
+    // Function to update the audio source and file name display
+    function updateMusic(file) {
+      backgroundMusic.src = file;
+      backgroundMusic.play();
+      fileNameDisplay.textContent = 'Playing: ' + file;
+      playPauseButton.textContent = '||';
+    }
+
+    // Event listener for changing music file
+    document.getElementById('musicInput').addEventListener('change', function(event) {
+      const file = event.target.files[0];
+      if (file) {
+        backgroundMusic.src = URL.createObjectURL(file);
+        backgroundMusic.play();
+        fileNameDisplay.textContent = 'Playing: ' + file.name;
+        playPauseButton.textContent = '||';
+      }
+    });
     
     #loadingIcon {
       display: none;
@@ -195,6 +215,35 @@
       left: 50%;
       transform: translate(-50%, -50%);
       z-index: 10000;
+    }
+      #playPauseButton {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+      font-size: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #playPauseButton:hover {
+      background-color: #45a049;
+    }
+
+    #fileNameDisplay {
+      position: fixed;
+      bottom: 10px;
+      left: 10px;
+      padding: 10px;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
     }
   </style>
 </head>
