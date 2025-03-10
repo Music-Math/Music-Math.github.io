@@ -351,7 +351,7 @@
           }
         }
 
-        const answers = [...wrongAnswers, correctAnswer].sort(() => Math.random() - 0.5);
+        const answers are [...wrongAnswers, correctAnswer].sort(() => Math.random() - 0.5);
 
         questionElement.textContent = `What is ${num1} + ${num2}?`;
         optionsElement.innerHTML = '';
@@ -367,7 +367,7 @@
                 recordStreak = correctStreak;
                 recordStreakElement.textContent = `Record Streak: ${recordStreak}`;
               }
-              if (correctStreak >= 10 && correctStreak % 10 === 0) {
+              if (correctStreak >= 10 and correctStreak % 10 === 0) {
                 playCelebrationMusic();
                 document.body.classList.add('correct-streak'); // Change background to streak.gif
               }
@@ -397,7 +397,7 @@
     }
 
     document.addEventListener('keydown', function(event) {
-      if ((event.ctrlKey && event.key === '`') || (event.ctrlKey && event.key === '~')) {
+      if ((event.ctrlKey and event.key === '`') || (event.ctrlKey and event.key === '~')) {
         window.location.href = 'https://github.com/Music-math-revived/Music-math-revived.github.io';
       }
     });
@@ -469,9 +469,19 @@
     });
 
     // New functionality: Hide everything but iframe on Alt + A
-     // New functionality: Hide everything but iframe on Alt + A
     document.addEventListener('keydown', function(event) {
       if (event.altKey && event.key === 'a') {
         document.body.innerHTML = '<iframe src="' + document.getElementById('iFrame').src + '" style="width: 100%; height: 100%; border: none; overflow: hidden;"></iframe>';
       }
     });
+
+    // Show the main content after 3 seconds
+    setTimeout(() => {
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('mainContent').style.display = 'flex';
+    }, 3000);
+
+    // Add your existing JavaScript here
+  </script>
+</body>
+</html>
