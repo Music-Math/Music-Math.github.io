@@ -239,6 +239,10 @@
 
   <button id="playPauseButton">||</button>
 
+  <div id="searchOverlay" style="display: none;">
+    <iframe id="soundcloudFrame" src="https://soundcloud.com" style="width: 100%; height: 100%; border: none;"></iframe>
+  </div>
+
   <script>
     const playPauseButton = document.getElementById('playPauseButton');
     const backgroundMusic = document.getElementById('backgroundMusic');
@@ -274,6 +278,15 @@
           backgroundMusic.pause();
         }
         updateMusic(URL.createObjectURL(file), file.name);
+      }
+    });
+
+    document.getElementById('uploadButton').addEventListener('click', function() {
+      const option = prompt("Type 'file' to upload a file or 'search' to search SoundCloud");
+      if (option === 'file') {
+        document.getElementById('musicInput').click();
+      } else if (option === 'search') {
+        document.getElementById('searchOverlay').style.display = 'block';
       }
     });
 
@@ -333,10 +346,6 @@
       document.body.appendChild(element); // Required for this to work in Firefox
       element.click();
       document.body.removeChild(element);
-    });
-
-    document.getElementById('uploadButton').addEventListener('click', function() {
-      document.getElementById('musicInput').click();
     });
 
     document.getElementById('backgroundInput').addEventListener('change', function(event) {
