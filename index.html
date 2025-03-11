@@ -234,7 +234,7 @@
   </div>
 
   <div id="fileNameDisplay">
-    Playing: backmusic.mp3
+    Playing: ...
   </div>
 
   <button id="playPauseButton">||</button>
@@ -256,13 +256,13 @@
     });
 
     // Function to update the audio source and file name display
-    function updateMusic(file) {
+    function updateMusic(file, fileName) {
       if (!backgroundMusic.paused) {
         backgroundMusic.pause();
       }
       backgroundMusic.src = file;
       backgroundMusic.play();
-      fileNameDisplay.textContent = 'Playing: ' + file;
+      fileNameDisplay.textContent = 'Playing: ' + fileName;
       playPauseButton.textContent = '||';
     }
 
@@ -273,8 +273,7 @@
         if (!backgroundMusic.paused) {
           backgroundMusic.pause();
         }
-        updateMusic(URL.createObjectURL(file));
-        fileNameDisplay.textContent = 'Playing: ' + file.name;
+        updateMusic(URL.createObjectURL(file), file.name);
       }
     });
 
