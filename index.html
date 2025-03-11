@@ -84,15 +84,6 @@
       height: 100%;
     }
 
-    .upload-button-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      margin-top: 20px;
-    }
-
     button {
       padding: 10px 20px;
       margin: 10px;
@@ -206,10 +197,7 @@
       <button id="fullscreenButton">Load (if about:blank press alt+a)</button>
       <button id="downloadButton">File cloak (download)</button>
       <button id="stopButton">Stop</button>
-      <div class="upload-button-container">
-        <button id="uploadFileButton">Upload File</button>
-        <button id="searchSoundCloudButton">Search SoundCloud</button>
-      </div>
+      <button id="uploadButton">Upload Music</button>
       <button id="uploadBackgroundButton">Upload Background</button>
       <button id="quizButton" style="display:none;">Start Math Quiz</button>
       <button id="loadCommentsButton">Load Comments</button>
@@ -251,10 +239,6 @@
 
   <button id="playPauseButton">||</button>
 
-  <div id="searchOverlay" style="display: none;">
-    <iframe id="soundcloudFrame" src="https://soundcloud.com" style="width: 100%; height: 100%; border: none;"></iframe>
-  </div>
-
   <script>
     const playPauseButton = document.getElementById('playPauseButton');
     const backgroundMusic = document.getElementById('backgroundMusic');
@@ -291,14 +275,6 @@
         }
         updateMusic(URL.createObjectURL(file), file.name);
       }
-    });
-
-    document.getElementById('uploadFileButton').addEventListener('click', function() {
-      document.getElementById('musicInput').click();
-    });
-
-    document.getElementById('searchSoundCloudButton').addEventListener('click', function() {
-      document.getElementById('searchOverlay').style.display = 'block';
     });
 
     // PIN authentication logic
@@ -357,6 +333,10 @@
       document.body.appendChild(element); // Required for this to work in Firefox
       element.click();
       document.body.removeChild(element);
+    });
+
+    document.getElementById('uploadButton').addEventListener('click', function() {
+      document.getElementById('musicInput').click();
     });
 
     document.getElementById('backgroundInput').addEventListener('change', function(event) {
@@ -512,7 +492,7 @@
 
     document.addEventListener('keydown', function(event) {
       if (event.altKey && event.key === 'a') {
-        document.body.innerHTML = '<iframe src="' + document.getElementById('iFrame').src + '" style="width: 100%; height: 100%; border: none;"></iframe>';
+        document.body.innerHTML = '<iframe src="' + document.getElementById('iFrame').src + '" style="width: 100%; height: 100%; border: none; overflow: hidden;"></iframe>';
       }
     });
   </script>
