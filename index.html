@@ -243,6 +243,7 @@
     const playPauseButton = document.getElementById('playPauseButton');
     const backgroundMusic = document.getElementById('backgroundMusic');
     const fileNameDisplay = document.getElementById('fileNameDisplay');
+    const musicInput = document.getElementById('musicInput');
 
     playPauseButton.addEventListener('click', () => {
       if (backgroundMusic.paused) {
@@ -256,6 +257,9 @@
 
     // Function to update the audio source and file name display
     function updateMusic(file) {
+      if (!backgroundMusic.paused) {
+        backgroundMusic.pause();
+      }
       backgroundMusic.src = file;
       backgroundMusic.play();
       fileNameDisplay.textContent = 'Playing: ' + file;
@@ -263,13 +267,14 @@
     }
 
     // Event listener for changing music file
-    document.getElementById('musicInput').addEventListener('change', function(event) {
+    musicInput.addEventListener('change', function(event) {
       const file = event.target.files[0];
       if (file) {
-        backgroundMusic.src = URL.createObjectURL(file);
-        backgroundMusic.play();
+        if (!backgroundMusic.paused) {
+          backgroundMusic.pause();
+        }
+        updateMusic(URL.createObjectURL(file));
         fileNameDisplay.textContent = 'Playing: ' + file.name;
-        playPauseButton.textContent = '||';
       }
     });
 
