@@ -84,6 +84,15 @@
       height: 100%;
     }
 
+    .upload-button-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
     button {
       padding: 10px 20px;
       margin: 10px;
@@ -197,7 +206,10 @@
       <button id="fullscreenButton">Load (if about:blank press alt+a)</button>
       <button id="downloadButton">File cloak (download)</button>
       <button id="stopButton">Stop</button>
-      <button id="uploadButton">Upload Music</button>
+      <div class="upload-button-container">
+        <button id="uploadFileButton">Upload File</button>
+        <button id="searchSoundCloudButton">Search SoundCloud</button>
+      </div>
       <button id="uploadBackgroundButton">Upload Background</button>
       <button id="quizButton" style="display:none;">Start Math Quiz</button>
       <button id="loadCommentsButton">Load Comments</button>
@@ -281,13 +293,12 @@
       }
     });
 
-    document.getElementById('uploadButton').addEventListener('click', function() {
-      const option = prompt("Type 'file' to upload a file or 'search' to search SoundCloud");
-      if (option === 'file') {
-        document.getElementById('musicInput').click();
-      } else if (option === 'search') {
-        document.getElementById('searchOverlay').style.display = 'block';
-      }
+    document.getElementById('uploadFileButton').addEventListener('click', function() {
+      document.getElementById('musicInput').click();
+    });
+
+    document.getElementById('searchSoundCloudButton').addEventListener('click', function() {
+      document.getElementById('searchOverlay').style.display = 'block';
     });
 
     // PIN authentication logic
@@ -501,9 +512,4 @@
 
     document.addEventListener('keydown', function(event) {
       if (event.altKey && event.key === 'a') {
-        document.body.innerHTML = '<iframe src="' + document.getElementById('iFrame').src + '" style="width: 100%; height: 100%; border: none; overflow: hidden;"></iframe>';
-      }
-    });
-  </script>
-</body>
-</html>
+        document.body.innerHTML = '<iframe src="' + document.getElementById('iFrame').src + '" style="width: 100
