@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap&family=Open+Sans:wght@400;600&display=swap&family=Lobster&display=swap&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap&family=Open+Sans:wght@400;600&display=swap&family=Lobster&display=swap&family=Montserrat:wght@400;700&displa[...]
   <style type="text/css">
     body {
       font-family: 'Roboto', sans-serif;
@@ -201,6 +201,7 @@
       <button id="uploadBackgroundButton">Upload Background</button>
       <button id="quizButton" style="display:none;">Start Math Quiz</button>
       <button id="loadCommentsButton">Load Comments</button>
+      <button id="searchMusicButton">Search for Music</button>
     </div>
     <input type="file" id="musicInput" accept="audio/*" style="display:none;">
     <input type="file" id="backgroundInput" accept="image/*" style="display:none;">
@@ -491,10 +492,4 @@
     });
 
     document.addEventListener('keydown', function(event) {
-      if (event.altKey && event.key === 'a') {
-        document.body.innerHTML = '<iframe src="' + document.getElementById('iFrame').src + '" style="width: 100%; height: 100%; border: none; overflow: hidden;"></iframe>';
-      }
-    });
-  </script>
-</body>
-</html>
+      if (event.altKey && event.key
