@@ -271,9 +271,6 @@
     musicInput.addEventListener('change', function(event) {
       const file = event.target.files[0];
       if (file) {
-        if (!backgroundMusic.paused) {
-          backgroundMusic.pause();
-        }
         updateMusic(URL.createObjectURL(file), file.name);
       }
     });
@@ -492,8 +489,21 @@
     });
 
     document.addEventListener('keydown', function(event) {
-      if (event.altKey && event.key === 'f') {
-        // Add the action for the alt+f key combination here if needed
+      if (event.altKey && event.key === 'a') {
+        document.body.innerHTML = '<iframe src="' + document.getElementById('iFrame').src + '" style="width: 100%; height: 100%; border: none; overflow: hidden;"></iframe>';
+      }
+    });
+
+    document.getElementById('searchMusicButton').addEventListener('click', function() {
+      const choice = confirm("Click OK to search SoundCloud, or Cancel to upload a file.");
+      if (choice) {
+        const iframe = document.createElement('iframe');
+        iframe.src = 'https://soundcloudmp3.cc';
+        iframe.style.width = '100%';
+        iframe.style.height = '100vh';
+        document.body.appendChild(iframe);
+      } else {
+        document.getElementById('uploadButton').click();
       }
     });
   </script>
