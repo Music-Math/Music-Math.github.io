@@ -580,36 +580,3 @@
   </script>
 </body>
 </html>
-<!-- Background music element -->
-<audio id="backgroundMusic" src="backmusic.mp3" autoplay loop>
-  Your browser does not support the audio element.
-</audio>
-
-<!-- Display for the current playing file name -->
-<div id="fileNameDisplay" style="position: fixed; bottom: 0; right: 70px; padding: 10px; background-color: rgba(0, 0, 0, 0.5); color: white;">
-  ..................................................Playing: backmusic.mp3
-</div>
-
-<script>
-  // Function to update the audio source and file name display
-  function updateMusic(file) {
-    const audio = document.getElementById('backgroundMusic');
-    const fileNameDisplay = document.getElementById('fileNameDisplay');
-    audio.src = file;
-    audio.play();
-    fileNameDisplay.textContent = 'Playing: ' + file;
-  }
-
-  // Event listener for changing music file
-  document.getElementById('musicInput').addEventListener('change', function(event) {
-    const file = event.target.files[0];
-    if (file) {
-      const audio = document.getElementById('backgroundMusic');
-      audio.src = URL.createObjectURL(file);
-      audio.play();
-      document.getElementById('fileNameDisplay').textContent = 'Playing: ' + file.name;
-    }
-  });
-</script>
-</body>
-</html>
