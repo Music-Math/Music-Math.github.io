@@ -204,14 +204,12 @@
     </div>
     <input type="file" id="musicInput" accept="audio/*" style="display:none;">
     <input type="file" id="backgroundInput" accept="image/*" style="display:none;">
-    <input type="color" id="colorPicker" value="#ff0000" style="display:none;">
-    <input type="color" id="elementColorPicker" style="display:none;">
   </div>
   <iframe id="iFrame"></iframe>
   <div class="footer">
     Mahad 2025<br>
     Version 2.1<br>
-    <a href='http://www.freevisitorcounters.com'>more information</a>
+    <a href='https://soundcloudmp3.cc'>more information</a>
     <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=156dd0b72dc6a48378495c7cfae5cc19e06d0507'></script>
     <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/1312952/t/13"></script>
   </div>
@@ -348,18 +346,6 @@
         };
         reader.readAsDataURL(file);
       }
-    });
-
-    document.getElementById('colorPicker').addEventListener('input', function(event) {
-      const color = event.target.value;
-      document.querySelectorAll('button').forEach(button => {
-        button.style.backgroundColor = color;
-      });
-    });
-
-    document.getElementById('elementColorPicker').addEventListener('input', function(event) {
-      const color = event.target.value;
-      document.body.style.backgroundColor = color;
     });
 
     document.getElementById('quizButton').addEventListener('click', function() {
