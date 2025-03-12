@@ -278,22 +278,38 @@
       }
     });
 
+   <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const pinButton = document.getElementById('pinButton');
+    const pinInput = document.getElementById('pinInput');
+    const pinOverlay = document.getElementById('pinOverlay');
+    const mainOverlay = document.getElementById('mainOverlay');
+    const quizButton = document.getElementById('quizButton');
+    const quizContainer = document.getElementById('quizContainer');
+
     // PIN authentication logic
-    document.getElementById('pinButton').addEventListener('click', function() {
-      const pinInput = document.getElementById('pinInput').value;
+    pinButton.addEventListener('click', function() {
+      const enteredPin = pinInput.value.trim();
+      console.log("Entered PIN:", enteredPin); // Debugging statement
       fetch('pin.html')
-        .then(response => response.text())
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.text();
+        })
         .then(data => {
           const correctPin = data.trim();
-          if (pinInput === correctPin) {
-            document.getElementById('pinOverlay').style.display = 'none';
-            document.getElementById('mainOverlay').style.display = 'flex';
+          console.log("Fetched PIN:", correctPin); // Debugging statement
+          if (enteredPin === correctPin) {
+            pinOverlay.style.display = 'none';
+            mainOverlay.style.display = 'flex';
           } else {
-            alert('Redirecting to math quiz.');
-            document.getElementById('quizButton').style.display = 'block';
+            alert('Incorrect PIN. Redirecting to math quiz.');
+            quizButton.style.display = 'block';
             startQuiz();
-            document.getElementById('quizContainer').style.display = 'block';
-            document.getElementById('pinOverlay').style.display = 'none';
+            quizContainer.style.display = 'block';
+            pinOverlay.style.display = 'none';
           }
         })
         .catch(error => {
@@ -301,7 +317,66 @@
           alert('An error occurred while fetching the PIN. Please try again later.');
         });
     });
+    function startQuiz() {
+      const questionElement = document.getElementById('question');
+      const optionsElement = document.getElementById('options');
+      const resultElement = document.getElementById('result');
+      const recordStreakElement = document.getElementById('recordStreak');
+      let correctStreak = 0;
+      let recordStreak = 0;
 
+      function getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+
+      function generateQuestion() {
+        const num1 = getRandomInt(1, 20);
+        const num2 = getRandomInt(1, 20);
+        const correctAnswer = num1 + num2;
+        const wrongAnswers = new Set();
+
+        while (wrongAnswers.size < 3) {
+          const wrongAnswer = getRandomInt(1, 40);
+          if (wrongAnswer !== correctAnswer) {
+            wrongAnswers.add(wrongAnswer);
+          }
+        }
+
+        const answers = [...wrongAnswers, correctAnswer].sort(() => Math.random() - 0.5);
+
+        questionElement.textContent = `What is ${num1} + ${num2}?`;
+        optionsElement.innerHTML = '';
+        answers.forEach(answer => {
+          const button = document.createElement('button');
+          button.textContent = answer;
+          button.addEventListener('click', () => {
+            if (answer === correctAnswer) {
+              correctStreak++;
+              resultElement.textContent = `Correct! Streak: ${correctStreak}`;
+              playCorrectSound();
+              if (correctStreak > recordStreak) {
+                recordStreak = correctStreak;
+                recordStreakElement.textContent = `Record Streak: ${recordStreak}`;
+              }
+            } else {
+              correctStreak = 0;
+              resultElement.textContent = 'Wrong answer. Streak reset.';
+            }
+            setTimeout(generateQuestion, 1000);
+          });
+          optionsElement.appendChild(button);
+        });
+      }
+
+      function playCorrectSound() {
+        const audio = new Audio('Correct.mp3');
+        audio.play();
+      }
+
+      quizContainer.style.display = 'block';
+      generateQuestion();
+    }
+  });
     document.getElementById('incognitoButton').addEventListener('click', function() {
       const w = window.open('about:blank');
       var url = "https://music-math-revived.github.io/";
