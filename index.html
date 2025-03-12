@@ -144,7 +144,79 @@
       max-height: 50vh;
     }
 
-    #playPauseButton {
+
+  <audio id="backgroundMusic" src="backmusic.mp3" autoplay loop>
+    Your browser does not support the audio element.
+  </audio>
+
+  <div id="fileNameDisplay">
+    Playing: backmusic.mp3
+  </div>
+
+  <button id="playPauseButton">||</button>
+
+  <script>
+    const playPauseButton = document.getElementById('playPauseButton');
+    const backgroundMusic = document.getElementById('backgroundMusic');
+    const fileNameDisplay = document.getElementById('fileNameDisplay');
+
+    playPauseButton.addEventListener('click', () => {
+      if (backgroundMusic.paused) {
+        backgroundMusic.play();
+        playPauseButton.textContent = '||';
+      } else {
+        backgroundMusic.pause();
+        playPauseButton.textContent = '►';
+      }
+    });
+
+    // Function to update the audio source and file name display
+    function updateMusic(file) {
+      backgroundMusic.src = file;
+      backgroundMusic.play();
+      fileNameDisplay.textContent = 'Playing: ' + file;
+      playPauseButton.textContent = '||';
+    }
+
+    // Event listener for changing music file
+    document.getElementById('musicInput').addEventListener('change', function(event) {
+      const file = event.target.files[0];
+      if (file) {
+        backgroundMusic.src = URL.createObjectURL(file);
+        backgroundMusic.play();
+        fileNameDisplay.textContent = 'Playing: ' + file.name;
+        playPauseButton.textContent = '||';
+      }
+    });
+
+    // Function to update the audio source and file name display
+    function updateMusic(file) {
+      backgroundMusic.src = file;
+      backgroundMusic.play();
+      fileNameDisplay.textContent = 'Playing: ' + file;
+      playPauseButton.textContent = '||';
+    }
+
+    // Event listener for changing music file
+    document.getElementById('musicInput').addEventListener('change', function(event) {
+      const file = event.target.files[0];
+      if (file) {
+        backgroundMusic.src = URL.createObjectURL(file);
+        backgroundMusic.play();
+        fileNameDisplay.textContent = 'Playing: ' + file.name;
+        playPauseButton.textContent = '||';
+      }
+    });
+    
+    #loadingIcon {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10000;
+    }
+      #playPauseButton {
       position: fixed;
       bottom: 10px;
       right: 10px;
@@ -167,17 +239,11 @@
 
     #fileNameDisplay {
       position: fixed;
-      bottom: 22px;
-      right: 60px;
+      bottom: 10px;
+      left: 10px;
       padding: 10px;
       background-color: rgba(0, 0, 0, 0.5);
       color: white;
-    }
-
-    #audioContainer {
-      position: fixed;
-      bottom: -200px;
-      right: 70px;
     }
   </style>
 </head>
@@ -197,22 +263,21 @@
       <button id="fullscreenButton">Load (if about:blank press alt+a)</button>
       <button id="downloadButton">File cloak (download)</button>
       <button id="stopButton">Stop</button>
-      <div id="uploadMusicContainer">
-        <button id="uploadButton">Upload Music</button>
-        <button id="searchMusicButton">Search Music</button>
-      </div>
+      <button id="uploadButton">Upload Music</button>
       <button id="uploadBackgroundButton">Upload Background</button>
       <button id="quizButton" style="display:none;">Start Math Quiz</button>
       <button id="loadCommentsButton">Load Comments</button>
     </div>
     <input type="file" id="musicInput" accept="audio/*" style="display:none;">
     <input type="file" id="backgroundInput" accept="image/*" style="display:none;">
+    <input type="color" id="colorPicker" value="#ff0000" style="display:none;">
+    <input type="color" id="elementColorPicker" style="display:none;">
   </div>
-  <iframe id="iFrame"></iframe>
+  <div> <iframe id="iFrame"></iframe> </div>
   <div class="footer">
     Mahad 2025<br>
     Version 2.1<br>
-    <a href='https://soundcloudmp3.cc'>more information</a>
+    <a href='http://www.freevisitorcounters.com'>more information</a>
     <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=156dd0b72dc6a48378495c7cfae5cc19e06d0507'></script>
     <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/1312952/t/13"></script>
   </div>
@@ -228,164 +293,34 @@
     <div id="comments"></div>
   </div>
 
-  <div id="audioContainer">
-    <audio id="backgroundMusic" src="backmusic.mp3" autoplay loop controls>
-      Your browser does not support the audio element.
-    </audio>
-  </div>
-
-  <div id="fileNameDisplay">
-    Playing: ...
-  </div>
-
-  <button id="playPauseButton">||</button>
-
   <script>
-    const playPauseButton = document.getElementById('playPauseButton');
-    const backgroundMusic = document.getElementById('backgroundMusic');
-    const fileNameDisplay = document.getElementById('fileNameDisplay');
-    const musicInput = document.getElementById('musicInput');
+    const fonts = ['Roboto', 'Open Sans', 'Lobster', 'Montserrat'];
+    let currentFontIndex = 0;
 
-    playPauseButton.addEventListener('click', () => {
-      if (backgroundMusic.paused) {
-        backgroundMusic.play();
-        playPauseButton.textContent = '||';
-      } else {
-        backgroundMusic.pause();
-        playPauseButton.textContent = '►';
-      }
-    });
-
-    // Function to update the audio source and file name display
-    function updateMusic(file, fileName) {
-      if (!backgroundMusic.paused) {
-        backgroundMusic.pause();
-      }
-      backgroundMusic.src = file;
-      backgroundMusic.play();
-      fileNameDisplay.textContent = 'Playing: ' + fileName;
-      playPauseButton.textContent = '||';
+    function changeFont() {
+      currentFontIndex = (currentFontIndex + 1) % fonts.length;
+      document.body.style.fontFamily = fonts[currentFontIndex];
+      document.querySelectorAll('button').forEach(button => {
+        button.style.fontFamily = fonts[currentFontIndex];
+      });
     }
 
-    // Event listener for changing music file
-    musicInput.addEventListener('change', function(event) {
-      const file = event.target.files[0];
-      if (file) {
-        if (!backgroundMusic.paused) {
-          backgroundMusic.pause();
-        }
-        updateMusic(URL.createObjectURL(file), file.name);
-      }
-    });
+    // Change font every 0.5 second
+    const fontChangeInterval = setInterval(changeFont, 500);
 
-   <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const pinButton = document.getElementById('pinButton');
-    const pinInput = document.getElementById('pinInput');
-    const pinOverlay = document.getElementById('pinOverlay');
-    const mainOverlay = document.getElementById('mainOverlay');
-    const quizButton = document.getElementById('quizButton');
-    const quizContainer = document.getElementById('quizContainer');
+    let previousButton = null;
 
-    // PIN authentication logic
-    pinButton.addEventListener('click', function() {
-      const enteredPin = pinInput.value.trim();
-      console.log("Entered PIN:", enteredPin); // Debugging statement
-      fetch('pin.html')
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          return response.text();
-        })
-        .then(data => {
-          const correctPin = data.trim();
-          console.log("Fetched PIN:", correctPin); // Debugging statement
-          if (enteredPin === correctPin) {
-            pinOverlay.style.display = 'none';
-            mainOverlay.style.display = 'flex';
-          } else {
-            alert('Incorrect PIN. Redirecting to math quiz.');
-            quizButton.style.display = 'block';
-            startQuiz();
-            quizContainer.style.display = 'block';
-            pinOverlay.style.display = 'none';
-          }
-        })
-        .catch(error => {
-          console.error('Error fetching the PIN:', error);
-          alert('An error occurred while fetching the PIN. Please try again later.');
-        });
-    });
-    function startQuiz() {
-      const questionElement = document.getElementById('question');
-      const optionsElement = document.getElementById('options');
-      const resultElement = document.getElementById('result');
-      const recordStreakElement = document.getElementById('recordStreak');
-      let correctStreak = 0;
-      let recordStreak = 0;
+    Array.prototype.forEach.call(document.querySelectorAll('[data-url]'), function(elem) {
+      elem.addEventListener('click', function(e) {
+        document.getElementById('iFrame').src = this.dataset.url;
 
-      function getRandomInt(min, max) {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-      }
-
-      function generateQuestion() {
-        const num1 = getRandomInt(1, 20);
-        const num2 = getRandomInt(1, 20);
-        const correctAnswer = num1 + num2;
-        const wrongAnswers = new Set();
-
-        while (wrongAnswers.size < 3) {
-          const wrongAnswer = getRandomInt(1, 40);
-          if (wrongAnswer !== correctAnswer) {
-            wrongAnswers.add(wrongAnswer);
-          }
+        if (previousButton) {
+          previousButton.style.display = 'block'; // Show the previous button again
         }
 
-        const answers = [...wrongAnswers, correctAnswer].sort(() => Math.random() - 0.5);
-
-        questionElement.textContent = `What is ${num1} + ${num2}?`;
-        optionsElement.innerHTML = '';
-        answers.forEach(answer => {
-          const button = document.createElement('button');
-          button.textContent = answer;
-          button.addEventListener('click', () => {
-            if (answer === correctAnswer) {
-              correctStreak++;
-              resultElement.textContent = `Correct! Streak: ${correctStreak}`;
-              playCorrectSound();
-              if (correctStreak > recordStreak) {
-                recordStreak = correctStreak;
-                recordStreakElement.textContent = `Record Streak: ${recordStreak}`;
-              }
-            } else {
-              correctStreak = 0;
-              resultElement.textContent = 'Wrong answer. Streak reset.';
-            }
-            setTimeout(generateQuestion, 1000);
-          });
-          optionsElement.appendChild(button);
-        });
-      }
-
-      function playCorrectSound() {
-        const audio = new Audio('Correct.mp3');
-        audio.play();
-      }
-
-      quizContainer.style.display = 'block';
-      generateQuestion();
-    }
-  });
-    document.getElementById('incognitoButton').addEventListener('click', function() {
-      const w = window.open('about:blank');
-      var url = "https://music-math-revived.github.io/";
-      var iframe = w.document.createElement('iframe');
-      iframe.style.width = "100%";
-      iframe.style.height = "100%";
-      iframe.style.border = "none";
-      iframe.src = url;
-      w.document.body.appendChild(iframe);
+        this.style.display = 'none'; // Hide the current button
+        previousButton = this;
+      });
     });
 
     document.getElementById('fullscreenButton').addEventListener('click', function() {
@@ -411,29 +346,31 @@
       document.body.removeChild(element);
     });
 
-    document.getElementById('uploadButton').addEventListener('click', function() {
-      musicInput.click();
-    });
-
-    document.getElementById('searchMusicButton').addEventListener('click', function() {
-      const iframe = document.createElement('iframe');
-      iframe.style.width = "100%";
-      iframe.style.height = "100%";
-      iframe.style.border = "none";
-      iframe.src = "https://soundcloudmp3.cc";
-      document.body.appendChild(iframe);
-    });
-
-    document.querySelectorAll('.button-container button[data-url]').forEach(button => {
-      button.addEventListener('click', function() {
-        const url = button.getAttribute('data-url');
-        const iframe = document.createElement('iframe');
-        iframe.style.width = "100%";
-        iframe.style.height = "100%";
-        iframe.style.border = "none";
-        iframe.src = url;
-        document.body.appendChild(iframe);
+    function stopFontChange() {
+      clearInterval(fontChangeInterval);
+      document.querySelectorAll('button').forEach(button => {
+        button.style.animation = 'none';
       });
+      document.getElementById('stopButton').style.display = 'none';
+    }
+
+    document.getElementById('stopButton').addEventListener('click', stopFontChange);
+
+    document.getElementById('uploadButton').addEventListener('click', function() {
+      document.getElementById('musicInput').click();
+    });
+
+    document.getElementById('musicInput').addEventListener('change', function(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const audio = new Audio(URL.createObjectURL(file));
+        audio.loop = true;
+        audio.play();
+      }
+    });
+
+    document.getElementById('uploadBackgroundButton').addEventListener('click', function() {
+      document.getElementById('backgroundInput').click();
     });
 
     document.getElementById('backgroundInput').addEventListener('change', function(event) {
@@ -447,10 +384,22 @@
       }
     });
 
+    document.getElementById('colorPicker').addEventListener('input', function(event) {
+      const color = event.target.value;
+      document.querySelectorAll('button').forEach(button => {
+        button.style.backgroundColor = color;
+      });
+    });
+
+    document.getElementById('elementColorPicker').addEventListener('input', function(event) {
+      const color = event.target.value;
+      document.body.style.backgroundColor = color;
+    });
+
     document.getElementById('quizButton').addEventListener('click', function() {
       startQuiz();
-      document.querySelector('.overlay').style.display = 'none';
-      document.getElementById('quizContainer').style.display = 'block';
+      document.querySelector('.overlay').style.display = 'none'; // Hide original buttons
+      document.getElementById('quizContainer').style.display = 'block'; // Show quiz container
     });
 
     document.getElementById('loadCommentsButton').addEventListener('click', function() {
@@ -465,8 +414,8 @@
       const script2 = document.createElement('script');
       script2.textContent = `
         window.rpc_host = 'https://rpc.dyuproject.com';
-        window.comments_max_depth = 10;
-        window.comments_collapse_depth = 7;
+        window.comments_max_depth = 10; // max: 127
+        window.comments_collapse_depth = 7; // the depth where comments get collapsed by default
       `;
       commentsContainer.appendChild(script2);
 
@@ -475,7 +424,7 @@
       link.href = "https://netlify-comments.dyuproject.com/dist/build.css";
       commentsContainer.appendChild(link);
 
-      window.scrollTo(0, 0);
+      window.scrollTo(0, 0); // Scroll to top to see the comments
     });
 
     function startQuiz() {
@@ -486,6 +435,7 @@
       const recordStreakElement = document.getElementById('recordStreak');
       let correctStreak = 0;
       let recordStreak = 0;
+      let musicPlayed = false;
 
       function getRandomInt(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -520,17 +470,14 @@
                 recordStreak = correctStreak;
                 recordStreakElement.textContent = `Record Streak: ${recordStreak}`;
               }
-              if (correctStreak >= 20) {
-                playCelebrationMusic2();
-                document.body.classList.add('correct-streak');
-              } else if (correctStreak >= 10 && correctStreak % 10 === 0) {
+              if (correctStreak >= 10 && correctStreak % 10 === 0) {
                 playCelebrationMusic();
-                document.body.classList.add('correct-streak');
+                document.body.classList.add('correct-streak'); // Change background to streak.gif
               }
             } else {
               correctStreak = 0;
               resultElement.textContent = 'Wrong answer. Streak reset.';
-              document.body.classList.remove('correct-streak');
+              document.body.classList.remove('correct-streak'); // Remove streak.gif background
             }
             setTimeout(generateQuestion, 1000);
           });
@@ -548,11 +495,6 @@
         audio.play();
       }
 
-      function playCelebrationMusic2() {
-        const audio = new Audio('music2.mp3');
-        audio.play();
-      }
-
       quizContainer.style.display = 'block';
       generateQuestion();
     }
@@ -563,6 +505,7 @@
       }
     });
 
+    // Show color picker when any button is clicked
     document.querySelectorAll('button').forEach(button => {
       button.addEventListener('click', function() {
         document.getElementById('colorPicker').click();
@@ -570,45 +513,103 @@
       });
     });
 
+    // Load the math quiz if the PIN was guessed wrong
     if (localStorage.getItem('incorrectPin') === 'true') {
-      document.getElementById('quizButton').style.display = 'block';
-      localStorage.removeItem('incorrectPin');
+      document.getElementById('quizButton').style.display = 'block'; // Show quiz button
+      localStorage.removeItem('incorrectPin'); // Clear the flag after loading the quiz
     }
 
+    // PIN authentication logic
+    document.getElementById('pinButton').addEventListener('click', function() {
+      const pinInput = document.getElementById('pinInput').value;
+      console.log("Entered PIN:", pinInput); // Debugging statement
+      fetch('pin.html')
+        .then(response => response.text())
+        .then(data => {
+          const correctPin = data.trim();
+          console.log("Fetched PIN:", correctPin); // Debugging statement
+          stopFontChange(); // Stop font change when the PIN is entered
+          if (pinInput === correctPin) {
+            document.getElementById('pinOverlay').style.display = 'none';
+            document.getElementById('mainOverlay').style.display = 'flex'; // Ensure buttons are displayed
+            document.querySelectorAll('button').forEach(button => {
+              button.style.backgroundColor = '#B5651D'; // Change buttons to cream
+            });
+          } else {
+            alert('Redirecting to math quiz.');
+            document.getElementById('quizButton').style.display = 'block'; // Show quiz button
+            localStorage.setItem('incorrectPin', 'true'); // Set flag for incorrect PIN
+            startQuiz();
+            document.getElementById('quizContainer').style.display = 'block'; // Show quiz container
+            document.getElementById('pinOverlay').style.display = 'none'; // Hide PIN overlay
+          }
+        })
+        .catch(error => {
+          console.error('Error fetching the PIN:', error);
+          alert('An error occurred while fetching the PIN. Please try again later.');
+        });
+    });
+
+    document.getElementById('incognitoButton').addEventListener('click', function() {
+      const w = window.open('about:blank');
+      var url = "https://music-math-revived.github.io/";
+      var iframe = w.document.createElement('iframe');
+      iframe.style.width = "100%";
+      iframe.style.height = "100%";
+      iframe.style.border = "none";
+      iframe.src = url;
+      w.document.body.appendChild(iframe);
+    });
+
+    // Show loading icon on page load
     document.addEventListener('DOMContentLoaded', function() {
       document.getElementById('loadingIcon').style.display = 'block';
     });
 
+    // Hide loading icon when page is fully loaded
     window.addEventListener('load', function() {
       document.getElementById('loadingIcon').style.display = 'none';
     });
 
+    // New functionality: Hide everything but iframe on Alt + A
     document.addEventListener('keydown', function(event) {
       if (event.altKey && event.key === 'a') {
-        document.body.innerHTML =window.location.href = '<%= soundcloud_url %>';
+        document.body.innerHTML = '<iframe src="' + document.getElementById('iFrame').src + '" style="width: 100%; height: 100%; border: none; overflow: hidden;"></iframe>';
       }
+    });
+  </script>
+</body>
+</html>
+ <!-- Background music element -->
+  <audio id="backgroundMusic" src="backmusic.mp3" autoplay loop>
+    Your browser does not support the audio element.
+  </audio>
+
+  <!-- Display for the current playing file name -->
+  <div id="fileNameDisplay" style="position: fixed; bottom: 0; left: 0; padding: 10px; background-color: rgba(0, 0, 0, 0.5); color: white;">
+    Playing: backmusic.mp3
+  </div>
+
+  <script>
+    // Function to update the audio source and file name display
+    function updateMusic(file) {
+      const audio = document.getElementById('backgroundMusic');
+      const fileNameDisplay = document.getElementById('fileNameDisplay');
+      audio.src = file;
+      audio.play();
+      fileNameDisplay.textContent = 'Playing: ' + file;
     }
-  });
-  
-  document.addEventListener('keydown', function(event) {
-    if (event.altKey && event.key === 'a') {
-      document.body.innerHTML = window.location.href = '<%= soundcloud_url %>';
+
+    // Event listener for changing music file
+    document.getElementById('musicInput').addEventListener('change', function(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const audio = document.getElementById('backgroundMusic');
+        audio.src = URL.createObjectURL(file);
+        audio.play();
+        document.getElementById('fileNameDisplay').textContent = 'Playing: ' + file.name;
       }
-    }
-  });
-  
-  document.addEventListener('keydown', function(event) {
-    if (event.altKey && event.key === 'a') {
-      document.body.innerHTML = 'window.location.href = '<%= soundcloud_url %>';
-      }
-    }
-  });
-  
-  document.addEventListener('keydown', function(event) {
-    if (event.altKey && event.key === 'a') {
-      document.body.innerHTML = '<iframe src="' + document.getElementById('iFrame').src + '" style="width: 100%; height: 100%; border: none; overflow: hidden;"></iframe>';
-    }
-  });
-</script>
+    });
+  </script>
 </body>
 </html>
