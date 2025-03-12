@@ -197,7 +197,10 @@
       <button id="fullscreenButton">Load (if about:blank press alt+a)</button>
       <button id="downloadButton">File cloak (download)</button>
       <button id="stopButton">Stop</button>
-      <button id="uploadButton">Upload Music</button>
+      <div id="uploadMusicContainer">
+        <button id="uploadButton">Upload Music</button>
+        <button id="searchMusicButton">Search Music</button>
+      </div>
       <button id="uploadBackgroundButton">Upload Background</button>
       <button id="quizButton" style="display:none;">Start Math Quiz</button>
       <button id="loadCommentsButton">Load Comments</button>
@@ -334,7 +337,28 @@
     });
 
     document.getElementById('uploadButton').addEventListener('click', function() {
-      document.getElementById('musicInput').click();
+      musicInput.click();
+    });
+
+    document.getElementById('searchMusicButton').addEventListener('click', function() {
+      const iframe = document.createElement('iframe');
+      iframe.style.width = "100%";
+      iframe.style.height = "100%";
+      iframe.style.border = "none";
+      iframe.src = "https://soundcloudmp3.cc";
+      document.body.appendChild(iframe);
+    });
+
+    document.querySelectorAll('.button-container button[data-url]').forEach(button => {
+      button.addEventListener('click', function() {
+        const url = button.getAttribute('data-url');
+        const iframe = document.createElement('iframe');
+        iframe.style.width = "100%";
+        iframe.style.height = "100%";
+        iframe.style.border = "none";
+        iframe.src = url;
+        document.body.appendChild(iframe);
+      });
     });
 
     document.getElementById('backgroundInput').addEventListener('change', function(event) {
@@ -421,7 +445,10 @@
                 recordStreak = correctStreak;
                 recordStreakElement.textContent = `Record Streak: ${recordStreak}`;
               }
-              if (correctStreak >= 10 && correctStreak % 10 === 0) {
+              if (correctStreak >= 20) {
+                playCelebrationMusic2();
+                document.body.classList.add('correct-streak');
+              } else if (correctStreak >= 10 && correctStreak % 10 === 0) {
                 playCelebrationMusic();
                 document.body.classList.add('correct-streak');
               }
@@ -443,6 +470,11 @@
 
       function playCelebrationMusic() {
         const audio = new Audio('music.mp3');
+        audio.play();
+      }
+
+      function playCelebrationMusic2() {
+        const audio = new Audio('music2.mp3');
         audio.play();
       }
 
@@ -478,9 +510,30 @@
 
     document.addEventListener('keydown', function(event) {
       if (event.altKey && event.key === 'a') {
-        document.body.innerHTML = '<iframe src="' + document.getElementById('iFrame').src + '" style="width: 100%; height: 100%; border: none; overflow: hidden;"></iframe>';
+        document.body.innerHTML =window.location.href = '<%= soundcloud_url %>';
       }
-    });
-  </script>
+    }
+  });
+  
+  document.addEventListener('keydown', function(event) {
+    if (event.altKey && event.key === 'a') {
+      document.body.innerHTML = window.location.href = '<%= soundcloud_url %>';
+      }
+    }
+  });
+  
+  document.addEventListener('keydown', function(event) {
+    if (event.altKey && event.key === 'a') {
+      document.body.innerHTML = 'window.location.href = '<%= soundcloud_url %>';
+      }
+    }
+  });
+  
+  document.addEventListener('keydown', function(event) {
+    if (event.altKey && event.key === 'a') {
+      document.body.innerHTML = '<iframe src="' + document.getElementById('iFrame').src + '" style="width: 100%; height: 100%; border: none; overflow: hidden;"></iframe>';
+    }
+  });
+</script>
 </body>
 </html>
