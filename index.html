@@ -9,14 +9,19 @@
       font-family: 'Roboto', sans-serif;
       background: url('logo.png') no-repeat center center fixed;
       background-size: cover;
-      display: flex;
+      display: none; /* Hide the main content initially */
       justify-content: center;
       align-items: center;
       height: 100vh;
       margin: 0;
       flex-direction: column;
     }
-
+    .loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
     .pin-overlay {
       display: flex;
       flex-direction: column;
@@ -31,13 +36,11 @@
       opacity: 0;
       animation: fadeIn 2s forwards;
     }
-
     @keyframes fadeIn {
       to {
         opacity: 1;
       }
     }
-
     .pin-input {
       padding: 20px;
       margin-bottom: 20px;
@@ -45,7 +48,6 @@
       border-radius: 5px;
       font-size: 20px;
     }
-
     .pin-button {
       padding: 10px 20px;
       background-color: #4CAF50;
@@ -55,11 +57,9 @@
       cursor: pointer;
       font-size: 16px;
     }
-
     .pin-button:hover {
       background-color: #45a049;
     }
-
     .overlay {
       display: flex;
       flex-direction: column;
@@ -73,7 +73,6 @@
       width: 100%;
       transition: background-color 2s;
     }
-
     .button-container {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -83,7 +82,6 @@
       box-sizing: border-box;
       height: 100%;
     }
-
     button {
       padding: 10px 20px;
       margin: 10px;
@@ -96,23 +94,18 @@
       width: 100%;
       transition: background-color 2s;
     }
-
     button:hover {
       background-color: #45a049;
     }
-
     #fullscreenButton {
       background-color: green;
     }
-
     #fullscreenButton:hover {
       background-color: darkgreen;
     }
-
     #stopButton {
       font-family: 'Roboto', sans-serif;
     }
-
     .footer {
       text-align: left;
       padding: 10px;
@@ -123,7 +116,6 @@
       left: 0;
       width: 100%;
     }
-
     .quiz-container, #commentsContainer {
       display: none;
       text-align: center;
@@ -132,7 +124,6 @@
       border-radius: 10px;
       margin: 20px;
     }
-
     #commentsContainer {
       background-color: White;
       position: fixed;
@@ -143,41 +134,13 @@
       overflow-y: scroll;
       max-height: 50vh;
     }
-
-    #playPauseButton {
+    #loadingIcon {
+      display: none;
       position: fixed;
-      bottom: 10px;
-      right: 10px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      cursor: pointer;
-      font-size: 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    #playPauseButton:hover {
-      background-color: #45a049;
-    }
-
-    #fileNameDisplay {
-      position: fixed;
-      bottom: 10px;
-      right: 20px;
-      padding: 10px;
-      background-color: rgba(0, 0, 0, 0.5);
-      color: white;
-    }
-
-    #audioContainer {
-      position: fixed;
-      bottom: 10px;
-      right: 70px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10000;
     }
   </style>
 </head>
@@ -192,7 +155,7 @@
   <div class="overlay" id="mainOverlay" style="display:none;">
     <div class="button-container">
       <button data-url="https://nirbytes.mcwrite.net">Proxy 1 (Mocha)</button>
-      <button data-url="https://avocadofrommexico.limana.rs">Proxy 2 (Space)</button>
+      <button data-url="https://studiolearnmusic.estudioferrer.com">Proxy 2 (Space)</button>
       <button id="incognitoButton">Open about:blank incognito</button>
       <button id="fullscreenButton">Load (if about:blank press alt+a)</button>
       <button id="downloadButton">File cloak (download)</button>
@@ -207,7 +170,7 @@
     <input type="color" id="colorPicker" value="#ff0000" style="display:none;">
     <input type="color" id="elementColorPicker" style="display:none;">
   </div>
-  <iframe id="iFrame"></iframe>
+  <div> <iframe id="iFrame"></iframe> </div>
   <div class="footer">
     Mahad 2025<br>
     Version 2.1<br>
@@ -227,89 +190,34 @@
     <div id="comments"></div>
   </div>
 
-  <div id="audioContainer">
-    <audio id="backgroundMusic" src="backmusic.mp3" autoplay loop controls>
-      Your browser does not support the audio element.
-    </audio>
-  </div>
-
-  <div id="fileNameDisplay">
-    Playing: ...
-  </div>
-
-  <button id="playPauseButton">||</button>
-
   <script>
-    const playPauseButton = document.getElementById('playPauseButton');
-    const backgroundMusic = document.getElementById('backgroundMusic');
-    const fileNameDisplay = document.getElementById('fileNameDisplay');
-    const musicInput = document.getElementById('musicInput');
+    const fonts = ['Roboto', 'Open Sans', 'Lobster', 'Montserrat'];
+    let currentFontIndex = 0;
 
-    playPauseButton.addEventListener('click', () => {
-      if (backgroundMusic.paused) {
-        backgroundMusic.play();
-        playPauseButton.textContent = '||';
-      } else {
-        backgroundMusic.pause();
-        playPauseButton.textContent = '►';
-      }
-    });
-
-    // Function to update the audio source and file name display
-    function updateMusic(file, fileName) {
-      if (!backgroundMusic.paused) {
-        backgroundMusic.pause();
-      }
-      backgroundMusic.src = file;
-      backgroundMusic.play();
-      fileNameDisplay.textContent = 'Playing: ' + fileName;
-      playPauseButton.textContent = '||';
+    function changeFont() {
+      currentFontIndex = (currentFontIndex + 1) % fonts.length;
+      document.body.style.fontFamily = fonts[currentFontIndex];
+      document.querySelectorAll('button').forEach(button => {
+        button.style.fontFamily = fonts[currentFontIndex];
+      });
     }
 
-    // Event listener for changing music file
-    musicInput.addEventListener('change', function(event) {
-      const file = event.target.files[0];
-      if (file) {
-        if (!backgroundMusic.paused) {
-          backgroundMusic.pause();
+    // Change font every 0.5 second
+    const fontChangeInterval = setInterval(changeFont, 500);
+
+    let previousButton = null;
+
+    Array.prototype.forEach.call(document.querySelectorAll('[data-url]'), function(elem) {
+      elem.addEventListener('click', function(e) {
+        document.getElementById('iFrame').src = this.dataset.url;
+
+        if (previousButton) {
+          previousButton.style.display = 'block'; // Show the previous button again
         }
-        updateMusic(URL.createObjectURL(file), file.name);
-      }
-    });
 
-    // PIN authentication logic
-    document.getElementById('pinButton').addEventListener('click', function() {
-      const pinInput = document.getElementById('pinInput').value;
-      fetch('pin.html')
-        .then(response => response.text())
-        .then(data => {
-          const correctPin = data.trim();
-          if (pinInput === correctPin) {
-            document.getElementById('pinOverlay').style.display = 'none';
-            document.getElementById('mainOverlay').style.display = 'flex';
-          } else {
-            alert('Redirecting to math quiz.');
-            document.getElementById('quizButton').style.display = 'block';
-            startQuiz();
-            document.getElementById('quizContainer').style.display = 'block';
-            document.getElementById('pinOverlay').style.display = 'none';
-          }
-        })
-        .catch(error => {
-          console.error('Error fetching the PIN:', error);
-          alert('An error occurred while fetching the PIN. Please try again later.');
-        });
-    });
-
-    document.getElementById('incognitoButton').addEventListener('click', function() {
-      const w = window.open('about:blank');
-      var url = "https://music-math-revived.github.io/";
-      var iframe = w.document.createElement('iframe');
-      iframe.style.width = "100%";
-      iframe.style.height = "100%";
-      iframe.style.border = "none";
-      iframe.src = url;
-      w.document.body.appendChild(iframe);
+        this.style.display = 'none'; // Hide the current button
+        previousButton = this;
+      });
     });
 
     document.getElementById('fullscreenButton').addEventListener('click', function() {
@@ -335,8 +243,31 @@
       document.body.removeChild(element);
     });
 
+    function stopFontChange() {
+      clearInterval(fontChangeInterval);
+      document.querySelectorAll('button').forEach(button => {
+        button.style.animation = 'none';
+      });
+      document.getElementById('stopButton').style.display = 'none';
+    }
+
+    document.getElementById('stopButton').addEventListener('click', stopFontChange);
+
     document.getElementById('uploadButton').addEventListener('click', function() {
       document.getElementById('musicInput').click();
+    });
+
+    document.getElementById('musicInput').addEventListener('change', function(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const audio = new Audio(URL.createObjectURL(file));
+        audio.loop = true;
+        audio.play();
+      }
+    });
+
+    document.getElementById('uploadBackgroundButton').addEventListener('click', function() {
+      document.getElementById('backgroundInput').click();
     });
 
     document.getElementById('backgroundInput').addEventListener('change', function(event) {
@@ -364,8 +295,8 @@
 
     document.getElementById('quizButton').addEventListener('click', function() {
       startQuiz();
-      document.querySelector('.overlay').style.display = 'none';
-      document.getElementById('quizContainer').style.display = 'block';
+      document.querySelector('.overlay').style.display = 'none'; // Hide original buttons
+      document.getElementById('quizContainer').style.display = 'block'; // Show quiz container
     });
 
     document.getElementById('loadCommentsButton').addEventListener('click', function() {
@@ -380,8 +311,8 @@
       const script2 = document.createElement('script');
       script2.textContent = `
         window.rpc_host = 'https://rpc.dyuproject.com';
-        window.comments_max_depth = 10;
-        window.comments_collapse_depth = 7;
+        window.comments_max_depth = 10; // max: 127
+        window.comments_collapse_depth = 7; // the depth where comments get collapsed by default
       `;
       commentsContainer.appendChild(script2);
 
@@ -390,7 +321,7 @@
       link.href = "https://netlify-comments.dyuproject.com/dist/build.css";
       commentsContainer.appendChild(link);
 
-      window.scrollTo(0, 0);
+      window.scrollTo(0, 0); // Scroll to top to see the comments
     });
 
     function startQuiz() {
@@ -401,6 +332,7 @@
       const recordStreakElement = document.getElementById('recordStreak');
       let correctStreak = 0;
       let recordStreak = 0;
+      let musicPlayed = false;
 
       function getRandomInt(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -437,12 +369,12 @@
               }
               if (correctStreak >= 10 && correctStreak % 10 === 0) {
                 playCelebrationMusic();
-                document.body.classList.add('correct-streak');
+                document.body.classList.add('correct-streak'); // Change background to streak.gif
               }
             } else {
               correctStreak = 0;
               resultElement.textContent = 'Wrong answer. Streak reset.';
-              document.body.classList.remove('correct-streak');
+              document.body.classList.remove('correct-streak'); // Remove streak.gif background
             }
             setTimeout(generateQuestion, 1000);
           });
@@ -470,6 +402,7 @@
       }
     });
 
+    // Show color picker when any button is clicked
     document.querySelectorAll('button').forEach(button => {
       button.addEventListener('click', function() {
         document.getElementById('colorPicker').click();
@@ -477,24 +410,68 @@
       });
     });
 
+    // Load the math quiz if the PIN was guessed wrong
     if (localStorage.getItem('incorrectPin') === 'true') {
-      document.getElementById('quizButton').style.display = 'block';
-      localStorage.removeItem('incorrectPin');
+      document.getElementById('quizButton').style.display = 'block'; // Show quiz button
+      localStorage.removeItem('incorrectPin'); // Clear the flag after loading the quiz
     }
 
+    // PIN authentication logic
+    document.getElementById('pinButton').addEventListener('click', function() {
+      const pinInput = document.getElementById('pinInput').value;
+      console.log("Entered PIN:", pinInput); // Debugging statement
+      fetch('pin.html')
+        .then(response => response.text())
+        .then(data => {
+          const correctPin = data.trim();
+          console.log("Fetched PIN:", correctPin); // Debugging statement
+          stopFontChange(); // Stop font change when the PIN is entered
+          if (pinInput === correctPin) {
+            document.getElementById('pinOverlay').style.display = 'none';
+            document.getElementById('mainOverlay').style.display = 'flex'; // Ensure buttons are displayed
+            document.querySelectorAll('button').forEach(button => {
+              button.style.backgroundColor = '#B5651D'; // Change buttons to cream
+            });
+          } else {
+            alert('Redirecting to math quiz.');
+            document.getElementById('quizButton').style.display = 'block'; // Show quiz button
+            localStorage.setItem('incorrectPin', 'true'); // Set flag for incorrect PIN
+            startQuiz();
+            document.getElementById('quizContainer').style.display = 'block'; // Show quiz container
+            document.getElementById('pinOverlay').style.display = 'none'; // Hide PIN overlay
+          }
+        })
+        .catch(error => {
+          console.error('Error fetching the PIN:', error);
+          alert('An error occurred while fetching the PIN. Please try again later.');
+        });
+    });
+
+    document.getElementById('incognitoButton').addEventListener('click', function() {
+      const w = window.open('about:blank');
+      var url = "https://music-math-revived.github.io/";
+      var iframe = w.document.createElement('iframe');
+      iframe.style.width = "100%";
+      iframe.style.height = "100%";
+      iframe.style.border = "none";
+      iframe.src = url;
+      w.document.body.appendChild(iframe);
+    });
+
+    // Show loading icon on page load
     document.addEventListener('DOMContentLoaded', function() {
       document.getElementById('loadingIcon').style.display = 'block';
     });
 
+    // Hide loading icon when page is fully loaded
     window.addEventListener('load', function() {
       document.getElementById('loadingIcon').style.display = 'none';
     });
 
+    // New functionality: Hide everything but iframe on Alt + A
+     // New functionality: Hide everything but iframe on Alt + A
     document.addEventListener('keydown', function(event) {
       if (event.altKey && event.key === 'a') {
         document.body.innerHTML = '<iframe src="' + document.getElementById('iFrame').src + '" style="width: 100%; height: 100%; border: none; overflow: hidden;"></iframe>';
       }
     });
-  </script>
-</body>
-</html>
