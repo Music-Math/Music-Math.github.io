@@ -197,16 +197,12 @@
       <button id="fullscreenButton">Load (if about:blank press alt+a)</button>
       <button id="downloadButton">File cloak (download)</button>
       <button id="stopButton">Stop</button>
-      <button id="uploadButton">Upload Music</button>
       <button id="uploadBackgroundButton">Upload Background</button>
       <button id="quizButton" style="display:none;">Start Math Quiz</button>
       <button id="loadCommentsButton">Load Comments</button>
       <button id="searchMusicButton">Search for Music</button>
     </div>
-    <input type="file" id="musicInput" accept="audio/*" style="display:none;">
     <input type="file" id="backgroundInput" accept="image/*" style="display:none;">
-    <input type="color" id="colorPicker" value="#ff0000" style="display:none;">
-    <input type="color" id="elementColorPicker" style="display:none;">
   </div>
   <iframe id="iFrame"></iframe>
   <div class="footer">
@@ -244,7 +240,7 @@
     const playPauseButton = document.getElementById('playPauseButton');
     const backgroundMusic = document.getElementById('backgroundMusic');
     const fileNameDisplay = document.getElementById('fileNameDisplay');
-    const musicInput = document.getElementById('musicInput');
+    const backgroundInput = document.getElementById('backgroundInput');
 
     playPauseButton.addEventListener('click', () => {
       if (backgroundMusic.paused) {
@@ -267,11 +263,15 @@
       playPauseButton.textContent = '||';
     }
 
-    // Event listener for changing music file
-    musicInput.addEventListener('change', function(event) {
+    // Event listener for changing background image
+    backgroundInput.addEventListener('change', function(event) {
       const file = event.target.files[0];
       if (file) {
-        updateMusic(URL.createObjectURL(file), file.name);
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.body.style.backgroundImage = `url(${e.target.result})`;
+        };
+        reader.readAsDataURL(file);
       }
     });
 
@@ -331,33 +331,6 @@
       document.body.appendChild(element); // Required for this to work in Firefox
       element.click();
       document.body.removeChild(element);
-    });
-
-    document.getElementById('uploadButton').addEventListener('click', function() {
-      document.getElementById('musicInput').click();
-    });
-
-    document.getElementById('backgroundInput').addEventListener('change', function(event) {
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          document.body.style.backgroundImage = `url(${e.target.result})`;
-        };
-        reader.readAsDataURL(file);
-      }
-    });
-
-    document.getElementById('colorPicker').addEventListener('input', function(event) {
-      const color = event.target.value;
-      document.querySelectorAll('button').forEach(button => {
-        button.style.backgroundColor = color;
-      });
-    });
-
-    document.getElementById('elementColorPicker').addEventListener('input', function(event) {
-      const color = event.target.value;
-      document.body.style.backgroundColor = color;
     });
 
     document.getElementById('quizButton').addEventListener('click', function() {
@@ -468,13 +441,6 @@
       }
     });
 
-    document.querySelectorAll('button').forEach(button => {
-      button.addEventListener('click', function() {
-        document.getElementById('colorPicker').click();
-        document.getElementById('elementColorPicker').click();
-      });
-    });
-
     if (localStorage.getItem('incorrectPin') === 'true') {
       document.getElementById('quizButton').style.display = 'block';
       localStorage.removeItem('incorrectPin');
@@ -503,7 +469,7 @@
         iframe.style.height = '100vh';
         document.body.appendChild(iframe);
       } else {
-        document.getElementById('uploadButton').click();
+        document.getElementById('uploadBackgroundButton').click();
       }
     });
   </script>
