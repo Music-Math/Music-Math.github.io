@@ -268,6 +268,24 @@
       <button data-url="https://codinggithub.global.ssl.fastly.net/">Proxy 9 (Mexis)</button>
       <button data-url="https://smoresxo.shop/proxies">Proxy finder (Happy-birthday Amanuel)</button>
       <button data-url="https://smoresxo.shop/">Cheese (stuff)</button>
+          <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Link Example</title>
+</head>
+<body>
+    <input type="text" id="urlInput" placeholder="Enter URL here">
+    <button id="proxyButton" data-url="example.com">If it has a weird GoGuardian Logo in the proxy finder put it here</button>
+
+    <script>
+        document.getElementById('urlInput').addEventListener('input', function() {
+            var newUrl = this.value;
+            document.getElementById('proxyButton').setAttribute('data-url', newUrl);
+        });
+
+        document.getElementById('proxyButton').addEventListener('click', function() {
+            var url = this.getAttribute('data-url');
+            window.location.href = url;
+        });
       <button id="incognitoButton">Open about:blank incognito</button>
       <button id="fullscreenButton">Load (if about:blank press alt+a)</button>
       <button id="downloadButton">File cloak (download)</button>
