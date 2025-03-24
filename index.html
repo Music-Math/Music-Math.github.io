@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CLever | Log in</title>
+    <title>Clever | Log in</title>
     <style>
         /* Styles for the overlay */
         #overlay {
@@ -28,6 +28,15 @@
             font-size: 16px;
             margin-left: 10px;
         }
+
+        .quiz-container {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            margin: 20px;
+        }
     </style>
 </head>
 <body>
@@ -44,6 +53,13 @@
     <!-- Button to download backup.html -->
     <button id="downloadButton">Download File cloak</button>
 
+    <div class="quiz-container" id="quizContainer">
+        <h2 id="question"></h2>
+        <div id="options"></div>
+        <p id="result"></p>
+        <p id="recordStreak"></p>
+    </div>
+
     <script>
         // Download button functionality
         document.getElementById('downloadButton').addEventListener('click', function() {
@@ -52,16 +68,6 @@
             link.download = 'backup.html';
             link.click();
         });
-
-        // Fetch and display content from pin.html
-        fetch('pin.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('pinData').innerHTML = data;
-            })
-            .catch(error => {
-                console.error('Error fetching pin.html:', error);
-            });
 
         // Overlay pin functionality
         document.getElementById('submitPin').addEventListener('click', function() {
@@ -72,13 +78,71 @@
                     if (enteredPin === correctPin.trim()) {
                         document.getElementById('overlay').style.display = 'none';
                     } else {
-                        alert('Incorrect PIN. Please try again.');
+                        alert('Incorrect PIN. Redirecting to math quiz.');
+                        startQuiz();
+                        document.getElementById('quizContainer').style.display = 'block'; // Show quiz container
+                        document.getElementById('overlay').style.display = 'none'; // Hide PIN overlay
                     }
                 })
                 .catch(error => {
                     console.error('Error fetching pin:', error);
                 });
         });
+
+        function startQuiz() {
+            const quizContainer = document.getElementById('quizContainer');
+            const questionElement = document.getElementById('question');
+            const optionsElement = document.getElementById('options');
+            const resultElement = document.getElementById('result');
+            const recordStreakElement = document.getElementById('recordStreak');
+            let correctStreak = 0;
+            let recordStreak = 0;
+
+            function getRandomInt(min, max) {
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+            }
+
+            function generateQuestion() {
+                const num1 = getRandomInt(1, 20);
+                const num2 = getRandomInt(1, 20);
+                const correctAnswer = num1 + num2;
+                const wrongAnswers = new Set();
+
+                while (wrongAnswers.size < 3) {
+                    const wrongAnswer = getRandomInt(1, 40);
+                    if (wrongAnswer !== correctAnswer) {
+                        wrongAnswers.add(wrongAnswer);
+                    }
+                }
+
+                const answers = [...wrongAnswers, correctAnswer].sort(() => Math.random() - 0.5);
+
+                questionElement.textContent = `What is ${num1} + ${num2}?`;
+                optionsElement.innerHTML = '';
+                answers.forEach(answer => {
+                    const button = document.createElement('button');
+                    button.textContent = answer;
+                    button.addEventListener('click', () => {
+                        if (answer === correctAnswer) {
+                            correctStreak++;
+                            resultElement.textContent = `Correct! Streak: ${correctStreak}`;
+                            if (correctStreak > recordStreak) {
+                                recordStreak = correctStreak;
+                                recordStreakElement.textContent = `Record Streak: ${recordStreak}`;
+                            }
+                        } else {
+                            correctStreak = 0;
+                            resultElement.textContent = 'Wrong answer. Streak reset.';
+                        }
+                        setTimeout(generateQuestion, 1000);
+                    });
+                    optionsElement.appendChild(button);
+                });
+            }
+
+            quizContainer.style.display = 'block';
+            generateQuestion();
+        }
     </script>
 </body>
 </html>
