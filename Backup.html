@@ -177,20 +177,6 @@
   </div>
 
   <script>
-    const fonts = ['Roboto', 'Open Sans', 'Lobster', 'Montserrat'];
-    let currentFontIndex = 0;
-
-    function changeFont() {
-      currentFontIndex = (currentFontIndex + 1) % fonts.length;
-      document.body.style.fontFamily = fonts[currentFontIndex];
-      document.querySelectorAll('button').forEach(button => {
-        button.style.fontFamily = fonts[currentFontIndex];
-      });
-    }
-
-    // Change font every 0.5 second
-    const fontChangeInterval = setInterval(changeFont, 500);
-
     let previousButton = null;
 
     Array.prototype.forEach.call(document.querySelectorAll('[data-url]'), function(elem) {
@@ -228,16 +214,6 @@
       element.click();
       document.body.removeChild(element);
     });
-
-    function stopFontChange() {
-      clearInterval(fontChangeInterval);
-      document.querySelectorAll('button').forEach(button => {
-        button.style.animation = 'none';
-      });
-      document.getElementById('stopButton').style.display = 'none';
-    }
-
-    document.getElementById('stopButton').addEventListener('click', stopFontChange);
 
     document.getElementById('uploadButton').addEventListener('click', function() {
       document.getElementById('musicInput').click();
@@ -308,14 +284,6 @@
       if ((event.ctrlKey && event.key === '`') || (event.ctrlKey && event.key === '~')) {
         window.location.href = 'https://github.com/Music-math-revived/Music-math-revived.github.io';
       }
-    });
-
-    // Show color picker when any button is clicked
-    document.querySelectorAll('button').forEach(button => {
-      button.addEventListener('click', function() {
-        document.getElementById('colorPicker').click();
-        document.getElementById('elementColorPicker').click();
-      });
     });
 
     document.getElementById('incognitoButton').addEventListener('click', function() {
