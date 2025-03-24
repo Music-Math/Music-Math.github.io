@@ -32,11 +32,24 @@
 
         .quiz-container {
             display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 1); /* Fully opaque background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
             text-align: center;
+            z-index: 1001; /* Higher than the overlay */
+        }
+
+        .quiz-content {
             padding: 20px;
             background-color: rgba(255, 255, 255, 1); /* Fully opaque background */
             border-radius: 10px;
-            margin: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
         .content {
@@ -58,8 +71,10 @@
 
         <!-- Button to download Backup.html -->
         <button id="downloadButton">Download File cloak</button>
+    </div>
 
-        <div class="quiz-container" id="quizContainer">
+    <div class="quiz-container" id="quizContainer">
+        <div class="quiz-content">
             <h2 id="question"></h2>
             <div id="options"></div>
             <p id="result"></p>
@@ -87,7 +102,7 @@
                         document.getElementById('content').style.display = 'block'; // Show content
                     } else {
                         alert('Incorrect PIN. Redirecting to math quiz.');
-                        document.getElementById('quizContainer').style.display = 'block'; // Show quiz container
+                        document.getElementById('quizContainer').style.display = 'flex'; // Show quiz container
                         startQuiz();
                         document.getElementById('overlay').style.display = 'none'; // Hide PIN overlay
                     }
@@ -148,7 +163,7 @@
                 });
             }
 
-            quizContainer.style.display = 'block';
+            quizContainer.style.display = 'flex';
             generateQuestion();
         }
     </script>
