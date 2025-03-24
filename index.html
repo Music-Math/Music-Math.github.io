@@ -38,6 +38,10 @@
             border-radius: 10px;
             margin: 20px;
         }
+
+        .content {
+            display: none; /* Initially hidden */
+        }
     </style>
 </head>
 <body>
@@ -49,7 +53,7 @@
         </div>
     </div>
 
-    <div class="content">
+    <div class="content" id="content">
         <h1>The unblocker</h1>
 
         <!-- Button to download Backup.html -->
@@ -80,6 +84,7 @@
                 .then(correctPin => {
                     if (enteredPin === correctPin.trim()) {
                         document.getElementById('overlay').style.display = 'none';
+                        document.getElementById('content').style.display = 'block'; // Show content
                     } else {
                         alert('Incorrect PIN. Redirecting to math quiz.');
                         startQuiz();
