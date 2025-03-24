@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="icon" href="favicon.png" type="image/jpeg">
     <title>Clever | Log in</title>
     <style>
         /* Styles for the overlay */
@@ -64,7 +65,7 @@
         // Download button functionality
         document.getElementById('downloadButton').addEventListener('click', function() {
             const link = document.createElement('a');
-            link.href = 'backup.html';
+            link.href = './backup.html'; // Ensure this file is in the same directory
             link.download = 'backup.html';
             link.click();
         });
