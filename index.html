@@ -11,91 +11,42 @@
       font-family: 'Roboto', sans-serif;
       background: url('logo.png') no-repeat center center fixed;
       background-size: cover;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       height: 100vh;
       margin: 0;
-      flex-direction: column;
-    }
-
-    .pin-overlay {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      background-color: rgba(255, 255, 255, 1);
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      opacity: 0;
-      animation: fadeIn 2s forwards;
-    }
-
-    @keyframes fadeIn {
-      to {
-        opacity: 1;
-      }
-    }
-
-    .pin-input {
-      padding: 20px;
-      margin-bottom: 20px;
-      border: 2px solid #ccc;
-      border-radius: 5px;
-      font-size: 20px;
-    }
-
-    .pin-button {
-      padding: 10px 20px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-
-    .pin-button:hover {
-      background-color: #45a049;
+      overflow: auto; /* Make the body scrollable */
     }
 
     .overlay {
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: space-evenly;
+      justify-content: flex-start; /* Align items to the start */
       height: 100vh;
-      background-color: rgba(255, 255, 255, 0.8);
-      position: absolute;
-      top: 0;
-      left: 0;
       width: 100%;
-      transition: background-color 2s;
+      background-color: rgba(255, 255, 255, 0.8);
+      position: relative;
     }
 
     .button-container {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      grid-gap: 10px;
+      display: flex;
+      flex-direction: column; /* Stack the buttons on top of each other */
+      align-items: center;
+      justify-content: center;
       padding: 20px;
       width: 100%;
       box-sizing: border-box;
-      height: 100%;
     }
 
     button {
-      padding: 5px 10px;
-      margin: 5px;
+      padding: 10px 20px; /* Adjust padding */
+      margin: 10px 0; /* Adjust margin to stack buttons */
       background-color: rgba(255, 0, 0, 1);
       color: white;
       border: none;
       border-radius: 5px;
       cursor: pointer;
-      font-size: 12px;
-      width: 80%;
+      font-size: 16px; /* Adjust font size */
+      width: 80%; /* Adjust width */
       transition: background-color 2s;
     }
 
@@ -146,119 +97,51 @@
       max-height: 50vh;
     }
 
-
-  <audio id="backgroundMusic" src="BackMusic.mp3" autoplay loop>
-    Your browser does not support the audio element.
-  </audio>
-
-  <div id="fileNameDisplay"> 
-                                      
-  </div>
-
-  <button id="playPauseButton">||</button>
-
-  <script>
-    const playPauseButton = document.getElementById('playPauseButton');
-    const backgroundMusic = document.getElementById('backgroundMusic');
-    const fileNameDisplay = document.getElementById('fileNameDisplay');
-
-    playPauseButton.addEventListener('click', () => {
-      if (backgroundMusic.paused) {
-        backgroundMusic.play();
-        playPauseButton.textContent = '||';
-      } else {
-        backgroundMusic.pause();
-        playPauseButton.textContent = '►';
-      }
-    });
-
-    // Function to update the audio source and file name display
-    function updateMusic(file) {
-      backgroundMusic.src = file;
-      backgroundMusic.play();
-      fileNameDisplay.textContent = 'Playing: ' + file;
-      playPauseButton.textContent = '||';
+    #loadingIcon {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10000;
     }
 
-    // Event listener for changing music file
-    document.getElementById('musicInput').addEventListener('change', function(event) {
-      const file = event.target.files[0];
-      if (file) {
-        backgroundMusic.src = URL.createObjectURL(file);
-        backgroundMusic.play();
-        fileNameDisplay.textContent = 'Playing: ' + file.name;
-        playPauseButton.textContent = '||';
-      }
-    });
-
-    // Function to update the audio source and file name display
-    function updateMusic(file) {
-      backgroundMusic.src = file;
-      backgroundMusic.play();
-      fileNameDisplay.textContent = 'Playing: ' + file;
-      playPauseButton.textContent = '||';
+    #playPauseButton {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+      font-size: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
-    // Event listener for changing music file
-    document.getElementById('musicInput').addEventListener('change', function(event) {
-      const file = event.target.files[0];
-      if (file) {
-        backgroundMusic.src = URL.createObjectURL(file);
-        backgroundMusic.play();
-        fileNameDisplay.textContent = 'Playing: ' + file.name;
-        playPauseButton.textContent = '||';
-      }
-    });
-    
-  // Misplaced CSS rules within <script> tag
-  #loadingIcon {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 10000;
-  }
-  #playPauseButton {
-    position: fixed;
-    bottom: 10px;
-    right: 10px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    cursor: pointer;
-    font-size: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+    #playPauseButton:hover {
+      background-color: #45a049;
+    }
 
-  #playPauseButton:hover {
-    background-color: #45a049;
-  }
-
-  #fileNameDisplay {
-    position: fixed;
-    bottom: 10px;
-    left: 10px;
-    padding: 10px;
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
-  }
+    #fileNameDisplay {
+      position: fixed;
+      bottom: 10px;
+      left: 10px;
+      padding: 10px;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+    }
   </style>
 </head>
 <body>
   <div id="loadingIcon">
     <img src="Loading.gif" alt="Loading...">
   </div>
-  <div class="pin-overlay" id="pinOverlay">
-    <input type="password" id="pinInput" class="pin-input" placeholder="Enter PIN">
-    <button id="pinButton" class="pin-button">Submit</button>
-  </div>
-  <div class="overlay" id="mainOverlay" style="display:none;">
+  <div class="overlay" id="mainOverlay">
     <div class="button-container">
       <button data-url="https://nirbytes.mcwrite.net">Proxy 1 (Mocha)</button>
       <button data-url="https://avocadofrommexico.limana.rs">Proxy 2 (Space)</button>
@@ -273,12 +156,11 @@
       <button data-url="https://friends-are.awesome.yukon.ar/">Proxy 10 (Lunar)</button>
       <button data-url="https://calm-hawk-529.3kh0.org/">Proxy 11 (Shuttle) **ADS!!!**</button>
       <button data-url="https://create.edpuzzle.com.inergi.cl/">Proxy 12 (Moonlight) **ADS!!!**</button>
-      <button data-url="https://fansdumptruck.global.ssl.fastly.net/">Proxy 13 (Bolt) **ADS!!!** </button>
-      <button data-url="https://3kh0kaio.global.ssl.fastly.net/">Proxy 14 (3kho) </button>
-      <button data-url="https://math.global.ssl.fastly.net/">Proxy 15 (SZVY) </button>
-      <button data-url="https://skibidiultraviolet.global.ssl.fastly.net/">Proxy 16 (Ultaviolet) </button>
-      <button data-url="https://www.www.sadowdayo11.ipv64.net/">Proxy 17 (Shadow) **MID ADS!!**</button>
-      <button data-url="https://www.youtube.com/embed/xV1VQul58Rs?si=D6iEESi2ZzJvrNib">Make your own proxy</button>
+      <button data-url="https://fansdumptruck.global.ssl.fastly.net/">Proxy 13 (Bolt)</button>
+      <button data-url="https://3kh0kaio.global.ssl.fastly.net/">Proxy 14 (3kho)</button>
+      <button data-url="https://math.global.ssl.fastly.net/">Proxy 15 (SZVY)</button>
+      <button data-url="https://skibidiultraviolet.global.ssl.fastly.net/">Proxy 16 (Ultaviolet)</button>
+      <button data-url="https://www.www.sadowdayo11.ipv64.net/">Proxy 17 (Shadow)</button>
       <button data-url="https://smoresxo.shop/proxies">Proxy finder (Happy-birthday Amanuel)</button>
       <button data-url="https://smoresxo.shop/">Cheese (stuff)</button>
       <button id="incognitoButton">Open about:blank incognito</button>
@@ -296,7 +178,7 @@
     <input type="color" id="elementColorPicker" style="display:none;">
   </div>
   <div> <iframe id="iFrame"></iframe> </div>
-<div class="footer">
+  <div class="footer">
     Mahad 2025<br>
     Version 2.1<br>
     EDUCATIONAL PURPOSES ONLY
