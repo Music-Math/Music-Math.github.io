@@ -13,19 +13,14 @@
 <body>
   <!-- Your page content here -->
   
-  <script>
-    // Assuming this is JavaScript intended for inserting external resources
-    const commentsContainer = document.getElementById('comments-container');
-
-    const script2 = document.createElement('script');
-    script2.src = "https://netlify-comments.dyuproject.com/dist/build.js";
-    script2.async = true;
-    commentsContainer.appendChild(script2);
-
-    const link = document.createElement('link');
-    link.rel = "stylesheet";
-    link.href = "https://netlify-comments.dyuproject.com/dist/build.css";
-    commentsContainer.appendChild(link);
+<div id="comments"></div>
+<script>
+window.rpc_host = 'https://rpc.dyuproject.com';
+window.comments_max_depth = 10; // max: 127
+window.comments_collapse_depth = 7; // the depth where comments get collapsed by default
+</script>
+<script src="https://netlify-comments.dyuproject.com/dist/build.js"></script>
+<link rel="stylesheet" href="https://netlify-comments.dyuproject.com/dist/build.css" />
   </script>
 </body>
 </html>
