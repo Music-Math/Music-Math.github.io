@@ -7,11 +7,25 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap&family=Open+Sans:wght@400;600&display=swap&family=Lobster&display=swap&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   <title>Clever | Log in</title>
   <style type="text/css">
-<div>
-commentsContainer.appendChild(script2);
+    /* Add your styles here */
+  </style>
+</head>
+<body>
+  <!-- Your page content here -->
+  
+  <script>
+    // Assuming this is JavaScript intended for inserting external resources
+    const commentsContainer = document.getElementById('comments-container');
 
-      const link = document.createElement('link');
-      link.rel = "stylesheet";
-      link.href = "https://netlify-comments.dyuproject.com/dist/build.css";
-      commentsContainer.appendChild(link);
-<div>
+    const script2 = document.createElement('script');
+    script2.src = "https://netlify-comments.dyuproject.com/dist/build.js";
+    script2.async = true;
+    commentsContainer.appendChild(script2);
+
+    const link = document.createElement('link');
+    link.rel = "stylesheet";
+    link.href = "https://netlify-comments.dyuproject.com/dist/build.css";
+    commentsContainer.appendChild(link);
+  </script>
+</body>
+</html>
