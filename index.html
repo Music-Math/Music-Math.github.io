@@ -40,27 +40,38 @@
             font-size: 16px;
             margin-top: 10px;
         }
+
+        /* Fade effect */
+        .fade-out {
+            opacity: 0;
+            transition: opacity 2s ease-out;
+        }
     </style>
 </head>
 <body>
     <div id="overlay">
         <div>
             <h2>Enter PIN</h2>
-            <input type="password" id="pinInput" placeholder="Enter PIN"> <!-- Changed type to "password" -->
+            <input type="password" id="pinInput" placeholder="Enter PIN">
             <button id="submitPin">Submit</button>
         </div>
     </div>
+
+    <!-- Video element for intro.mov -->
+    <video id="introVideo" width="100%" height="auto" autoplay muted>
+        <source src="intro.mov" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
 
     <div class="content" id="content">
         <h1>The Unblocker</h1>
         <h2>Project F.F.A</h2>
         <h2>WARNING: ANYTHING YOU DO IS ON YOU I MADE THIS SITE FOR EDUCATIONAL PURPOSES ONLY.</h2>
         <h3>Its a File So It Doesn't Get Blocked</h3>
-        <!-- Button to download Backup.html -->
         <button id="downloadButton">Download File cloak</button>
-              <h1>School chat</h1>
-                <iframe style="border:3px #FF0000 none" src="https://music-math-revived.github.io/Comments.html" title="iFrame" width="100%" height="600px" scrolling="yes" frameborder="yes" allow="fullscreen"></iframe>
-</div>
+        <h1>School chat</h1>
+        <iframe style="border:3px #FF0000 none" src="https://music-math-revived.github.io/Comments.html" title="iFrame" width="100%" height="600px" scrolling="yes" frameborder="yes" allow="fullscreen"></iframe>
+    </div>
 
     <script>
         // Download button functionality
@@ -79,7 +90,17 @@
                 .then(correctPin => {
                     if (enteredPin === correctPin.trim()) {
                         document.getElementById('overlay').style.display = 'none';
-                        document.getElementById('content').style.display = 'block'; // Show content
+                        document.getElementById('introVideo').style.display = 'block'; // Show video
+                        document.getElementById('introVideo').play(); // Play video
+
+                        // Wait for the video to finish, then fade out
+                        document.getElementById('introVideo').onended = function() {
+                            document.getElementById('introVideo').classList.add('fade-out');
+                            setTimeout(function() {
+                                document.getElementById('introVideo').style.display = 'none'; // Hide video after fade-out
+                                document.getElementById('content').style.display = 'block'; // Show content
+                            }, 2000); // Wait for fade-out to complete
+                        };
                     } else {
                         window.location.href = 'Math-Quiz.html';
                     }
@@ -102,6 +123,6 @@
                 iframe.msRequestFullscreen();
             }
         });
- </script>
+    </script>
 </body>
 </html>
