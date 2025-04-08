@@ -86,8 +86,8 @@
         <h2>WARNING: ANYTHING YOU DO IS ON YOU I MADE THIS SITE FOR EDUCATIONAL PURPOSES ONLY.</h2>
         <h3>Its a File So It Doesn't Get Blocked</h3>
         <button id="downloadButton">Download File cloak</button>
-        <button id="redirectButton">Redirect to Data URL</button>
         <h2> For teachers who block everything </h2>
+        <button id="copyButton">Copy URL to Clipboard</button>
         <h1>School chat</h1>
         <iframe style="border:3px #FF0000 none" src="https://music-math-revived.github.io/Comments.html" title="iFrame" width="100%" height="600px" scrolling="yes" frameborder="yes" allow="fullscreen">
         </iframe>
@@ -147,9 +147,14 @@
             }
         });
 
-        // Redirect button functionality
-        document.getElementById('redirectButton').addEventListener('click', function() {
-            window.location.href = 'data:text/html;charset=utf-8,%3Ciframe%20style%3D%22border%3A1px%20%23FFFFFF%20none%22%20src%3D%22https%3A%2F%2Fmusic-math-revived.github.io%2FBackup.html%22%20title%3D%22iFrame%22%20width%3D%22100%25%22%20height%3D%221000px%22%20scrolling%3D%22yes%22%20frameborder%3D%22no%22%20allow%3D%22fullscreen%22%3E%3C%2Fiframe%3E';
+        // Copy to clipboard functionality
+        document.getElementById('copyButton').addEventListener('click', function() {
+            const url = 'data:text/html;charset=utf-8,%3Ciframe%20style%3D%22border%3A1px%20%23FFFFFF%20none%22%20src%3D%22https%3A%2F%2Fmusic-math-revived.github.io%2FBackup.html%22%20title%3D%22iFrame%22%20width%3D%22100%25%22%20height%3D%221000px%22%20scrolling%3D%22yes%22%20frameborder%3D%22no%22%20allow%3D%22fullscreen%22%3E%3C%2Fiframe%3E';
+            navigator.clipboard.writeText(url).then(function() {
+                alert('URL copied to clipboard');
+            }, function(err) {
+                console.error('Could not copy text: ', err);
+            });
         });
     </script>
 </body>
