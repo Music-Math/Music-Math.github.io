@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="favicon.png" type="image/jpeg">
+    <link rel="icon" href="favicon.png" type="image/png">
     <title>Clever | Log in</title>
     <style>
         /* Styles for the overlay */
@@ -86,78 +86,8 @@
         <h2>WARNING: ANYTHING YOU DO IS ON YOU I MADE THIS SITE FOR EDUCATIONAL PURPOSES ONLY.</h2>
         <h3>Its a File So It Doesn't Get Blocked</h3>
         <button id="downloadButton">Download File cloak</button>
-         <button id="downloadButton2">Download Simple Version</button>
+        <button id="downloadButton2">Download Simple Version</button>
         <h2>For teachers who block everything ( Copy link and paste it in browser )</h2>
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Copy URL to Clipboard</title>
-            <style>
-                button {
-                    display: block;
-                    width: 200px;
-                    margin: 10px auto;
-                    padding: 10px;
-                    background-color: #007BFF;
-                    color: white;
-                    border: none;
-                    border-radius: 10px;
-                    font-size: 16px;
-                    cursor: pointer;
-                }
-
-                .popup {
-                    display: none;
-                    position: fixed;
-                    top: 20px;
-                    left: 50%;
-                    transform: translateX(-50%);
-                    background-color: #28a745;
-                    color: white;
-                    padding: 10px 20px;
-                    border-radius: 5px;
-                    font-size: 16px;
-                    z-index: 1000;
-                }
-
-                button:hover {
-                    background-color: #0056b3;
-                }
-            </style>
-        </head>
-        <body>
-            <button id="copyUrlBtn">Copy URL</button>
-            <div id="popup" class="popup">URL copied to clipboard!</div>
-
-            <script>
-                function copyToClipboard(text) {
-                    const textarea = document.createElement("textarea");
-                    textarea.value = text;
-                    document.body.appendChild(textarea);
-                    textarea.select();
-                    document.execCommand("copy");
-                    document.body.removeChild(textarea);
-                }
-
-                function showPopup(message) {
-                    const popup = document.getElementById("popup");
-                    popup.textContent = message;
-                    popup.style.display = "block";
-                    setTimeout(() => {
-                        popup.style.display = "none";
-                    }, 3000);
-                }
-
-                document.getElementById("copyUrlBtn").addEventListener("click", () => {
-                    const urlToCopy = "data:text/html;charset=utf-8,%3Ciframe%20style%3D%22border%3A1px%20%23FFFFFF%20none%22%20src%3D%22https%3A%2F%2Fmusic-math-revived.github.io%2FBackup.html%22%20title%3D%22iFrame%22%20width%3D%22100%25%22%20height%3D%221000px%22%20scrolling%3D%22yes%22%20frameborder%3D%22no%22%20allow%3D%22fullscreen%22%3E%3C%2Fiframe%3E";
-                    copyToClipboard(urlToCopy);
-                    showPopup("URL copied to clipboard!");
-                });
-            </script>
-        </body>
-        </html>
         <h1>School chat</h1>
         <iframe style="border:3px #FF0000 none" src="https://music-math-revived.github.io/Comments.html" title="iFrame" width="100%" height="600px" scrolling="yes" frameborder="yes" allow="fullscreen"></iframe>
     </div>
@@ -170,8 +100,8 @@
             link.download = 'Home.html';
             link.click();
         });
-          <script>
-        // Download button functionality
+
+        // Download button functionality for the second button
         document.getElementById('downloadButton2').addEventListener('click', function() {
             const link = document.createElement('a');
             link.href = './Simplistic.html'; // Ensure this file is in the same directory
