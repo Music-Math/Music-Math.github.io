@@ -19,7 +19,6 @@
             align-items: center;
             color: black;
             z-index: 1000;
-            text-align: center; /* Center text */
         }
         #overlay input {
             padding: 10px;
@@ -33,7 +32,6 @@
 
         .content {
             display: none; /* Initially hidden */
-            text-align: center; /* Center text */
         }
 
         /* Styles for the fullscreen button */
@@ -65,11 +63,6 @@
             position: relative;
             z-index: 1;
         }
-
-        /* Centered text for the body */
-        body {
-            text-align: center;
-        }
     </style>
 </head>
 <body>
@@ -82,18 +75,18 @@
     </div>
 
     <!-- Video element for intro.mov -->
-    <video id="introVideo" autoplay muted>
+    <video id="introVideo" autoplay >
         <source src="Intro.mp4" type="video/mp4">
         Your browser does not support the video tag.
     </video>
 
     <div class="content" id="content">
-        <h1>The Unblocker</h1>
-        <h2>Project F.F.A</h2>
-        <h2>WARNING: ANYTHING YOU DO IS ON YOU I MADE THIS SITE FOR EDUCATIONAL PURPOSES ONLY.</h2>
-        <h3>Its a File So It Doesn't Get Blocked</h3>
+        <h1>ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤThe Unblocker</h1>
+        <h2>ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤProject F.F.A</h2>
+        <h2>ㅤㅤㅤㅤㅤWARNING: ANYTHING YOU DO IS ON YOU I MADE THIS SITE FOR EDUCATIONAL PURPOSES ONLY.</h2>
+        <h3>ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤIts a File So It Doesn't Get Blocked</h3>
         <button id="downloadButton">Download File cloak</button>
-        <h2>For teachers who block everything ( Copy link and paste it in browser )</h2>
+        <h2> ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤFor teachers who block everything ( Copy link and paste it in browser )</h2>
         <!DOCTYPE html>
         <html lang="en">
         <head>
@@ -116,7 +109,7 @@
 
                 .popup {
                     display: none;
-                    position: fixed;
+                    position: left;
                     top: 20px;
                     left: 50%;
                     transform: translateX(-50%);
@@ -126,7 +119,6 @@
                     border-radius: 5px;
                     font-size: 16px;
                     z-index: 1000;
-                    text-align: center; /* Center text */
                 }
 
                 button:hover {
@@ -158,7 +150,7 @@
                 }
 
                 document.getElementById("copyUrlBtn").addEventListener("click", () => {
-                    const urlToCopy = "data:text/html;charset=utf-8,%3Ciframe%20style%3D%22border%3A1px%20%23FFFFFF%20none%22%20src%3D%22https%3A%2F%2Fmusic-math-revived.github.io%2FBackup.html%22%20t[...]
+                    const urlToCopy = "data:text/html;charset=utf-8,%3Ciframe%20style%3D%22border%3A1px%20%23FFFFFF%20none%22%20src%3D%22https%3A%2F%2Fmusic-math-revived.github.io%2FBackup.html%22%20title%3D%22iFrame%22%20width%3D%22100%25%22%20height%3D%221000px%22%20scrolling%3D%22yes%22%20frameborder%3D%22no%22%20allow%3D%22fullscreen%22%3E%3C%2Fiframe%3E";
                     copyToClipboard(urlToCopy);
                     showPopup("URL copied to clipboard!");
                 });
@@ -166,7 +158,7 @@
         </body>
         </html>
         <h1>School chat</h1>
-        <iframe style="border:3px #FF0000 none" src="https://music-math-revived.github.io/Comments.html" title="iFrame" width="100%" height="600px" scrolling="yes" frameborder="yes" allow="fullscreen"[...]
+        <iframe style="border:3px #FF0000 none" src="https://music-math-revived.github.io/Comments.html" title="iFrame" width="100%" height="600px" scrolling="yes" frameborder="yes" allow="fullscreen"></iframe>
     </div>
 
     <script>
@@ -226,7 +218,7 @@
         // Copy to clipboard functionality
         document.getElementById('copyButton').addEventListener('click', function() {
             var dummy = document.createElement('input'),
-                text = 'data:text/html;charset=utf-8,%3Ciframe%20style%3D%22border%3A1px%20%23FFFFFF%20none%22%20src%3D%22https%3A%2F%2Fmusic-math-revived.github.io%2FBackup.html%22%20title%3D%22iFram[...]
+                text = 'data:text/html;charset=utf-8,%3Ciframe%20style%3D%22border%3A1px%20%23FFFFFF%20none%22%20src%3D%22https%3A%2F%2Fmusic-math-revived.github.io%2FBackup.html%22%20title%3D%22iFrame%22%20width%3D%22100%25%22%20height%3D%221000px%22%20scrolling%3D%22yes%22%20frameborder%3D%22no%22%20allow%3D%22fullscreen%22%3E%3C%2Fiframe%3E';
 
             document.body.appendChild(dummy);
             dummy.value = text;
