@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="favicon.png" type="image/jpeg">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap&family=Open+Sans:wght@400;600&display=swap&family=Lobster&display=swap&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <title>Clever | Log in</title>
+  <style type="text/css">
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: url('logo.png') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      flex-direction: column;
+    }
+
+    .overlay {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-evenly;
+      height: 100vh;
+      background-color: rgba(255, 255, 255, 0.8);
+        background-size: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      transition: background-color 2s;
+    }
+
+    .button-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: 10px;
+      padding: 20px;
+      width: 100%;
+      box-sizing: border-box;
+      height: 100%;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      background-color: rgba(255, 0, 0, 1);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      width: 100%;
+      transition: background-color 2s;
+    }
+
+    button:hover {
+      background-color: red;
+    }
+
+    #fullscreenButton {
+      background-color: green;
+    }
+
+    #fullscreenButton:hover {
+      background-color: darkgreen;
+    }
+
+    #stopButton {
+      font-family: 'Roboto', sans-serif;
+    }
+
+    .footer {
+      text-align: left;
+      padding: 10px;
+      background-color: 0, 0, 0, 0.7
+      color: rgba(255, 255, 255, 0.7);
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 195px;
+    }
+
+    #loadingIcon {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10000;
+    }
+
+    #playPauseButton {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+      font-size: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #playPauseButton:hover {
+      background-color: #45a049;
+    }
+
+    #fileNameDisplay {
+      position: fixed;
+      bottom: 10px;
+      left: 10px;
+      padding: 10px;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div id="loadingIcon">
+    <img src="Loading.gif" alt="Loading...">
+  </div>
+  <div class="overlay" id="mainOverlay">
+    <div class="button-container">
+      <button data-url="https://nirbytes.mcwrite.net">Proxy 1 (Mocha)</button>
+      <button data-url="https://avocadofrommexico.limana.rs">Proxy 2 (Space)</button>
+      <button data-url="https://open-your.eyes-and-look-at-what-youve-done.budjettravel.net/">Proxy 2 (backup)</button>
+      <button data-url="https://twitter.4wardfabrications.com">Proxy 3 (Rammerhead)</button>
+      <button data-url="https://update.phoenixtheatre.net.au/">Proxy 4 (Ghost)</button>
+      <button data-url="https://learn.streetdirectory.net.my/">Proxy 5 (Daydreamx)</button>
+      <button data-url="https://voidnetworkisthebest.global.ssl.fastly.nt/">Proxy 6 (Void)</button>     
+      <button data-url="https://friends-are.awesome.yukon.ar/">Proxy 7 (Lunar)</button>
+      <button data-url="https://3kh0kaio.global.ssl.fastly.net/">Proxy 8 (3kho) </button>
+      <button data-url="https://math.global.ssl.fastly.net/">Proxy 9 (SZVY) </button>
+      <button data-url="https://skibidiultraviolet.global.ssl.fastly.net/">Proxy 10 (Ultaviolet) </button>
+      <button data-url="buy.boatingequipment.co.nz/">Proxy 11 (Interstellar) </button>
+        <button data-url="https://hi-astralogical.global.ssl.fastly.net/">Proxy 12 (US4) </button>
+           <button data-url="https://zva-l.global.ssl.fastly.net/">Proxy 13 (US5) </button>
+      <button data-url="https://16rogo-net.global.ssl.fastly.net/">EXTENSION KILLER**</button>
+       <button data-url="https://extprint3r.github.io/">EXTENSION KILLER/ IF THE FIRST ONE DOESNT WORK.</button>
+      <button data-url="https://music-math-revived.github.io/Comments.html">Comments (Fixed)**</button>
+      <button data-url="https://smoresxo.shop/proxies">Proxy finder </button>
+      <button data-url="https://smoresxo.shop/">Cheese (stuff)</button>
+      <button id="incognitoButton">Open about:blank incognito</button>
+      <button id="fullscreenButton">Load (if about:blank press alt+a)</button>
+      <button id="downloadButton">File cloak (download)</button>
+      <button id="stopButton">Stop</button>
+      <button id="uploadButton">Upload Music</button>
+      <button id="uploadBackgroundButton">Upload Background</button>
+    </div>
+    <input type="file" id="musicInput" accept="audio/*" style="display:none;">
+    <input type="file" id="backgroundInput" accept="image/*" style="display:none;">
+    <input type="color" id="colorPicker" value="#ff2c2c" style="display:none;">
+    <input type="color" id="elementColorPicker" style="display:none;">
+  </div>
+  <div> <iframe id="iFrame"></iframe> </div>
+  <div class="footer">
+    Mahad 2025<br>
+    Version 2.1<br>
+    Make your own <a href="https://www.youtube.com/watch?v=xV1VQul58Rs">Make a proxy</a>
+    <a href='http://www.freevisitorcounters.com'></a>
+    <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=156dd0b72dc6a48378495c7cfae5cc19e06d0507'></script>
+    <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/1312952/t/13"></script>
+  </div>
+
+  <div id="commentsContainer">
+    <iframe id="comments" src="https://music-math-revived.github.io/Comments.html" style="width:100%; height:400px; border:none;"></iframe>
+  </div>
+
+  <script>
+    let previousButton = null;
+
+    Array.prototype.forEach.call(document.querySelectorAll('[data-url]'), function(elem) {
+      elem.addEventListener('click', function(e) {
+        document.getElementById('iFrame').src = this.dataset.url;
+
+        if (previousButton) {
+          previousButton.style.display = 'block'; // Show the previous button again
+        }
+
+        this.style.display = 'none'; // Hide the current button
+        previousButton = this;
+      });
+    });
+
+    document.getElementById('fullscreenButton').addEventListener('click', function() {
+      const iFrame = document.getElementById('iFrame');
+      if (iFrame.requestFullscreen) {
+        iFrame.requestFullscreen();
+      } else if (iFrame.mozRequestFullScreen) { /* Firefox */
+        iFrame.mozRequestFullScreen();
+      } else if (iFrame.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+        iFrame.webkitRequestFullscreen();
+      } else if (iFrame.msRequestFullscreen) { /* IE/Edge */
+        iFrame.msRequestFullscreen();
+      }
+    });
+
+    document.getElementById('downloadButton').addEventListener('click', function() {
+      const element = document.createElement('a');
+      const file = new Blob([document.documentElement.outerHTML], {type: 'text/html'});
+      element.href = URL.createObjectURL(file);
+      element.download = 'index.html';
+      document.body.appendChild(element); // Required for this to work in Firefox
+      element.click();
+      document.body.removeChild(element);
+    });
+
+    document.getElementById('uploadButton').addEventListener('click', function() {
+      document.getElementById('musicInput').click();
+    });
+
+    document.getElementById('musicInput').addEventListener('change', function(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const audio = new Audio(URL.createObjectURL(file));
+        audio.loop = true;
+        audio.play();
+      }
+    });
+
+    document.getElementById('uploadBackgroundButton').addEventListener('click', function() {
+      document.getElementById('backgroundInput').click();
+    });
+
+    document.getElementById('backgroundInput').addEventListener('change', function(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.body.style.backgroundImage = `url(${e.target.result})`;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    document.getElementById('colorPicker').addEventListener('input', function(event) {
+      const color = event.target.value;
+      document.querySelectorAll('button').forEach(button => {
+        button.style.backgroundColor = color;
+      });
+    });
+
+    document.getElementById('elementColorPicker').addEventListener('input', function(event) {
+      const color = event.target.value;
+      document.body.style.backgroundColor = color;
+    });
+
+    document.getElementById('loadCommentsButton').addEventListener('click', function() {
+      const commentsContainer = document.getElementById('commentsContainer');
+      commentsContainer.style.display = 'block';
+
+      // Load comments script
+      const script1 = document.createElement('script');
+      script1.src = "https://netlify-comments.dyuproject.com/dist/build.js";
+      commentsContainer.appendChild(script1);
+
+      const script2 = document.createElement('script');
+      script2.textContent = `
+        window.rpc_host = 'https://rpc.dyuproject.com';
+        window.comments_max_depth = 10; // max: 127
+        window.comments_collapse_depth = 7; // the depth where comments get collapsed by default
+      `;
+      commentsContainer.appendChild(script2);
+
+      const link = document.createElement('link');
+      link.rel = "stylesheet";
+      link.href = "https://netlify-comments.dyuproject.com/dist/build.css";
+      commentsContainer.appendChild(link);
+
+      window.scrollTo(0, 0); // Scroll to top to see the comments
+    });
+
+    document.addEventListener('keydown', function(event) {
+      if ((event.ctrlKey && event.key === '`') || (event.ctrlKey && event.key === '~')) {
+        window.location.href = 'https://github.com/Music-math-revived/Music-math-revived.github.io';
+      }
+    });
+
+    document.getElementById('incognitoButton').addEventListener('click', function() {
+      const w = window.open('about:blank');
+      var url = "https://music-math-revived.github.io/";
+      var iframe = w.document.createElement('iframe');
+      iframe.style.width = "100%";
+      iframe.style.height = "100%";
+      iframe.style.border = "none";
+      iframe.src = url;
+      w.document.body.appendChild(iframe);
+    });
+
+    // Show loading icon on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById('loadingIcon').style.display = 'block';
+    });
+
+    // Hide loading icon when page is fully loaded
+    window.addEventListener('load', function() {
+      document.getElementById('loadingIcon').style.display = 'none';
+    });
+
+    // New functionality: Hide everything but iframe on Alt + A
+    document.addEventListener('keydown', function(event) {
+      if (event.altKey && event.key === 'a') {
+        document.body.innerHTML = '<iframe src="' + document.getElementById('iFrame').src + '" style="width: 100%; height: 100%; border: none; overflow: hidden;"></iframe>';
+      }
+    });
+  </script>
+  <!-- Fullscreen button -->
+  <button id="fullscreenButton">Fullscreen</button>
+  <!-- Background music element -->
+  <audio id="backgroundMusic" src="backmusic.mp3" autoplay loop>
+    Your browser does not support the audio element.
+  </audio>
+
+  <!-- Display for the current playing file name -->
+  <div id="fileNameDisplay" style="position: fixed; bottom: 0; right: 0; padding: 10px; background-color: rgba(0, 0, 0, 0.5); color: white;">
+   
+  </div>
+
+  <script>
+    // Function to update the audio source and file name display
+    function updateMusic(file) {
+      const audio = document.getElementById('backgroundMusic');
+      const fileNameDisplay = document.getElementById('fileNameDisplay');
+      audio.src = file;
+      audio.play();
+      fileNameDisplay.textContent = 'Playing: ' + file;
+    }
+
+    // Event listener for changing music file
+    document.getElementById('musicInput').addEventListener('change', function(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const audio = document.getElementById('backgroundMusic');
+        audio.src = URL.createObjectURL(file);
+        audio.play();
+        document.getElementById('fileNameDisplay').textContent = 'Playing: ' + file.name;
+      }
+    });
+  </script>
+</body>
+</html>
