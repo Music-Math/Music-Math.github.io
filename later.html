@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="favicon.png" type="image/png">
+    <title>Clever | Log in</title>
+    <style>
+        /* Styles for the overlay */
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 1); /* White background with full opacity */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: black;
+            z-index: 1000;
+        }
+        #overlay input {
+            padding: 10px;
+            font-size: 16px;
+        }
+        #overlay button {
+            padding: 10px;
+            font-size: 16px;
+            margin-left: 10px;
+        }
+
+        .content {
+            display: none; /* Initially hidden */
+        }
+
+        /* Styles for the fullscreen button */
+        #fullscreenButton {
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        /* Fade effect */
+        .fade-out {
+            opacity: 0;
+            transition: opacity 2s ease-out;
+        }
+
+        /* Ensure video is fullscreen initially */
+        #introVideo {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 100;
+        }
+
+        /* Content area styling */
+        #content {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Clipboard button styles */
+        button {
+            display: block;
+            width: 200px;
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #FF0000; /* Red background */
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            text-align: left; /* Left-aligned text */
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            z-index: 1000;
+        }
+
+        button:hover {
+            background-color: #b30000; /* Darker red on hover */
+        }
+
+        .visuallyhidden {
+            position: absolute;
+            clip: rect(1px, 1px, 1px, 1px);
+        }
+
+        .copybutton {
+            background-color: #fff;
+            border: 0;
+            outline: 0;
+            cursor: pointer;
+            opacity: 1;
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            z-index: 9;
+            border-radius: 24px;
+        }
+
+        .button-tooltip-container {
+            display: flex;
+            align-items: center;
+            margin-top: 16px;
+            min-height: 30px;
+        }
+
+        #custom-tooltip {
+            display: none;
+            margin-left: 40px;
+            padding: 5px 12px;
+            background-color: #000000df;
+            border-radius: 4px;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div id="overlay">
+        <div>
+            <h2>Enter PIN</h2>
+            <input type="password" id="pinInput" placeholder="Enter PIN">
+            <button id="submitPin">Submit</button>
+        </div>
+    </div>
+
+    <!-- Video element for intro.mov -->
+    <video id="introVideo" autoplay>
+        <source src="Intro.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <div class="content" id="content">
+        <h1>The Unblocker</h1>
+        <h2>Project F.F.A</h2>
+        <h2>WARNING: ANYTHING YOU DO IS ON YOU I MADE THIS SITE FOR EDUCATIONAL PURPOSES ONLY.</h2>
+        <h3>Its a File So It Doesn't Get Blocked</h3>
+        <button id="downloadButton">Download File cloak</button>
+        <button id="downloadButton2">Download Simple Version</button>
+        <h2>For teachers who block everything ( Copy link and paste it in browser )</h2>
+        <div class="button-tooltip-container">
+            <button title="Copy share link" type="submit" value="copy" onclick="copy();" class="copybutton">
+                <svg width="22" height="22" viewBox="0 0 20 20" version="1.1">
+                    <path fill="#000" d="M20,18.2V19H0v-1.5h16.4h2.1V5.2H20V18.2z M1.5,11.3V5.2H0v12.3h1.5V11.3z M9.2,12.8V0.5h1.5v12.3H9.2z M4.6,5.2h1.5v1.5H4.6V5.2z M6.2,3.6h1.5v1.5H6.2V3.6z M13.8,5.2h1.5v1.5h-1.5V5.2z M12.3,3.6h1.5v1.5h-1.5V3.6z M10.8,2.1h1.5v1.5h-1.5V2.1z M7.7,2.1h1.5v1.5H7.7V2.1z"></path>
+                </svg>
+            </button>
+            <span id="custom-tooltip">Copied!</span>
+        </div>
+        <h1>School chat</h1>
+        <iframe style="border:3px #FF0000 none" src="https://music-math-revived.github.io/Comments.html" title="iFrame" width="100%" height="600px" scrolling="yes" frameborder="yes" allow="fullscreen"></iframe>
+    </div>
+
+    <textarea class="visuallyhidden" id="box"></textarea>
+
+    <script>
+        // Download button functionality
+        document.getElementById('downloadButton').addEventListener('click', function() {
+            const link = document.createElement('a');
+            link.href = './Home.html'; // Ensure this file is in the same directory
+            link.download = 'Home.html';
+            link.click();
+        });
+
+        // Download button functionality for the second button
+        document.getElementById('downloadButton2').addEventListener('click', function() {
+            const link = document.createElement('a');
+            link.href = './Simplistic.html'; // Ensure this file is in the same directory
+            link.download = 'Simplistic.html';
+            link.click();
+        });
+
+        // Overlay pin functionality
+        document.getElementById('submitPin').addEventListener('click', function() {
+            const enteredPin = document.getElementById('pinInput').value;
+            fetch('pin.html')
+                .then(response => response.text())
+                .then(correctPin => {
+                    if (enteredPin === correctPin.trim()) {
+                        document.getElementById('overlay').style.display = 'none';
+                        document.getElementById('introVideo').style.display = 'block'; // Show video
+                        document.getElementById('introVideo').play(); // Play video
+
+                        // Wait for the video to finish, then fade out
+                        document.getElementById('introVideo').onended = function() {
+                            // Add the fade-out class to the video
+                            document.getElementById('introVideo').classList.add('fade-out');
+                            
+                            // After the fade-out transition completes, show the content
+                            setTimeout(function() {
+                                document.getElementById('introVideo').style.display = 'none'; // Hide video
+                                document.getElementById('content').style.display = 'block'; // Show website content
+                            }, 2000); // Wait for the fade-out effect (2 seconds)
+                        };
+                    } else {
+                        window.location.href = 'Math-Quiz.html';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching pin:', error);
+                });
+        });
+
+        function copy() {
+            var Url = document.getElementById("box");
+            Url.value = "data:text/html;charset=utf-8,%3Ciframe%20style%3D%22border%3A1px%20%23FFFFFF%20none%22%20src%3D%22https%3A%2F%2Fmusic-math-revived.github.io%2FBackup.html%22%20title%3D%22Backup%22%20width%3D%22100%25%22%20height%3D%22600px%22%20scrolling%3D%22yes%22%20frameborder%3D%22yes%22%20allow%3D%22fullscreen%22%3E%3C%2Fiframe%3E";
+            Url.focus();
+            Url.select();
+            document.getElementById("custom-tooltip").style.display = "inline";
+            document.execCommand("copy");
+            setTimeout(function () {
+                document.getElementById("custom-tooltip").style.display = "none";
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
