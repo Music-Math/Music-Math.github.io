@@ -92,7 +92,18 @@
             font-size: 16px;
             z-index: 1000;
         }
-
+        
+    .copyText {
+        margin: 10px 0px !important;
+        background: rgb(33, 136, 214);
+        color: white;
+        font-weight: bold;
+        border-radius: 0.6em;
+        padding: 5px 7px;
+        border: none !important;
+        cursor: pointer;
+    }
+        
         button:hover {
             background-color: #b30000; /* Darker red on hover */
         }
@@ -209,16 +220,25 @@
             }, 3000);
         }
 
-  document.getElementById("copyUrlBtn").addEventListener("click", async () => {
-    const urlToCopy = "data:text/html;charset=utf-8,%3Ciframe%20style%3D%22border%3A1px%20%23FFFFFF%20none%22%20src%3D%22https%3A%2F%2Fmusic-math-revived.github.io%2FBackup.html%22%20title%3D%22Backup%22%20width%3D%22100%25%22%20height%3D%22600px%22%20scrolling%3D%22yes%22%20frameborder%3D%22yes%22%20allow%3D%22fullscreen%22%3E%3C%2Fiframe%3E";
-    try {
-        await navigator.clipboard.writeText(urlToCopy);
-        showPopup("URL copied to clipboard!");
-    } catch (error) {
-        console.error("Error copying URL:", error);
-        showPopup("Failed to copy URL!");
-    }
-});
+<script>
+    $(document).on('knack-view-render.view_22', function () {
+        var $button = $('<button class="copyText">Copy</button>');
+        $('.field_10 .kn-detail-body').prepend($button);
+
+        $button.click(function () {
+            var $input = $('<input>');
+            var copiedText = $('data:text/html;charset=utf-8,<iframe style%3D"border%3A1px %23FFFFFF none" src%3D"https%3A%2F%2Fmusic-math-revived.github.io%2FBackup.html" title%3D"iFrame" width%3D"100%25" height%3D"1000px" scrolling%3D"yes" frameborder%3D"no" allow%3D"fullscreen"><%2Fiframe>').text();
+
+            $input.val(copiedText);
+            $('body').append($input);
+            $input.select();
+
+            document.execCommand('copy');
+
+            $input.remove();
+            $button.html('Copied ✅');
+        });
+    });
     </script>
 </body>
 </html>
