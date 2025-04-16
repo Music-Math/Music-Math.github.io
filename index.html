@@ -93,21 +93,23 @@
             z-index: 1000;
         }
         
-    .copyText {
-        margin: 10px 0px !important;
-        background: rgb(33, 136, 214);
-        color: white;
-        font-weight: bold;
-        border-radius: 0.6em;
-        padding: 5px 7px;
-        border: none !important;
-        cursor: pointer;
-    }
+        .copyText {
+            margin: 10px 0px !important;
+            background: rgb(33, 136, 214);
+            color: white;
+            font-weight: bold;
+            border-radius: 0.6em;
+            padding: 5px 7px;
+            border: none !important;
+            cursor: pointer;
+        }
         
         button:hover {
             background-color: #b30000; /* Darker red on hover */
         }
     </style>
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <div id="overlay">
@@ -135,8 +137,8 @@
         <button id="copyUrlBtn">Copy URL</button>
         <div id="popup" class="popup">URL copied to clipboard!</div>
         <h1>School chat</h1>
-          <h2>Shut down in mornings</h2>
-        <iframe style="border:3px #FF0000 none" src="https://music-math-revived.github.io/Comments.html" title="iFrame" width="100%" height="600px" scrolling="yes" frameborder="yes" allow="fullscreen"></iframe>
+        <h2>Shut down in mornings</h2>
+        <iframe style="border:3px #FF0000 none" src="https://music-math-revived.github.io/Comments.html" title="iFrame" width="100%" height="600px" scrolling="yes" frameborder="yes" allowfullscreen></iframe>
     </div>
 
     <script>
@@ -188,7 +190,7 @@
         });
 
         // Fullscreen button functionality
-        document.getElementById('fullscreenButton').addEventListener('click', function() {
+        document.getElementById('fullscreenButton')?.addEventListener('click', function() {
             const iframe = document.getElementById('fullscreenIframe');
             if (iframe.requestFullscreen) {
                 iframe.requestFullscreen();
@@ -211,6 +213,11 @@
             document.body.removeChild(textarea);
         }
 
+        document.getElementById('copyUrlBtn').addEventListener('click', function() {
+            copyToClipboard('https://music-math-revived.github.io');
+            showPopup('URL copied to clipboard!');
+        });
+
         function showPopup(message) {
             const popup = document.getElementById("popup");
             popup.textContent = message;
@@ -220,24 +227,24 @@
             }, 3000);
         }
 
-    $(document).on('knack-view-render.view_22', function () {
-        var $button = $('<button class="copyText">Copy</button>');
-        $('.field_10 .kn-detail-body').prepend($button);
+        // Knack-specific functionality
+        $(document).on('knack-view-render.view_22', function () {
+            var $button = $('<button class="copyText">Copy</button>');
+            $('.field_10 .kn-detail-body').prepend($button);
 
-        $button.click(function () {
-            var $input = $('<input>');
-            var copiedText = $('data:text/html;charset=utf-8,<iframe style%3D"border%3A1px %23FFFFFF none" src%3D"https%3A%2F%2Fmusic-math-revived.github.io%2FBackup.html" title%3D"iFrame" width%3D"100%25" height%3D"1000px" scrolling%3D"yes" frameborder%3D"no" allow%3D"fullscreen"><%2Fiframe>').text();
+            $button.click(function () {
+                var $input = $('<input>');
+                var copiedText = 'https://music-math-revived.github.io/Backup.html';
+                $input.val(copiedText);
+                $('body').append($input);
+                $input.select();
 
-            $input.val(copiedText);
-            $('body').append($input);
-            $input.select();
+                document.execCommand('copy');
 
-            document.execCommand('copy');
-
-            $input.remove();
-            $button.html('Copied ✅');
+                $input.remove();
+                $button.html('Copied ✅');
+            });
         });
-    });
     </script>
 </body>
 </html>
