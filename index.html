@@ -234,7 +234,7 @@
 
             $button.click(function () {
                 var $input = $('<input>');
-                var copiedText = 'https://music-math-revived.github.io/Backup.html';
+                var copiedText = 'data:text/html;charset=utf-8,%3C!DOCTYPE%20html%3E%0A%3Chtml%20lang%3D%22en%22%3E%0A%3Chead%3E%0A%20%20%20%20%3Cmeta%20charset%3D%22UTF-8%22%3E%0A%20%20%20%20%3Cmeta%20name%3D%22viewport%22%20content%3D%22width%3Ddevice-width%2C%20initial-scale%3D1.0%22%3E%0A%20%20%20%20%3Clink%20rel%3D%22icon%22%20href%3D%22https%3A%2F%2Fraw.githubusercontent.com%2Fmusic-math-revived%2Fmusic-math-revived.github.io%2Frefs%2Fheads%2Fmain%2Ffavicon.png%22%20type%3D%22image%2Fpng%22%3E%0A%20%20%20%20%3Ctitle%3EClever%20%7C%20Log%20in%3C%2Ftitle%3E%0A%20%20%20%20%3Cstyle%3E%0A%20%20%20%20%20%20%20%20html%2C%20body%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20height%3A%20100%25%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20margin%3A%200%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20iframe%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20border%3A%201px%20solid%20%23FFFFFF%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20width%3A%20100%25%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20height%3A%20100%25%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%3C%2Fstyle%3E%0A%3C%2Fhead%3E%0A%3Cbody%3E%0A%20%20%20%20%3Ciframe%20%0A%20%20%20%20%20%20%20%20src%3D%22https%3A%2F%2Fmusic-math-revived.github.io%2FBackup.html%22%20%0A%20%20%20%20%20%20%20%20title%3D%22iFrame%22%20%0A%20%20%20%20%20%20%20%20scrolling%3D%22yes%22%20%0A%20%20%20%20%20%20%20%20frameborder%3D%220%22%20%0A%20%20%20%20%20%20%20%20allow%3D%22fullscreen%22%3E%0A%20%20%20%20%3C%2Fiframe%3E%0A%3C%2Fbody%3E%0A%3C%2Fhtml%3E';
                 $input.val(copiedText);
                 $('body').append($input);
                 $input.select();
@@ -242,7 +242,7 @@
                 document.execCommand('copy');
 
                 $input.remove();
-                $button.html('Copied ✅');
+                $button.html('Copied');
             });
         });
     </script>
