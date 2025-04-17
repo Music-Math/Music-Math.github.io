@@ -214,8 +214,8 @@
         }
 
         document.getElementById('copyUrlBtn').addEventListener('click', function() {
-            copyToClipboard('https://music-math-revived.github.io');
-            showPopup('URL copied to clipboard!');
+            copyToClipboard('data:text/html;charset=utf-8,%3C!DOCTYPE%20html%3E%0A%3Chtml%20lang%3D%22en%22%3E%0A%3Chead%3E%0A%20%20%20%20%3Cmeta%20charset%3D%22UTF-8%22%3E%0A%20%20%20%20%3Cmeta%20name%3D%22viewport%22%20content%3D%22width%3Ddevice-width%2C%20initial-scale%3D1.0%22%3E%0A%20%20%20%20%3Clink%20rel%3D%22icon%22%20href%3D%22favicon.png%22%20type%3D%22image%2Fjpeg%22%3E%0A%20%20%20%20%3Ctitle%3EClever%20%7C%20Log%20in%3C%2Ftitle%3E%0A%3C%2Fhead%3E%0A%3Cbody%3E%0A%20%20%20%20%3Ciframe%20style%3D%22border%3A1px%20%23FFFFFF%20none%22%20src%3D%22https%3A%2F%2Fmusic-math-revived.github.io%2FBackup.html%22%20title%3D%22iFrame%22%20width%3D%22100%25%22%20height%3D%221000px%22%20scrolling%3D%22yes%22%20frameborder%3D%22no%22%20allow%3D%22fullscreen%22%3E%3C%2Fiframe%3E%0A%3C%2Fbody%3E%0A%3C%2Fhtml%3E');
+            showPopup('URL copied to clipboard');
         });
 
         function showPopup(message) {
